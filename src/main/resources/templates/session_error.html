@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>error</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/src/normalize.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/src/demo.css}">
+  <!--必要样式-->
+  <link rel="stylesheet" type="text/css" th:href="@{/src/component.css}">
+
+
+  <style type="text/css">
+    #Layer1 {position:absolute;	width:100%;	z-index:2;	top: 60%;}
+    .STYLE3 {font-size: medium}
+    #clock{font-family: 'Share Tech Mono', monospace;color: #ffffff;text-align: center;position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);color: #daf6ff;text-shadow: 0 0 20px #0aafe6, 0 0 20px rgba(10, 175, 230, 0);}
+    #clock .time{letter-spacing: 0.05em;font-size: 60px;padding: 5px 0;}
+    #clock .date{letter-spacing:0.1em;font-size:15px;}
+    #clock .text{letter-spacing: 0.1em;font-size:12px;padding:20px 0 0;}
+  </style>
+
+</head>
+<body>
+
+<div class="container demo-1">
+  <div class="content">
+    <div id="large-header" class="large-header" style="height: 917px;">
+      <canvas id="demo-canvas" width="1920" height="917"></canvas>
+      <h1 class="main-title">
+        <p class="STYLE3">...session error page...</p>
+        <p class="STYLE3">该用户已登录</p>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/src/TweenLite.min.js}"></script>
+<script th:src="@{/src/EasePack.min.js}"></script>
+<script th:src="@{/src/rAF.js}"></script>
+<script th:src="@{/src/demo-1.js}"></script>
+</body></html>

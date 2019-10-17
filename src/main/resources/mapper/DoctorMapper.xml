@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Doctor" >
+    <id column="doctor_id" property="doctorId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="duty" property="duty" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="doctor_group_id" property="doctorGroupId" jdbcType="BIGINT" />
+    <result column="hospital_id" property="hospitalId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    doctor_id, name, age, sex, card_id, duty, department, phone, doctor_group_id, hospital_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.DoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from doctor_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor_form
+    where doctor_id = #{doctorId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doctor_form
+    where doctor_id = #{doctorId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.entity.DoctorExample" >
+    delete from doctor_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.entity.Doctor" >
+    insert into doctor_form (doctor_id, name, age, 
+      sex, card_id, duty, 
+      department, phone, doctor_group_id, 
+      hospital_id)
+    values (#{doctorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{sex,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, #{duty,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{doctorGroupId,jdbcType=BIGINT}, 
+      #{hospitalId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Doctor" >
+    insert into doctor_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="duty != null" >
+        duty,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="doctorGroupId != null" >
+        doctor_group_id,
+      </if>
+      <if test="hospitalId != null" >
+        hospital_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null" >
+        #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGroupId != null" >
+        #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalId != null" >
+        #{hospitalId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.entity.DoctorExample" resultType="java.lang.Integer" >
+    select count(*) from doctor_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doctor_form
+    <set >
+      <if test="record.doctorId != null" >
+        doctor_id = #{record.doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardId != null" >
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duty != null" >
+        duty = #{record.duty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGroupId != null" >
+        doctor_group_id = #{record.doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hospitalId != null" >
+        hospital_id = #{record.hospitalId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doctor_form
+    set doctor_id = #{record.doctorId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      card_id = #{record.cardId,jdbcType=VARCHAR},
+      duty = #{record.duty,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      doctor_group_id = #{record.doctorGroupId,jdbcType=BIGINT},
+      hospital_id = #{record.hospitalId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Doctor" >
+    update doctor_form
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="duty != null" >
+        duty = #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGroupId != null" >
+        doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalId != null" >
+        hospital_id = #{hospitalId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where doctor_id = #{doctorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Doctor" >
+    update doctor_form
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      duty = #{duty,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      hospital_id = #{hospitalId,jdbcType=BIGINT}
+    where doctor_id = #{doctorId,jdbcType=BIGINT}
+  </update>
+</mapper>

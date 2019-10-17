@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.MenuRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.MenuRole" >
+    <id column="menu_role_id" property="menuRoleId" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="jurisdiction" property="jurisdiction" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    menu_role_id, role_id, menu_id, jurisdiction
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.MenuRoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from menu_role_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu_role_form
+    where menu_role_id = #{menuRoleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from menu_role_form
+    where menu_role_id = #{menuRoleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.entity.MenuRoleExample" >
+    delete from menu_role_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.entity.MenuRole" >
+    insert into menu_role_form (menu_role_id, role_id, menu_id, 
+      jurisdiction)
+    values (#{menuRoleId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT}, 
+      #{jurisdiction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.MenuRole" >
+    insert into menu_role_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuRoleId != null" >
+        menu_role_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="jurisdiction != null" >
+        jurisdiction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuRoleId != null" >
+        #{menuRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="jurisdiction != null" >
+        #{jurisdiction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.entity.MenuRoleExample" resultType="java.lang.Integer" >
+    select count(*) from menu_role_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update menu_role_form
+    <set >
+      <if test="record.menuRoleId != null" >
+        menu_role_id = #{record.menuRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuId != null" >
+        menu_id = #{record.menuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.jurisdiction != null" >
+        jurisdiction = #{record.jurisdiction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update menu_role_form
+    set menu_role_id = #{record.menuRoleId,jdbcType=BIGINT},
+      role_id = #{record.roleId,jdbcType=BIGINT},
+      menu_id = #{record.menuId,jdbcType=BIGINT},
+      jurisdiction = #{record.jurisdiction,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.MenuRole" >
+    update menu_role_form
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="jurisdiction != null" >
+        jurisdiction = #{jurisdiction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where menu_role_id = #{menuRoleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.MenuRole" >
+    update menu_role_form
+    set role_id = #{roleId,jdbcType=BIGINT},
+      menu_id = #{menuId,jdbcType=BIGINT},
+      jurisdiction = #{jurisdiction,jdbcType=VARCHAR}
+    where menu_role_id = #{menuRoleId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    select * from menu_role_form where role_id=#{roleId}
+  </select>
+</mapper>

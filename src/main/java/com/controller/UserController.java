@@ -27,7 +27,7 @@ public class UserController
   }
 
   @RequestMapping("/self_center/my_info")
-  @PreAuthorize("hasPermission('/self_center/my_info','r')")
+  @PreAuthorize("hasPermission('/self_center/my_info','r&c')")
   public String text()
   {
     return "Index";

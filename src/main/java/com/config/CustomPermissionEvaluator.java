@@ -35,7 +35,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     Collection<GrantedAuthority> authorities = user.getAuthorities();
 
     // 遍历用户所有角色
-    for(int i = 1; i <= authorities.size(); i++)
+    for(int i = 1; i <= authorities.size() - 1; i++)
     {
       String roleName = authorities.toArray()[i].toString();
       System.out.println(roleName);
@@ -50,9 +50,9 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         List permissions = menuRole.getPermissions();
         String url = menuService.selectByPrimaryKey(menuRole.getMenuId()).getUrl();
         // 如果访问的Url和权限用户符合的话，返回true
-        if(targetUrl.equals(url) && StringUtils.isEmpty(targetPermission))
+        if(targetUrl.equals(url) && !(StringUtils.isEmpty(targetPermission)))
         {
-          for(String permission : Arrays.asList(targetPermission.toString().trim().split(",")))
+          for(String permission : Arrays.asList(targetPermission.toString().trim().split("&")))
           {
             if(!permissions.contains(permission))
             {

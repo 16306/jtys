@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CaseMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Case" >
+    <id column="Case_id" property="caseId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Case_id, card_id, type, hospital, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from case_form
+    where Case_id = #{caseId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from case_form
+    where Case_id = #{caseId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Case" >
+    insert into case_form (Case_id, card_id, type, 
+      hospital, date)
+    values (#{caseId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{hospital,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Case" >
+    insert into case_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        Case_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="hospital != null" >
+        hospital,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Case" >
+    update case_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Case_id = #{caseId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Case" >
+    update case_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP}
+    where Case_id = #{caseId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.EvaluationMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Evaluation" >
+    <id column="evaluation_id" property="evaluationId" jdbcType="BIGINT" />
+    <result column="evaluator" property="evaluator" jdbcType="VARCHAR" />
+    <result column="doctor_id" property="doctorId" jdbcType="BIGINT" />
+    <result column="evaluation_content" property="evaluationContent" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    evaluation_id, evaluator, doctor_id, evaluation_content, time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from evaluation_form
+    where evaluation_id = #{evaluationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from evaluation_form
+    where evaluation_id = #{evaluationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Evaluation" >
+    insert into evaluation_form (evaluation_id, evaluator, doctor_id, 
+      evaluation_content, time)
+    values (#{evaluationId,jdbcType=BIGINT}, #{evaluator,jdbcType=VARCHAR}, #{doctorId,jdbcType=BIGINT}, 
+      #{evaluationContent,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Evaluation" >
+    insert into evaluation_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="evaluationId != null" >
+        evaluation_id,
+      </if>
+      <if test="evaluator != null" >
+        evaluator,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="evaluationContent != null" >
+        evaluation_content,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="evaluationId != null" >
+        #{evaluationId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluator != null" >
+        #{evaluator,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluationContent != null" >
+        #{evaluationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Evaluation" >
+    update evaluation_form
+    <set >
+      <if test="evaluator != null" >
+        evaluator = #{evaluator,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluationContent != null" >
+        evaluation_content = #{evaluationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where evaluation_id = #{evaluationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Evaluation" >
+    update evaluation_form
+    set evaluator = #{evaluator,jdbcType=VARCHAR},
+      doctor_id = #{doctorId,jdbcType=BIGINT},
+      evaluation_content = #{evaluationContent,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where evaluation_id = #{evaluationId,jdbcType=BIGINT}
+  </update>
+</mapper>

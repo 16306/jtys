@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ObstericalHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ObstericalHistory" >
+    <id column="obsterical_id" property="obstericalId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="marriage" property="marriage" jdbcType="VARCHAR" />
+    <result column="birth" property="birth" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    obsterical_id, card_id, marriage, birth
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from obsterical_history_form
+    where obsterical_id = #{obstericalId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from obsterical_history_form
+    where obsterical_id = #{obstericalId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.ObstericalHistory" >
+    insert into obsterical_history_form (obsterical_id, card_id, marriage, 
+      birth)
+    values (#{obstericalId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{marriage,jdbcType=VARCHAR}, 
+      #{birth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.ObstericalHistory" >
+    insert into obsterical_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="obstericalId != null" >
+        obsterical_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="marriage != null" >
+        marriage,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="obstericalId != null" >
+        #{obstericalId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="marriage != null" >
+        #{marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ObstericalHistory" >
+    update obsterical_history_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="marriage != null" >
+        marriage = #{marriage,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where obsterical_id = #{obstericalId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ObstericalHistory" >
+    update obsterical_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      marriage = #{marriage,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=VARCHAR}
+    where obsterical_id = #{obstericalId,jdbcType=BIGINT}
+  </update>
+</mapper>

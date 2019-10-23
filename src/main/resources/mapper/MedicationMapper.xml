@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.MedicationMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Medication" >
+    <id column="Medication_id" property="medicationId" jdbcType="BIGINT" />
+    <result column="case_id" property="caseId" jdbcType="BIGINT" />
+    <result column=" drug_name" property="drugName" jdbcType="VARCHAR" />
+    <result column="medication_time" property="medicationTime" jdbcType="TIMESTAMP" />
+    <result column="precautions" property="precautions" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Medication_id, case_id, " drug_name", medication_time, precautions, start_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Medication_form
+    where Medication_id = #{medicationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Medication_form
+    where Medication_id = #{medicationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Medication" >
+    insert into Medication_form (Medication_id, case_id, " drug_name", 
+      medication_time, precautions, start_time
+      )
+    values (#{medicationId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{drugName,jdbcType=VARCHAR}, 
+      #{medicationTime,jdbcType=TIMESTAMP}, #{precautions,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Medication" >
+    insert into Medication_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicationId != null" >
+        Medication_id,
+      </if>
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="drugName != null" >
+        " drug_name",
+      </if>
+      <if test="medicationTime != null" >
+        medication_time,
+      </if>
+      <if test="precautions != null" >
+        precautions,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicationId != null" >
+        #{medicationId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicationTime != null" >
+        #{medicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="precautions != null" >
+        #{precautions,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Medication" >
+    update Medication_form
+    <set >
+      <if test="caseId != null" >
+        case_id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        " drug_name" = #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicationTime != null" >
+        medication_time = #{medicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="precautions != null" >
+        precautions = #{precautions,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Medication_id = #{medicationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Medication" >
+    update Medication_form
+    set case_id = #{caseId,jdbcType=BIGINT},
+      " drug_name" = #{drugName,jdbcType=VARCHAR},
+      medication_time = #{medicationTime,jdbcType=TIMESTAMP},
+      precautions = #{precautions,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP}
+    where Medication_id = #{medicationId,jdbcType=BIGINT}
+  </update>
+</mapper>

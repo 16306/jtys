@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PastHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.PastHistory" >
+    <id column="past_id" property="pastId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.PastHistory" extends="BaseResultMap" >
+    <result column="describe" property="describe" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    past_id, card_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from past_history_form
+    where past_id = #{pastId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from past_history_form
+    where past_id = #{pastId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.PastHistory" >
+    insert into past_history_form (past_id, card_id, describe
+      )
+    values (#{pastId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{describe,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.PastHistory" >
+    insert into past_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pastId != null" >
+        past_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pastId != null" >
+        #{pastId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.PastHistory" >
+    update past_history_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where past_id = #{pastId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.PastHistory" >
+    update past_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=LONGVARCHAR}
+    where past_id = #{pastId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.PastHistory" >
+    update past_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR}
+    where past_id = #{pastId,jdbcType=BIGINT}
+  </update>
+</mapper>

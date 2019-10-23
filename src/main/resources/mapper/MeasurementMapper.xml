@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.MeasurementMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Measurement" >
+    <id column="Measurement_id" property="measurementId" jdbcType="BIGINT" />
+    <result column="measurement_type" property="measurementType" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Measurement_id, measurement_type, unit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Measurement_form
+    where Measurement_id = #{measurementId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Measurement_form
+    where Measurement_id = #{measurementId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Measurement" >
+    insert into Measurement_form (Measurement_id, measurement_type, unit
+      )
+    values (#{measurementId,jdbcType=BIGINT}, #{measurementType,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Measurement" >
+    insert into Measurement_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="measurementId != null" >
+        Measurement_id,
+      </if>
+      <if test="measurementType != null" >
+        measurement_type,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="measurementId != null" >
+        #{measurementId,jdbcType=BIGINT},
+      </if>
+      <if test="measurementType != null" >
+        #{measurementType,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Measurement" >
+    update Measurement_form
+    <set >
+      <if test="measurementType != null" >
+        measurement_type = #{measurementType,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Measurement_id = #{measurementId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Measurement" >
+    update Measurement_form
+    set measurement_type = #{measurementType,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR}
+    where Measurement_id = #{measurementId,jdbcType=BIGINT}
+  </update>
+</mapper>

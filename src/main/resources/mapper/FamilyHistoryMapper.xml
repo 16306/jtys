@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.FamilyHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.FamilyHistory" >
+    <id column="family_history_id" property="familyHistoryId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="relation" property="relation" jdbcType="VARCHAR" />
+    <result column="illness_name" property="illnessName" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    family_history_id, card_id, relation, illness_name, describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from family_history_form
+    where family_history_id = #{familyHistoryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from family_history_form
+    where family_history_id = #{familyHistoryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.FamilyHistory" >
+    insert into family_history_form (family_history_id, card_id, relation, 
+      illness_name, describe)
+    values (#{familyHistoryId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, 
+      #{illnessName,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.FamilyHistory" >
+    insert into family_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="familyHistoryId != null" >
+        family_history_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="relation != null" >
+        relation,
+      </if>
+      <if test="illnessName != null" >
+        illness_name,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="familyHistoryId != null" >
+        #{familyHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessName != null" >
+        #{illnessName,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.FamilyHistory" >
+    update family_history_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="illnessName != null" >
+        illness_name = #{illnessName,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where family_history_id = #{familyHistoryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.FamilyHistory" >
+    update family_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      illness_name = #{illnessName,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR}
+    where family_history_id = #{familyHistoryId,jdbcType=BIGINT}
+  </update>
+</mapper>

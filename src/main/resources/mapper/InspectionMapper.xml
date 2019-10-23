@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.InspectionMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Inspection" >
+    <id column="Inspection_id" property="inspectionId" jdbcType="BIGINT" />
+    <result column="case_id" property="caseId" jdbcType="BIGINT" />
+    <result column="inspection_item" property="inspectionItem" jdbcType="VARCHAR" />
+    <result column="inspection_time" property="inspectionTime" jdbcType="TIMESTAMP" />
+    <result column=" inspection_conclusion" property="inspectionConclusion" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Inspection_id, case_id, inspection_item, inspection_time, " inspection_conclusion"
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Inspection_form
+    where Inspection_id = #{inspectionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Inspection_form
+    where Inspection_id = #{inspectionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Inspection" >
+    insert into Inspection_form (Inspection_id, case_id, inspection_item, 
+      inspection_time, " inspection_conclusion")
+    values (#{inspectionId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{inspectionItem,jdbcType=VARCHAR}, 
+      #{inspectionTime,jdbcType=TIMESTAMP}, #{inspectionConclusion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Inspection" >
+    insert into Inspection_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="inspectionId != null" >
+        Inspection_id,
+      </if>
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="inspectionItem != null" >
+        inspection_item,
+      </if>
+      <if test="inspectionTime != null" >
+        inspection_time,
+      </if>
+      <if test="inspectionConclusion != null" >
+        " inspection_conclusion",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="inspectionId != null" >
+        #{inspectionId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="inspectionItem != null" >
+        #{inspectionItem,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionTime != null" >
+        #{inspectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inspectionConclusion != null" >
+        #{inspectionConclusion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Inspection" >
+    update Inspection_form
+    <set >
+      <if test="caseId != null" >
+        case_id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="inspectionItem != null" >
+        inspection_item = #{inspectionItem,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionTime != null" >
+        inspection_time = #{inspectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inspectionConclusion != null" >
+        " inspection_conclusion" = #{inspectionConclusion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Inspection_id = #{inspectionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Inspection" >
+    update Inspection_form
+    set case_id = #{caseId,jdbcType=BIGINT},
+      inspection_item = #{inspectionItem,jdbcType=VARCHAR},
+      inspection_time = #{inspectionTime,jdbcType=TIMESTAMP},
+      " inspection_conclusion" = #{inspectionConclusion,jdbcType=VARCHAR}
+    where Inspection_id = #{inspectionId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PurchaseMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Purchase" >
+    <id column="Purchase_id" property="purchaseId" jdbcType="BIGINT" />
+    <result column="purchase_family_id" property="purchaseFamilyId" jdbcType="BIGINT" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP" />
+    <result column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="handle_id" property="handleId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Purchase_id, purchase_family_id, purchase_time, device_id, handle_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Purchase_form
+    where Purchase_id = #{purchaseId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Purchase_form
+    where Purchase_id = #{purchaseId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Purchase" >
+    insert into Purchase_form (Purchase_id, purchase_family_id, purchase_time, 
+      device_id, handle_id)
+    values (#{purchaseId,jdbcType=BIGINT}, #{purchaseFamilyId,jdbcType=BIGINT}, #{purchaseTime,jdbcType=TIMESTAMP}, 
+      #{deviceId,jdbcType=BIGINT}, #{handleId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Purchase" >
+    insert into Purchase_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="purchaseId != null" >
+        Purchase_id,
+      </if>
+      <if test="purchaseFamilyId != null" >
+        purchase_family_id,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="handleId != null" >
+        handle_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="purchaseId != null" >
+        #{purchaseId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseFamilyId != null" >
+        #{purchaseFamilyId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="handleId != null" >
+        #{handleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Purchase" >
+    update Purchase_form
+    <set >
+      <if test="purchaseFamilyId != null" >
+        purchase_family_id = #{purchaseFamilyId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="handleId != null" >
+        handle_id = #{handleId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Purchase_id = #{purchaseId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Purchase" >
+    update Purchase_form
+    set purchase_family_id = #{purchaseFamilyId,jdbcType=BIGINT},
+      purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      handle_id = #{handleId,jdbcType=BIGINT}
+    where Purchase_id = #{purchaseId,jdbcType=BIGINT}
+  </update>
+</mapper>

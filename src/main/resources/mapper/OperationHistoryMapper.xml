@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.OperationHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.OperationHistory" >
+    <id column="operation_id" property="operationId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="operation_name" property="operationName" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    operation_id, card_id, operation_name, date, describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_history_form
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from operation_history_form
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.OperationHistory" >
+    insert into operation_history_form (operation_id, card_id, operation_name, 
+      date, describe)
+    values (#{operationId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{operationName,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{describe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.OperationHistory" >
+    insert into operation_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        operation_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="operationName != null" >
+        operation_name,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        #{operationId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationName != null" >
+        #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.OperationHistory" >
+    update operation_history_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationName != null" >
+        operation_name = #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.OperationHistory" >
+    update operation_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      operation_name = #{operationName,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      describe = #{describe,jdbcType=VARCHAR}
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </update>
+</mapper>

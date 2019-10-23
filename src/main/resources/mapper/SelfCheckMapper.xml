@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.SelfCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.SelfCheck" >
+    <id column="Self_check_id" property="selfCheckId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="measurement_id" property="measurementId" jdbcType="BIGINT" />
+    <result column="measurement_time" property="measurementTime" jdbcType="TIMESTAMP" />
+    <result column="measurement_result" property="measurementResult" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="device_source" property="deviceSource" jdbcType="VARCHAR" />
+    <result column="usage_time" property="usageTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Self_check_id, card_id, measurement_id, measurement_time, measurement_result, device_id, 
+    device_source, usage_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Self_check_form
+    where Self_check_id = #{selfCheckId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Self_check_form
+    where Self_check_id = #{selfCheckId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.SelfCheck" >
+    insert into Self_check_form (Self_check_id, card_id, measurement_id, 
+      measurement_time, measurement_result, device_id, 
+      device_source, usage_time)
+    values (#{selfCheckId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{measurementId,jdbcType=BIGINT}, 
+      #{measurementTime,jdbcType=TIMESTAMP}, #{measurementResult,jdbcType=VARCHAR}, #{deviceId,jdbcType=BIGINT}, 
+      #{deviceSource,jdbcType=VARCHAR}, #{usageTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.SelfCheck" >
+    insert into Self_check_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="selfCheckId != null" >
+        Self_check_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="measurementId != null" >
+        measurement_id,
+      </if>
+      <if test="measurementTime != null" >
+        measurement_time,
+      </if>
+      <if test="measurementResult != null" >
+        measurement_result,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="deviceSource != null" >
+        device_source,
+      </if>
+      <if test="usageTime != null" >
+        usage_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="selfCheckId != null" >
+        #{selfCheckId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="measurementId != null" >
+        #{measurementId,jdbcType=BIGINT},
+      </if>
+      <if test="measurementTime != null" >
+        #{measurementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="measurementResult != null" >
+        #{measurementResult,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceSource != null" >
+        #{deviceSource,jdbcType=VARCHAR},
+      </if>
+      <if test="usageTime != null" >
+        #{usageTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.SelfCheck" >
+    update Self_check_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="measurementId != null" >
+        measurement_id = #{measurementId,jdbcType=BIGINT},
+      </if>
+      <if test="measurementTime != null" >
+        measurement_time = #{measurementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="measurementResult != null" >
+        measurement_result = #{measurementResult,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceSource != null" >
+        device_source = #{deviceSource,jdbcType=VARCHAR},
+      </if>
+      <if test="usageTime != null" >
+        usage_time = #{usageTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Self_check_id = #{selfCheckId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.SelfCheck" >
+    update Self_check_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      measurement_id = #{measurementId,jdbcType=BIGINT},
+      measurement_time = #{measurementTime,jdbcType=TIMESTAMP},
+      measurement_result = #{measurementResult,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      device_source = #{deviceSource,jdbcType=VARCHAR},
+      usage_time = #{usageTime,jdbcType=TIMESTAMP}
+    where Self_check_id = #{selfCheckId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.WarningMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Warning" >
+    <id column="warning_id" property="warningId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    warning_id, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from warning_form
+    where warning_id = #{warningId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from warning_form
+    where warning_id = #{warningId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Warning" >
+    insert into warning_form (warning_id, type)
+    values (#{warningId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Warning" >
+    insert into warning_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warningId != null" >
+        warning_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warningId != null" >
+        #{warningId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Warning" >
+    update warning_form
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where warning_id = #{warningId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Warning" >
+    update warning_form
+    set type = #{type,jdbcType=VARCHAR}
+    where warning_id = #{warningId,jdbcType=BIGINT}
+  </update>
+</mapper>

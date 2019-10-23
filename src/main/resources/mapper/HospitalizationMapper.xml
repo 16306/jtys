@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.HospitalizationMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Hospitalization" >
+    <id column="Hospitalization_id" property="hospitalizationId" jdbcType="BIGINT" />
+    <result column="case_id" property="caseId" jdbcType="BIGINT" />
+    <result column="Hospitalization_number" property="hospitalizationNumber" jdbcType="BIGINT" />
+    <result column="disease_type" property="diseaseType" jdbcType="VARCHAR" />
+    <result column="physician_number" property="physicianNumber" jdbcType="BIGINT" />
+    <result column="chief_physician" property="chiefPhysician" jdbcType="VARCHAR" />
+    <result column="admission_time" property="admissionTime" jdbcType="TIMESTAMP" />
+    <result column="discharge_time" property="dischargeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Hospitalization_id, case_id, Hospitalization_number, disease_type, physician_number, 
+    chief_physician, admission_time, discharge_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Hospitalization_form
+    where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Hospitalization_form
+    where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Hospitalization" >
+    insert into Hospitalization_form (Hospitalization_id, case_id, Hospitalization_number, 
+      disease_type, physician_number, chief_physician, 
+      admission_time, discharge_time)
+    values (#{hospitalizationId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{hospitalizationNumber,jdbcType=BIGINT}, 
+      #{diseaseType,jdbcType=VARCHAR}, #{physicianNumber,jdbcType=BIGINT}, #{chiefPhysician,jdbcType=VARCHAR}, 
+      #{admissionTime,jdbcType=TIMESTAMP}, #{dischargeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Hospitalization" >
+    insert into Hospitalization_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hospitalizationId != null" >
+        Hospitalization_id,
+      </if>
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="hospitalizationNumber != null" >
+        Hospitalization_number,
+      </if>
+      <if test="diseaseType != null" >
+        disease_type,
+      </if>
+      <if test="physicianNumber != null" >
+        physician_number,
+      </if>
+      <if test="chiefPhysician != null" >
+        chief_physician,
+      </if>
+      <if test="admissionTime != null" >
+        admission_time,
+      </if>
+      <if test="dischargeTime != null" >
+        discharge_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hospitalizationId != null" >
+        #{hospitalizationId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalizationNumber != null" >
+        #{hospitalizationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="diseaseType != null" >
+        #{diseaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="physicianNumber != null" >
+        #{physicianNumber,jdbcType=BIGINT},
+      </if>
+      <if test="chiefPhysician != null" >
+        #{chiefPhysician,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionTime != null" >
+        #{admissionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeTime != null" >
+        #{dischargeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Hospitalization" >
+    update Hospitalization_form
+    <set >
+      <if test="caseId != null" >
+        case_id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="hospitalizationNumber != null" >
+        Hospitalization_number = #{hospitalizationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="diseaseType != null" >
+        disease_type = #{diseaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="physicianNumber != null" >
+        physician_number = #{physicianNumber,jdbcType=BIGINT},
+      </if>
+      <if test="chiefPhysician != null" >
+        chief_physician = #{chiefPhysician,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionTime != null" >
+        admission_time = #{admissionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeTime != null" >
+        discharge_time = #{dischargeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Hospitalization" >
+    update Hospitalization_form
+    set case_id = #{caseId,jdbcType=BIGINT},
+      Hospitalization_number = #{hospitalizationNumber,jdbcType=BIGINT},
+      disease_type = #{diseaseType,jdbcType=VARCHAR},
+      physician_number = #{physicianNumber,jdbcType=BIGINT},
+      chief_physician = #{chiefPhysician,jdbcType=VARCHAR},
+      admission_time = #{admissionTime,jdbcType=TIMESTAMP},
+      discharge_time = #{dischargeTime,jdbcType=TIMESTAMP}
+    where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
+  </update>
+</mapper>

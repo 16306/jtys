@@ -38,9 +38,125 @@
     </javaClientGenerator>
 
     <!--生成对应表及类名-->
-    <table tableName="user_role_form" domainObjectName="UserRole" enableCountByExample="true"
-      enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-      selectByExampleQueryId="true">
+    <table tableName="allergy_history_form" domainObjectName="AllergyHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="case_form" domainObjectName="Case" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Complaint_form" domainObjectName="Complaint" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="device_form" domainObjectName="device" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="doctor_group_form" domainObjectName="DoctorGroup" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="evaluation_form" domainObjectName="Evaluation" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="family_doctor_form" domainObjectName="FamilyDoctor" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="family_form" domainObjectName="Family" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="family_history_form" domainObjectName="FamilyHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="family_member_form" domainObjectName="FamilyMember" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Follow_up_form" domainObjectName="FollowUp" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Health_knowledge_form" domainObjectName="HealthKnowledge" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="hospital_form" domainObjectName="Hospital" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Hospitalization_form" domainObjectName="Hospitalization" enableCountByExample="false"
+    enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+    selectByExampleQueryId="false">
+  </table>
+    <table tableName="Inspection_form" domainObjectName="Inspection" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Measurement_form" domainObjectName="Measurement" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Medication_form" domainObjectName="Medication" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Notice_form" domainObjectName="Notice" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Notice_form" domainObjectName="Notice" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="obsterical_history_form" domainObjectName="ObstericalHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="operation_history_form" domainObjectName="OperationHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="past_history_form" domainObjectName="PastHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Purchase_form" domainObjectName="Purchase" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Self_check_form" domainObjectName="SelfCheck" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Service_record_form" domainObjectName="ServiceRecord" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Surgery_form" domainObjectName="Surgery" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="Threshold_form" domainObjectName="Threshold" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="unit_form" domainObjectName="Unit" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="warning_form" domainObjectName="Warning" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
+    <table tableName="warning_history_form" domainObjectName="WarningHistory" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
     </table>
   </context>
 </generatorConfiguration>

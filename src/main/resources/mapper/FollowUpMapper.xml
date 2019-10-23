@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.FollowUpMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.FollowUp" >
+    <id column="Follow_up_id" property="followUpId" jdbcType="BIGINT" />
+    <result column="doctor" property="doctor" jdbcType="VARCHAR" />
+    <result column="accompanying" property="accompanying" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="family_id" property="familyId" jdbcType="BIGINT" />
+    <result column="family_member_id" property="familyMemberId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.FollowUp" extends="BaseResultMap" >
+    <result column="health_assessment" property="healthAssessment" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Follow_up_id, doctor, accompanying, type, time, content, family_id, family_member_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    health_assessment
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Follow_up_form
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Follow_up_form
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.FollowUp" >
+    insert into Follow_up_form (Follow_up_id, doctor, accompanying, 
+      type, time, content, 
+      family_id, family_member_id, health_assessment
+      )
+    values (#{followUpId,jdbcType=BIGINT}, #{doctor,jdbcType=VARCHAR}, #{accompanying,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{familyId,jdbcType=BIGINT}, #{familyMemberId,jdbcType=BIGINT}, #{healthAssessment,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.FollowUp" >
+    insert into Follow_up_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="followUpId != null" >
+        Follow_up_id,
+      </if>
+      <if test="doctor != null" >
+        doctor,
+      </if>
+      <if test="accompanying != null" >
+        accompanying,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="familyId != null" >
+        family_id,
+      </if>
+      <if test="familyMemberId != null" >
+        family_member_id,
+      </if>
+      <if test="healthAssessment != null" >
+        health_assessment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="followUpId != null" >
+        #{followUpId,jdbcType=BIGINT},
+      </if>
+      <if test="doctor != null" >
+        #{doctor,jdbcType=VARCHAR},
+      </if>
+      <if test="accompanying != null" >
+        #{accompanying,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="familyId != null" >
+        #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="familyMemberId != null" >
+        #{familyMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="healthAssessment != null" >
+        #{healthAssessment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.FollowUp" >
+    update Follow_up_form
+    <set >
+      <if test="doctor != null" >
+        doctor = #{doctor,jdbcType=VARCHAR},
+      </if>
+      <if test="accompanying != null" >
+        accompanying = #{accompanying,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="familyId != null" >
+        family_id = #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="familyMemberId != null" >
+        family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="healthAssessment != null" >
+        health_assessment = #{healthAssessment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.FollowUp" >
+    update Follow_up_form
+    set doctor = #{doctor,jdbcType=VARCHAR},
+      accompanying = #{accompanying,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      family_id = #{familyId,jdbcType=BIGINT},
+      family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      health_assessment = #{healthAssessment,jdbcType=LONGVARCHAR}
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.FollowUp" >
+    update Follow_up_form
+    set doctor = #{doctor,jdbcType=VARCHAR},
+      accompanying = #{accompanying,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      family_id = #{familyId,jdbcType=BIGINT},
+      family_member_id = #{familyMemberId,jdbcType=BIGINT}
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+  </update>
+</mapper>

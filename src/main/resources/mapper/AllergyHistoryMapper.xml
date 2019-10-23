@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.AllergyHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.AllergyHistory" >
+    <id column="allergy_id" property="allergyId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="allergen" property="allergen" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    allergy_id, card_id, allergen, describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from allergy_history_form
+    where allergy_id = #{allergyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from allergy_history_form
+    where allergy_id = #{allergyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.AllergyHistory" >
+    insert into allergy_history_form (allergy_id, card_id, allergen, 
+      describe)
+    values (#{allergyId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{allergen,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.AllergyHistory" >
+    insert into allergy_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="allergyId != null" >
+        allergy_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="allergen != null" >
+        allergen,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="allergyId != null" >
+        #{allergyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="allergen != null" >
+        #{allergen,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.AllergyHistory" >
+    update allergy_history_form
+    <set >
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="allergen != null" >
+        allergen = #{allergen,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where allergy_id = #{allergyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.AllergyHistory" >
+    update allergy_history_form
+    set card_id = #{cardId,jdbcType=VARCHAR},
+      allergen = #{allergen,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR}
+    where allergy_id = #{allergyId,jdbcType=BIGINT}
+  </update>
+</mapper>

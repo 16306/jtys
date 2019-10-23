@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.FamilyDoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.FamilyDoctor" >
+    <id column="family_doctor_id" property="familyDoctorId" jdbcType="BIGINT" />
+    <result column="doctor_group_id" property="doctorGroupId" jdbcType="BIGINT" />
+    <result column="family_id" property="familyId" jdbcType="BIGINT" />
+    <result column="date_of_contract" property="dateOfContract" jdbcType="TIMESTAMP" />
+    <result column="contract_duration" property="contractDuration" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.FamilyDoctor" extends="BaseResultMap" >
+    <result column="contract_content" property="contractContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    family_doctor_id, doctor_group_id, family_id, date_of_contract, contract_duration
+  </sql>
+  <sql id="Blob_Column_List" >
+    contract_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from family_doctor_form
+    where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from family_doctor_form
+    where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.FamilyDoctor" >
+    insert into family_doctor_form (family_doctor_id, doctor_group_id, family_id, 
+      date_of_contract, contract_duration, contract_content
+      )
+    values (#{familyDoctorId,jdbcType=BIGINT}, #{doctorGroupId,jdbcType=BIGINT}, #{familyId,jdbcType=BIGINT}, 
+      #{dateOfContract,jdbcType=TIMESTAMP}, #{contractDuration,jdbcType=INTEGER}, #{contractContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.FamilyDoctor" >
+    insert into family_doctor_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="familyDoctorId != null" >
+        family_doctor_id,
+      </if>
+      <if test="doctorGroupId != null" >
+        doctor_group_id,
+      </if>
+      <if test="familyId != null" >
+        family_id,
+      </if>
+      <if test="dateOfContract != null" >
+        date_of_contract,
+      </if>
+      <if test="contractDuration != null" >
+        contract_duration,
+      </if>
+      <if test="contractContent != null" >
+        contract_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="familyDoctorId != null" >
+        #{familyDoctorId,jdbcType=BIGINT},
+      </if>
+      <if test="doctorGroupId != null" >
+        #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="familyId != null" >
+        #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="dateOfContract != null" >
+        #{dateOfContract,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractDuration != null" >
+        #{contractDuration,jdbcType=INTEGER},
+      </if>
+      <if test="contractContent != null" >
+        #{contractContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.FamilyDoctor" >
+    update family_doctor_form
+    <set >
+      <if test="doctorGroupId != null" >
+        doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="familyId != null" >
+        family_id = #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="dateOfContract != null" >
+        date_of_contract = #{dateOfContract,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractDuration != null" >
+        contract_duration = #{contractDuration,jdbcType=INTEGER},
+      </if>
+      <if test="contractContent != null" >
+        contract_content = #{contractContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.FamilyDoctor" >
+    update family_doctor_form
+    set doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      family_id = #{familyId,jdbcType=BIGINT},
+      date_of_contract = #{dateOfContract,jdbcType=TIMESTAMP},
+      contract_duration = #{contractDuration,jdbcType=INTEGER},
+      contract_content = #{contractContent,jdbcType=LONGVARCHAR}
+    where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.FamilyDoctor" >
+    update family_doctor_form
+    set doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      family_id = #{familyId,jdbcType=BIGINT},
+      date_of_contract = #{dateOfContract,jdbcType=TIMESTAMP},
+      contract_duration = #{contractDuration,jdbcType=INTEGER}
+    where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.deviceMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.device" >
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="equipment_name" property="equipmentName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP" />
+    <result column="purchaser" property="purchaser" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="purchase_quantity" property="purchaseQuantity" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    device_id, model, equipment_name, type, purchase_time, purchaser, price, purchase_quantity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from device_form
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from device_form
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.device" >
+    insert into device_form (device_id, model, equipment_name, 
+      type, purchase_time, purchaser, 
+      price, purchase_quantity)
+    values (#{deviceId,jdbcType=BIGINT}, #{model,jdbcType=VARCHAR}, #{equipmentName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{purchaseTime,jdbcType=TIMESTAMP}, #{purchaser,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{purchaseQuantity,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.device" >
+    insert into device_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="equipmentName != null" >
+        equipment_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="purchaser != null" >
+        purchaser,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="purchaseQuantity != null" >
+        purchase_quantity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentName != null" >
+        #{equipmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaser != null" >
+        #{purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseQuantity != null" >
+        #{purchaseQuantity,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.device" >
+    update device_form
+    <set >
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentName != null" >
+        equipment_name = #{equipmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaser != null" >
+        purchaser = #{purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseQuantity != null" >
+        purchase_quantity = #{purchaseQuantity,jdbcType=BIGINT},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.device" >
+    update device_form
+    set model = #{model,jdbcType=VARCHAR},
+      equipment_name = #{equipmentName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      purchaser = #{purchaser,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      purchase_quantity = #{purchaseQuantity,jdbcType=BIGINT}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+</mapper>

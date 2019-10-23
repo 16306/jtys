@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ServiceRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ServiceRecord" >
+    <id column="Service_id" property="serviceId" jdbcType="BIGINT" />
+    <result column="service_time" property="serviceTime" jdbcType="TIMESTAMP" />
+    <result column="doctor_group_id" property="doctorGroupId" jdbcType="BIGINT" />
+    <result column="family_id" property="familyId" jdbcType="BIGINT" />
+    <result column="family_member_id" property="familyMemberId" jdbcType="BIGINT" />
+    <result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+    <result column="service_evaluation" property="serviceEvaluation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Service_id, service_time, doctor_group_id, family_id, family_member_id, service_content, 
+    service_type, service_evaluation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Service_record_form
+    where Service_id = #{serviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Service_record_form
+    where Service_id = #{serviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.ServiceRecord" >
+    insert into Service_record_form (Service_id, service_time, doctor_group_id, 
+      family_id, family_member_id, service_content, 
+      service_type, service_evaluation)
+    values (#{serviceId,jdbcType=BIGINT}, #{serviceTime,jdbcType=TIMESTAMP}, #{doctorGroupId,jdbcType=BIGINT}, 
+      #{familyId,jdbcType=BIGINT}, #{familyMemberId,jdbcType=BIGINT}, #{serviceContent,jdbcType=VARCHAR}, 
+      #{serviceType,jdbcType=VARCHAR}, #{serviceEvaluation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.ServiceRecord" >
+    insert into Service_record_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceId != null" >
+        Service_id,
+      </if>
+      <if test="serviceTime != null" >
+        service_time,
+      </if>
+      <if test="doctorGroupId != null" >
+        doctor_group_id,
+      </if>
+      <if test="familyId != null" >
+        family_id,
+      </if>
+      <if test="familyMemberId != null" >
+        family_member_id,
+      </if>
+      <if test="serviceContent != null" >
+        service_content,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+      <if test="serviceEvaluation != null" >
+        service_evaluation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceTime != null" >
+        #{serviceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doctorGroupId != null" >
+        #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="familyId != null" >
+        #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="familyMemberId != null" >
+        #{familyMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceContent != null" >
+        #{serviceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceEvaluation != null" >
+        #{serviceEvaluation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ServiceRecord" >
+    update Service_record_form
+    <set >
+      <if test="serviceTime != null" >
+        service_time = #{serviceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doctorGroupId != null" >
+        doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="familyId != null" >
+        family_id = #{familyId,jdbcType=BIGINT},
+      </if>
+      <if test="familyMemberId != null" >
+        family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceContent != null" >
+        service_content = #{serviceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceEvaluation != null" >
+        service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Service_id = #{serviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ServiceRecord" >
+    update Service_record_form
+    set service_time = #{serviceTime,jdbcType=TIMESTAMP},
+      doctor_group_id = #{doctorGroupId,jdbcType=BIGINT},
+      family_id = #{familyId,jdbcType=BIGINT},
+      family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      service_content = #{serviceContent,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR}
+    where Service_id = #{serviceId,jdbcType=BIGINT}
+  </update>
+</mapper>

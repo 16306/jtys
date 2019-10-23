@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.DoctorGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.DoctorGroup" >
+    <id column="doctor_group_id" property="doctorGroupId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="group_leader_name" property="groupLeaderName" jdbcType="VARCHAR" />
+    <result column="group_leader_phone" property="groupLeaderPhone" jdbcType="VARCHAR" />
+    <result column="second_leader_name" property="secondLeaderName" jdbcType="VARCHAR" />
+    <result column="second_leader_phone" property="secondLeaderPhone" jdbcType="VARCHAR" />
+    <result column="speciality" property="speciality" jdbcType="VARCHAR" />
+    <result column="service_area" property="serviceArea" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    doctor_group_id, name, group_leader_name, group_leader_phone, second_leader_name, 
+    second_leader_phone, speciality, service_area
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor_group_form
+    where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doctor_group_form
+    where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.DoctorGroup" >
+    insert into doctor_group_form (doctor_group_id, name, group_leader_name, 
+      group_leader_phone, second_leader_name, second_leader_phone, 
+      speciality, service_area)
+    values (#{doctorGroupId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{groupLeaderName,jdbcType=VARCHAR}, 
+      #{groupLeaderPhone,jdbcType=VARCHAR}, #{secondLeaderName,jdbcType=VARCHAR}, #{secondLeaderPhone,jdbcType=VARCHAR}, 
+      #{speciality,jdbcType=VARCHAR}, #{serviceArea,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.DoctorGroup" >
+    insert into doctor_group_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorGroupId != null" >
+        doctor_group_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="groupLeaderName != null" >
+        group_leader_name,
+      </if>
+      <if test="groupLeaderPhone != null" >
+        group_leader_phone,
+      </if>
+      <if test="secondLeaderName != null" >
+        second_leader_name,
+      </if>
+      <if test="secondLeaderPhone != null" >
+        second_leader_phone,
+      </if>
+      <if test="speciality != null" >
+        speciality,
+      </if>
+      <if test="serviceArea != null" >
+        service_area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorGroupId != null" >
+        #{doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="groupLeaderName != null" >
+        #{groupLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupLeaderPhone != null" >
+        #{groupLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLeaderName != null" >
+        #{secondLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLeaderPhone != null" >
+        #{secondLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceArea != null" >
+        #{serviceArea,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.DoctorGroup" >
+    update doctor_group_form
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="groupLeaderName != null" >
+        group_leader_name = #{groupLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupLeaderPhone != null" >
+        group_leader_phone = #{groupLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLeaderName != null" >
+        second_leader_name = #{secondLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondLeaderPhone != null" >
+        second_leader_phone = #{secondLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        speciality = #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceArea != null" >
+        service_area = #{serviceArea,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.DoctorGroup" >
+    update doctor_group_form
+    set name = #{name,jdbcType=VARCHAR},
+      group_leader_name = #{groupLeaderName,jdbcType=VARCHAR},
+      group_leader_phone = #{groupLeaderPhone,jdbcType=VARCHAR},
+      second_leader_name = #{secondLeaderName,jdbcType=VARCHAR},
+      second_leader_phone = #{secondLeaderPhone,jdbcType=VARCHAR},
+      speciality = #{speciality,jdbcType=VARCHAR},
+      service_area = #{serviceArea,jdbcType=VARCHAR}
+    where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
+  </update>
+</mapper>

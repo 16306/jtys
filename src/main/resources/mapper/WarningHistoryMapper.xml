@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.WarningHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.WarningHistory" >
+    <id column="warning_history_id" property="warningHistoryId" jdbcType="BIGINT" />
+    <result column="detector" property="detector" jdbcType="VARCHAR" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    warning_history_id, detector, card_id, content, time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from warning_history_form
+    where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from warning_history_form
+    where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.WarningHistory" >
+    insert into warning_history_form (warning_history_id, detector, card_id, 
+      content, time)
+    values (#{warningHistoryId,jdbcType=BIGINT}, #{detector,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.WarningHistory" >
+    insert into warning_history_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warningHistoryId != null" >
+        warning_history_id,
+      </if>
+      <if test="detector != null" >
+        detector,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warningHistoryId != null" >
+        #{warningHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="detector != null" >
+        #{detector,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.WarningHistory" >
+    update warning_history_form
+    <set >
+      <if test="detector != null" >
+        detector = #{detector,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.WarningHistory" >
+    update warning_history_form
+    set detector = #{detector,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}
+  </update>
+</mapper>

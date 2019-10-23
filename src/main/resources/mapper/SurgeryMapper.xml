@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.SurgeryMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Surgery" >
+    <id column="Surgery_id" property="surgeryId" jdbcType="BIGINT" />
+    <result column="case_id" property="caseId" jdbcType="BIGINT" />
+    <result column="surgical_name" property="surgicalName" jdbcType="VARCHAR" />
+    <result column="operative_time" property="operativeTime" jdbcType="TIMESTAMP" />
+    <result column="surgical_description" property="surgicalDescription" jdbcType="VARCHAR" />
+    <result column="surgeon" property="surgeon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Surgery_id, case_id, surgical_name, operative_time, surgical_description, surgeon
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Surgery_form
+    where Surgery_id = #{surgeryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Surgery_form
+    where Surgery_id = #{surgeryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Surgery" >
+    insert into Surgery_form (Surgery_id, case_id, surgical_name, 
+      operative_time, surgical_description, surgeon
+      )
+    values (#{surgeryId,jdbcType=BIGINT}, #{caseId,jdbcType=BIGINT}, #{surgicalName,jdbcType=VARCHAR}, 
+      #{operativeTime,jdbcType=TIMESTAMP}, #{surgicalDescription,jdbcType=VARCHAR}, #{surgeon,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Surgery" >
+    insert into Surgery_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="surgeryId != null" >
+        Surgery_id,
+      </if>
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="surgicalName != null" >
+        surgical_name,
+      </if>
+      <if test="operativeTime != null" >
+        operative_time,
+      </if>
+      <if test="surgicalDescription != null" >
+        surgical_description,
+      </if>
+      <if test="surgeon != null" >
+        surgeon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="surgeryId != null" >
+        #{surgeryId,jdbcType=BIGINT},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="surgicalName != null" >
+        #{surgicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="operativeTime != null" >
+        #{operativeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surgicalDescription != null" >
+        #{surgicalDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="surgeon != null" >
+        #{surgeon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Surgery" >
+    update Surgery_form
+    <set >
+      <if test="caseId != null" >
+        case_id = #{caseId,jdbcType=BIGINT},
+      </if>
+      <if test="surgicalName != null" >
+        surgical_name = #{surgicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="operativeTime != null" >
+        operative_time = #{operativeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surgicalDescription != null" >
+        surgical_description = #{surgicalDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="surgeon != null" >
+        surgeon = #{surgeon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Surgery_id = #{surgeryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Surgery" >
+    update Surgery_form
+    set case_id = #{caseId,jdbcType=BIGINT},
+      surgical_name = #{surgicalName,jdbcType=VARCHAR},
+      operative_time = #{operativeTime,jdbcType=TIMESTAMP},
+      surgical_description = #{surgicalDescription,jdbcType=VARCHAR},
+      surgeon = #{surgeon,jdbcType=VARCHAR}
+    where Surgery_id = #{surgeryId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -7,9 +7,7 @@ public class User {
 
     private String password;
 
-    private Integer roleId;
-
-    private Long unit;
+    private Long hospitalId;
 
     private Long doctorId;
 
@@ -37,20 +35,12 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Long getHospitalId() {
+        return hospitalId;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public Long getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Long unit) {
-        this.unit = unit;
+    public void setHospitalId(Long hospitalId) {
+        this.hospitalId = hospitalId;
     }
 
     public Long getDoctorId() {

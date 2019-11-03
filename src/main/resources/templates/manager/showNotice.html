@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>通知</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h1 style="text-align: center;" th:text="${notice.title}"></h1>
+<p style="text-align: center;" th:text="${notice.publisher}"></p>
+<p style="text-align: center;" th:text="${notice.time}"></p>
+<div class="content" style="margin: 7px">
+  <p th:utext="${notice.content}"></p>
+</div>
+
+
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+</html>

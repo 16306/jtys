@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>添加通知</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<form id="notice-form" class="layui-form layui-form-pane" action="/manager/save" method="post" style="margin: 10px">
+  <div class="layui-form-item">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-block" style="margin-bottom: 10px">
+      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">内容</label>
+    <div class="layui-input-block">
+      <textarea id="content" name="content" placeholder="请输入内容" class="layui-textarea" lay-verify="article_desc"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">时间</label>
+    <div class="layui-input-block" style="margin-bottom: 10px">
+      <input type="text" id="time" name="time" required  lay-verify="required" placeholder="请选择时间" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <button lay-filter="noticeAdd" class="layui-btn"  lay-submit="" style="float: right;margin: 5px">提交</button>
+</form>
+
+
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.use(['jquery','form', 'layedit', 'laydate'], function(){
+    var form = layui.form
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate
+        ,$ = layui.jquery;
+
+    var index = layedit.build('content');
+
+
+    laydate.render({
+      elem: '#time' //指定元素
+      ,type: 'datetime'
+      ,format: 'yyyy-MM-dd HH:mm:ss'
+    });
+
+    form.verify({
+      article_desc: function(value) {
+        return layedit.sync(index);
+      }
+      ,required: function (value) {
+        if(!value)
+        {
+          return "不能为空！";
+        }
+      }
+    });
+
+    //监听submit提交按钮 button ，lay-filter 为 userAdd 的
+    form.on('submit(noticeAdd)', function(data){
+      //此段代码可以获取提交的数据
+      /* layer.alert(JSON.stringify(data.field), {
+           title: '最终的提交信息'
+       })*/
+      //ajax 提交
+      $.ajax({
+        type: "Post",
+        dataType: "text",
+        url: "http://localhost:8080/manager/save" ,//url
+        data: $('#notice-form').serialize(),  //表单数据
+        success: function (result) {
+          if (result === "success") {
+            layer.msg('添加成功，1秒后自动关闭该窗口');
+            //延迟1秒执行，目的是让用户看到提示
+            setTimeout( function(){
+              //1、先得到当前iframe层（弹出层）的索引  ///2、提交成功关闭弹出层窗口
+              var index = parent.layer.getFrameIndex(window.name);
+              parent.layer.close(index);
+            }, 1 * 1000 );
+          };
+        },
+        error : function() {
+          layer.msg('后台异常！未添加成功');
+        }
+      });
+      //阻止页面跳转
+      return false;
+    });
+  });
+</script>
+
+</html>

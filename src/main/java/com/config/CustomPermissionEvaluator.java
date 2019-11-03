@@ -38,7 +38,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     for(int i = 1; i <= authorities.size() - 1; i++)
     {
       String roleName = authorities.toArray()[i].toString();
-      System.out.println(roleName);
       Long roleId = roleService.selectByName(roleName).getRoleId();
       // 得到角色所有的权限
       List<MenuRole> permissionList = menuRoleService.selectByRoleId(roleId);

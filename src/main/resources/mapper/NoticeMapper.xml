@@ -4,17 +4,17 @@
   <resultMap id="BaseResultMap" type="com.entity.Notice">
     <id column="Notice_id " jdbcType="BIGINT" property="noticeId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="publisher" jdbcType="VARCHAR" property="publisher" />
-    <result column="unit_id" jdbcType="BIGINT" property="unitId" />
+    <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
   </resultMap>
   <sql id="Base_Column_List">
-    "Notice_id ", title, content, time, publisher, unit_id
+    "Notice_id ", title,content, time, publisher, hospital_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    *
     from Notice_form
     where "Notice_id " = #{noticeId,jdbcType=BIGINT}
   </select>
@@ -23,11 +23,11 @@
     where "Notice_id " = #{noticeId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.entity.Notice">
-    insert into Notice_form ("Notice_id ", title, content, 
-      time, publisher, unit_id
+    insert into Notice_form ("Notice_id ", title, time, 
+      publisher, hospital_id, content
       )
-    values (#{noticeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{time,jdbcType=TIMESTAMP}, #{publisher,jdbcType=VARCHAR}, #{unitId,jdbcType=BIGINT}
+    values (#{noticeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{publisher,jdbcType=VARCHAR}, #{hospitalId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Notice">
@@ -39,17 +39,17 @@
       <if test="title != null">
         title,
       </if>
-      <if test="content != null">
-        content,
-      </if>
       <if test="time != null">
         time,
       </if>
       <if test="publisher != null">
         publisher,
       </if>
-      <if test="unitId != null">
-        unit_id,
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="content != null">
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -59,17 +59,17 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
       </if>
       <if test="publisher != null">
         #{publisher,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null">
-        #{unitId,jdbcType=BIGINT},
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,130 +79,61 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
       <if test="time != null">
         time = #{time,jdbcType=TIMESTAMP},
       </if>
       <if test="publisher != null">
         publisher = #{publisher,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null">
-        unit_id = #{unitId,jdbcType=BIGINT},
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    where "Notice_id " = #{noticeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.Notice">
+    update Notice_form
+    set title = #{title,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
     where "Notice_id " = #{noticeId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Notice">
     update Notice_form
     set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
       publisher = #{publisher,jdbcType=VARCHAR},
-      unit_id = #{unitId,jdbcType=BIGINT}
+      hospital_id = #{hospitalId,jdbcType=BIGINT}
     where "Notice_id " = #{noticeId,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="com.entity.Notice">
-    <id column="Notice_id " jdbcType="BIGINT" property="noticeId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
-    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
-    <result column="unit_id" jdbcType="BIGINT" property="unitId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    "Notice_id ", title, content, time, publisher, unit_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from Notice_form
-    where "Notice_id " = #{noticeId,jdbcType=BIGINT}
+
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select top 1 * from Notice_form order by Notice_id desc
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from Notice_form
-    where "Notice_id " = #{noticeId,jdbcType=BIGINT}
+
+  <select id="getNoticeList" resultMap="BaseResultMap">
+    SELECT * FROM Notice_form where hospital_id=#{hospitalId,jdbcType=BIGINT}
+    <if test="title!='null'">
+      AND title LIKE  '%${title}%'
+    </if>
+    <if test="publisher!='null'">
+      AND publisher LIKE  '%${publisher}%'
+    </if>
+    ORDER BY Notice_form.time DESC
+  </select>
+
+  <delete id="batchDeleteNotice" parameterType="java.util.List">
+    delete
+    from Notice_form
+    where Notice_id in
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
   </delete>
-  <insert id="insert" parameterType="com.entity.Notice">
-    insert into Notice_form ("Notice_id ", title, content, 
-      time, publisher, unit_id
-      )
-    values (#{noticeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{time,jdbcType=TIMESTAMP}, #{publisher,jdbcType=VARCHAR}, #{unitId,jdbcType=BIGINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.entity.Notice">
-    insert into Notice_form
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="noticeId != null">
-        "Notice_id ",
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-      <if test="publisher != null">
-        publisher,
-      </if>
-      <if test="unitId != null">
-        unit_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="noticeId != null">
-        #{noticeId,jdbcType=BIGINT},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="publisher != null">
-        #{publisher,jdbcType=VARCHAR},
-      </if>
-      <if test="unitId != null">
-        #{unitId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Notice">
-    update Notice_form
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="publisher != null">
-        publisher = #{publisher,jdbcType=VARCHAR},
-      </if>
-      <if test="unitId != null">
-        unit_id = #{unitId,jdbcType=BIGINT},
-      </if>
-    </set>
-    where "Notice_id " = #{noticeId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.entity.Notice">
-    update Notice_form
-    set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      publisher = #{publisher,jdbcType=VARCHAR},
-      unit_id = #{unitId,jdbcType=BIGINT}
-    where "Notice_id " = #{noticeId,jdbcType=BIGINT}
-  </update>
 </mapper>

@@ -5,7 +5,6 @@ import com.entity.MenuRole;
 import com.service.MenuRoleService;
 import com.service.MenuService;
 import com.service.UserRoleService;
-import com.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/menu")
-public class MenuContorller
+public class MenuController
 {
   @Autowired
   private MenuRoleService menuRoleService;
@@ -29,8 +28,6 @@ public class MenuContorller
   @Autowired
   private UserRoleService userRoleService;
 
-  @Autowired
-  private UserService userService;
 
   @ResponseBody
   @PostMapping("/findMenuByRole")

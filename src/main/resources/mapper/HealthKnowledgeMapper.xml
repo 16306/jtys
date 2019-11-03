@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.entity.HealthKnowledge" >
     <id column="Health_knowledge_id" property="healthKnowledgeId" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="publisher_id" property="publisherId" jdbcType="BIGINT" />
     <result column="review_status" property="reviewStatus" jdbcType="VARCHAR" />
     <result column="reviewer" property="reviewer" jdbcType="VARCHAR" />
@@ -15,21 +15,27 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    <include refid="Base_Column_List" />
+    *
     from Health_knowledge_form
     where Health_knowledge_id = #{healthKnowledgeId,jdbcType=BIGINT}
+  </select>
+  <select id="getHealthKnowledgeList" resultMap="BaseResultMap">
+    select
+    *
+    from Health_knowledge_form
+    where review_status = #{reviewStatus,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Health_knowledge_form
     where Health_knowledge_id = #{healthKnowledgeId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.entity.HealthKnowledge" >
-    insert into Health_knowledge_form (Health_knowledge_id, title, content, 
+    insert into Health_knowledge_form (Health_knowledge_id, title,
       publisher_id, review_status, reviewer, 
-      review_time)
-    values (#{healthKnowledgeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{publisherId,jdbcType=BIGINT}, #{reviewStatus,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, 
-      #{reviewTime,jdbcType=TIMESTAMP})
+      review_time, content)
+    values (#{healthKnowledgeId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{publisherId,jdbcType=BIGINT},
+    #{reviewStatus,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, #{reviewTime,jdbcType=TIMESTAMP},
+    #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.HealthKnowledge" >
     insert into Health_knowledge_form
@@ -39,9 +45,6 @@
       </if>
       <if test="title != null" >
         title,
-      </if>
-      <if test="content != null" >
-        content,
       </if>
       <if test="publisherId != null" >
         publisher_id,
@@ -55,6 +58,9 @@
       <if test="reviewTime != null" >
         review_time,
       </if>
+      <if test="content != null" >
+        content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="healthKnowledgeId != null" >
@@ -62,9 +68,6 @@
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
       </if>
       <if test="publisherId != null" >
         #{publisherId,jdbcType=BIGINT},
@@ -78,6 +81,9 @@
       <if test="reviewTime != null" >
         #{reviewTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.HealthKnowledge" >
@@ -85,9 +91,6 @@
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="publisherId != null" >
         publisher_id = #{publisherId,jdbcType=BIGINT},
@@ -101,17 +104,23 @@
       <if test="reviewTime != null" >
         review_time = #{reviewTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where Health_knowledge_id = #{healthKnowledgeId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.HealthKnowledge" >
     update Health_knowledge_form
     set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
       publisher_id = #{publisherId,jdbcType=BIGINT},
       review_status = #{reviewStatus,jdbcType=VARCHAR},
       reviewer = #{reviewer,jdbcType=VARCHAR},
-      review_time = #{reviewTime,jdbcType=TIMESTAMP}
+      review_time = #{reviewTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
     where Health_knowledge_id = #{healthKnowledgeId,jdbcType=BIGINT}
   </update>
+
+
+
 </mapper>

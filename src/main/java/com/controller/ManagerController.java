@@ -1,0 +1,146 @@
+package com.controller;
+
+import com.entity.HealthKnowledge;
+import com.entity.Notice;
+import com.github.pagehelper.PageInfo;
+import com.service.HealthKnowledgeService;
+import com.service.NoticeService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("/manager")
+public class ManagerController
+{
+  @Autowired
+  private NoticeService noticeService;
+
+  @Autowired
+  private HealthKnowledgeService healthKnowledgeService;
+
+  @RequestMapping("/inform")
+  @PreAuthorize("hasPermission('/manager/inform','c&d&u&r')")
+  public String inform()
+  {
+    return "/manager/manager_inform";
+  }
+
+  @ResponseBody
+  @RequestMapping("/getNoticeList")
+  @PreAuthorize("hasPermission('/manager/inform','c&d&u&r')")
+  public Map<String, Object> get_notice_list(@RequestParam("page")int page, @RequestParam("limit")int limit,
+                                             @RequestParam(value = "title",defaultValue = "null")String title,
+                                             @RequestParam(value = "publisher",defaultValue = "null")String publisher)
+  {
+    FindUser findUser = new FindUser();
+    com.entity.User user = findUser.getuser();
+    PageInfo<Notice> pageInfo;
+    pageInfo = noticeService.getNoticeList(user.getHospitalId(),title,publisher,page,limit,1);
+    Map<String, Object> result = setdata(pageInfo);
+    return result;
+  }
+
+  @ResponseBody
+  @PostMapping("/deleteById")
+  @PreAuthorize("hasPermission('/manager/inform','d')")
+  public String deleteById(int id)
+  {
+    int a = noticeService.deleteByPrimaryKey(new Long((long)id));
+    return "删除成功";
+  }
+
+  @GetMapping("/addNotice")
+  @PreAuthorize("hasPermission('/manager/inform','c')")
+  public String addNotice()
+  {
+   return "/manager/addNotice";
+  }
+
+  @ResponseBody
+  @PostMapping("/save")
+  @PreAuthorize("hasPermission('/manager/inform','c')")
+  public String save(Notice notice)
+  {
+    FindUser findUser = new FindUser();
+    com.entity.User user = findUser.getuser();
+    Long id = noticeService.getAll().getNoticeId() + 1;
+    notice.setNoticeId(id);
+    notice.setPublisher(user.getUserName());
+    notice.setHospitalId(user.getHospitalId());
+    int s = noticeService.insert(notice);
+    if(s == 1)
+    {
+      return "success";
+    } else {
+      return "error";
+    }
+  }
+
+  @GetMapping("/showNotice")
+  @PreAuthorize("hasPermission('/manager/inform','r')")
+  public String showNotice(Model model, int id)
+  {
+    Notice notice = noticeService.selectByPrimaryKey(new Long((long)id));
+    model.addAttribute("notice", notice);
+    return "/manager/showNotice";
+  }
+
+  @ResponseBody
+  @GetMapping("/batchdelnotice")
+  @PreAuthorize("hasPermission('/manager/inform','d')")
+  public String batchDelNotice(String ids){
+    List<String> listIds= Arrays.asList(ids.split(","));
+    List<Long> listId = new ArrayList<>();
+    for(String id : listIds)
+    {
+      listId.add(Long.parseLong(id));
+    }
+    noticeService.batchDeleteNotice(listId);
+    return "批量删除操作成功！";
+  }
+
+
+  @RequestMapping("/audit")
+  @PreAuthorize("hasPermission('/manager/audit','d&u&r')")
+  public String audit()
+  {
+    return "/manager/audit";
+  }
+
+  @ResponseBody
+  @RequestMapping("/getHealthKnowledgeList")
+  @PreAuthorize("hasPermission('/manager/audit','d&u&r')")
+  public Map<String, Object> getHealthKnowledgeList(@RequestParam("page")int page, @RequestParam("limit")int limit)
+  {
+    PageInfo<HealthKnowledge> pageInfo;
+    pageInfo = healthKnowledgeService.getHealthKnowledgeList("0",page,limit,1);
+
+    Map<String, Object> result = setdata(pageInfo);
+
+    return result;
+  }
+
+  private Map<String, Object> setdata(@NotNull PageInfo<?> data)
+  {
+    Map<String,Object> result = new HashMap<>();
+    result.put("code",0);
+    result.put("msg","");
+    result.put("count",data.getTotal());
+    result.put("data",data.getList());
+    return result;
+  }
+
+}

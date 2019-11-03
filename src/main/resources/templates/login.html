@@ -38,7 +38,7 @@
         <div class="layui-form-item">
             <div class="layui-input-inline">
                 <input type="text" id="captcha" name="captcha" placeholder="请输入验证码" class="layui-input" style="float: left;width: 52%">
-                <img id="captchaImg" th:src="@{/getVerifyCodeImage}" onclick="changeCode()"/><!-- <a href="javascript:changeCode()">看不清换一张</a>-->
+                <img id="captchaImg" th:src="@{/getVerifyCodeImage}" onclick="changeCode()"/>
             </div>
         </div>
         <div class="layui-form-item">
@@ -50,7 +50,6 @@
     </form>
 </div>
 </body>
-<script th:src="@{/js/jquery.js}"></script>
 <script th:src="@{/layui/layui.js}"></script>
 <script th:inline="javascript">
     //项目路径
@@ -60,6 +59,7 @@
         var form = layui.form;
         var $ = layui.jquery;
         form.on('submit(formDemo)',function (data) {
+
         })
 
     });

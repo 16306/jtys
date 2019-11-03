@@ -5,8 +5,7 @@
     <id column="uesr_id" property="uesrId" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="role_id" property="roleId" jdbcType="INTEGER" />
-    <result column="unit" property="unit" jdbcType="BIGINT" />
+    <result column="hospital_id" property="hospitalId" jdbcType="BIGINT" />
     <result column="doctor_id" property="doctorId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    uesr_id, user_name, password, role_id, unit, doctor_id
+    uesr_id, user_name, password, hospital_id, doctor_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.UserExample" >
     select
@@ -86,8 +85,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from user_form
     where uesr_id = #{uesrId,jdbcType=BIGINT}
   </select>
@@ -102,11 +100,8 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.entity.User" >
-    insert into user_form (uesr_id, user_name, password, 
-      role_id, unit, doctor_id
-      )
-    values (#{uesrId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=INTEGER}, #{unit,jdbcType=BIGINT}, #{doctorId,jdbcType=BIGINT}
+    insert into user_form (uesr_id, user_name, password, hospital_id, doctor_id)
+    values (#{uesrId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{hospital_id,jdbcType=BIGINT}, #{doctorId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.User" >
@@ -124,8 +119,8 @@
       <if test="roleId != null" >
         role_id,
       </if>
-      <if test="unit != null" >
-        unit,
+      <if test="hospital_id != null" >
+        hospital_id,
       </if>
       <if test="doctorId != null" >
         doctor_id,
@@ -144,8 +139,8 @@
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="unit != null" >
-        #{unit,jdbcType=BIGINT},
+      <if test="hospital_id != null" >
+        #{hospital_id,jdbcType=BIGINT},
       </if>
       <if test="doctorId != null" >
         #{doctorId,jdbcType=BIGINT},
@@ -173,8 +168,8 @@
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
-      <if test="record.unit != null" >
-        unit = #{record.unit,jdbcType=BIGINT},
+      <if test="record.hospital_id != null" >
+        hospital_id = #{record.hospital_id,jdbcType=BIGINT},
       </if>
       <if test="record.doctorId != null" >
         doctor_id = #{record.doctorId,jdbcType=BIGINT},
@@ -189,8 +184,7 @@
     set uesr_id = #{record.uesrId,jdbcType=BIGINT},
       user_name = #{record.userName,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      role_id = #{record.roleId,jdbcType=INTEGER},
-      unit = #{record.unit,jdbcType=BIGINT},
+      hospital_id = #{record.hospital_id,jdbcType=BIGINT},
       doctor_id = #{record.doctorId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -208,8 +202,8 @@
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="unit != null" >
-        unit = #{unit,jdbcType=BIGINT},
+      <if test="hospital_id != null" >
+        hospital_id = #{hospital_id,jdbcType=BIGINT},
       </if>
       <if test="doctorId != null" >
         doctor_id = #{doctorId,jdbcType=BIGINT},
@@ -221,8 +215,7 @@
     update user_form
     set user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=INTEGER},
-      unit = #{unit,jdbcType=BIGINT},
+      hospital_id = #{hospital_id,jdbcType=BIGINT},
       doctor_id = #{doctorId,jdbcType=BIGINT}
     where uesr_id = #{uesrId,jdbcType=BIGINT}
   </update>

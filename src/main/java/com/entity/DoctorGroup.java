@@ -17,6 +17,8 @@ public class DoctorGroup {
 
     private String serviceArea;
 
+    private Long hospitalId;
+
     public Long getDoctorGroupId() {
         return doctorGroupId;
     }
@@ -79,5 +81,15 @@ public class DoctorGroup {
 
     public void setServiceArea(String serviceArea) {
         this.serviceArea = serviceArea == null ? null : serviceArea.trim();
+    }
+
+    public Long getHospitalId()
+    {
+        return hospitalId;
+    }
+
+    public void setHospitalId(Long hospitalId)
+    {
+        this.hospitalId = hospitalId;
     }
 }

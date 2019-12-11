@@ -102,7 +102,7 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <table tableName="Notice_form" domainObjectName="Notice" enableCountByExample="false"
+    <table tableName="family_form" domainObjectName="Family" enableCountByExample="false"
       enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
       selectByExampleQueryId="false">
     </table>

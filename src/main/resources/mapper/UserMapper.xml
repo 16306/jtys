@@ -101,7 +101,7 @@
   </delete>
   <insert id="insert" parameterType="com.entity.User" >
     insert into user_form (uesr_id, user_name, password, hospital_id, doctor_id)
-    values (#{uesrId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{hospital_id,jdbcType=BIGINT}, #{doctorId,jdbcType=BIGINT}
+    values (#{uesrId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{hospitalId,jdbcType=BIGINT}, #{doctorId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.User" >

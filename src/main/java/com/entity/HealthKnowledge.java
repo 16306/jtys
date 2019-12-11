@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class HealthKnowledge {
     private Long healthKnowledgeId;
@@ -15,6 +16,7 @@ public class HealthKnowledge {
 
     private String reviewer;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date reviewTime;
 
     public Long getHealthKnowledgeId() {

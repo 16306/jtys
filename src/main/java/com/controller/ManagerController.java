@@ -5,9 +5,13 @@ import com.entity.Notice;
 import com.github.pagehelper.PageInfo;
 import com.service.HealthKnowledgeService;
 import com.service.NoticeService;
+import com.util.FindUser;
+import com.util.SetData;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
@@ -49,16 +53,16 @@ public class ManagerController
     com.entity.User user = findUser.getuser();
     PageInfo<Notice> pageInfo;
     pageInfo = noticeService.getNoticeList(user.getHospitalId(),title,publisher,page,limit,1);
-    Map<String, Object> result = setdata(pageInfo);
+    Map<String, Object> result = SetData.setdata(pageInfo);
     return result;
   }
 
   @ResponseBody
   @PostMapping("/deleteById")
   @PreAuthorize("hasPermission('/manager/inform','d')")
-  public String deleteById(int id)
+  public String deleteById(Long id)
   {
-    int a = noticeService.deleteByPrimaryKey(new Long((long)id));
+    int a = noticeService.deleteByPrimaryKey(id);
     return "删除成功";
   }
 
@@ -91,9 +95,9 @@ public class ManagerController
 
   @GetMapping("/showNotice")
   @PreAuthorize("hasPermission('/manager/inform','r')")
-  public String showNotice(Model model, int id)
+  public String showNotice(Model model, Long id)
   {
-    Notice notice = noticeService.selectByPrimaryKey(new Long((long)id));
+    Notice notice = noticeService.selectByPrimaryKey(id);
     model.addAttribute("notice", notice);
     return "/manager/showNotice";
   }
@@ -128,19 +132,51 @@ public class ManagerController
     PageInfo<HealthKnowledge> pageInfo;
     pageInfo = healthKnowledgeService.getHealthKnowledgeList("0",page,limit,1);
 
-    Map<String, Object> result = setdata(pageInfo);
+    Map<String, Object> result = SetData.setdata(pageInfo);
 
     return result;
   }
 
-  private Map<String, Object> setdata(@NotNull PageInfo<?> data)
+  @GetMapping("/showHealthKnowledge")
+  @PreAuthorize("hasPermission('/manager/audit','r')")
+  public String showHealthKnowledge(Model model, Long id)
   {
-    Map<String,Object> result = new HashMap<>();
-    result.put("code",0);
-    result.put("msg","");
-    result.put("count",data.getTotal());
-    result.put("data",data.getList());
-    return result;
+    HealthKnowledge healthKnowledge = healthKnowledgeService.selectByPrimaryKey(id);
+    model.addAttribute("healthKnowledge", healthKnowledge);
+    return "/manager/showHealthKnowledge";
+  }
+
+  @ResponseBody
+  @GetMapping("/agreeHealthKnowledge")
+  @PreAuthorize("hasPermission('/manager/audit','r')")
+  public String agreeHealthKnowledge(Long id)
+  {
+    return setRiewStatus(id,"1");
+  }
+
+  @ResponseBody
+  @GetMapping("/disagreeHealthKnowledge")
+  @PreAuthorize("hasPermission('/manager/audit','r')")
+  public String disagreeHealthKnowledge(Long id)
+  {
+    return setRiewStatus(id,"-1");
+  }
+
+
+  private String setRiewStatus(Long id, @NotNull  String riewStatus)
+  {
+    FindUser findUser = new FindUser();
+    com.entity.User user = findUser.getuser();
+    HealthKnowledge healthKnowledge = healthKnowledgeService.selectByPrimaryKey(id);
+    healthKnowledge.setReviewStatus(riewStatus);
+    healthKnowledge.setReviewer(user.getUserName());
+    healthKnowledge.setReviewTime(SetData.setDate());
+    if(healthKnowledgeService.updateByPrimaryKey(healthKnowledge) == 1)
+    {
+      return "success";
+    }else{
+      return "error";
+    }
   }
 
 }

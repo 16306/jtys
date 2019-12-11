@@ -25,6 +25,27 @@
     from family_doctor_form
     where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByDoctorGroupId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    *
+    from family_doctor_form
+    where 1 = 1
+    <if test="doctorGroupId == -1">
+      AND doctor_group_id = ${doctorGroupId,jdbcType=BIGINT}
+    </if>
+    <if test="doctorGroupId != -1">
+      AND doctor_group_id != -1
+    </if>
+  </select>
+
+  <select id="selectByFamilyId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    *
+    from family_doctor_form
+    where family_id = #{familyId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from family_doctor_form
     where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
@@ -118,4 +139,9 @@
       contract_duration = #{contractDuration,jdbcType=INTEGER}
     where family_doctor_id = #{familyDoctorId,jdbcType=BIGINT}
   </update>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select top 1 * from family_doctor_form order by family_doctor_id desc
+  </select>
+
 </mapper>

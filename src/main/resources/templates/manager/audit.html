@@ -10,26 +10,6 @@
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
       <div class="layui-card">
-        <div class="layui-card-header">
-          <div class="layui-row">
-            <div class="layui-col-md4">
-              <!--<button class="layui-btn" onclick="noticeadd()"><i class="layui-icon">&#xe654;</i>新增</button>-->
-              <!--<button class="layui-btn layui-btn-danger" onclick="noticedelete()">批量删除</button>-->
-            </div>
-            <div class="layui-col-md8">
-              <!--<div class="layui-layout-right">-->
-                <!--<div class="layui-input-inline">-->
-                  <!--<input type="text" id="publisher" name="publisher" placeholder="发布人" autocomplete="off" class="layui-input">-->
-                <!--</div>-->
-                <!--<button class="layui-btn" onclick="searchPublisher()">搜索</button>-->
-                <!--<div class="layui-input-inline">-->
-                  <!--<input type="text" id="title" name="title" placeholder="标题" autocomplete="off" class="layui-input">-->
-                <!--</div>-->
-                <!--<button class="layui-btn" onclick="searchTitle()">搜索</button>-->
-              <!--</div>-->
-            </div>
-          </div>
-        </div>
         <div class="layui-card-body">
           <table id="HealthKnowledge" lay-filter="HealthKnowledge"></table>
           <div class="layui-hide" id="tools">
@@ -50,7 +30,7 @@
     var layer = layui.layer //弹层
         ,table = layui.table //表格
         ,element = layui.element; //元素操作
-    var $= layui.jquery;
+    var $ = layui.jquery;
 
     //第一个实例
     var tableInfo = table.render({
@@ -70,6 +50,84 @@
           ,{title:'操作',width: 225, align:'center', toolbar: '#tools'}
         ]
       ]
+    });
+
+    table.on('tool(HealthKnowledge)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+      var data = obj.data //获得当前行数据
+          , layEvent = obj.event;//获得 lay-event 对应的值
+
+      if(layEvent === 'detail')
+      {
+        layer.open({
+          type: 2,
+          content: "http://localhost:8080/manager/showHealthKnowledge?id=" + data.healthKnowledgeId,   //添加页，后台controller转发到指定页
+          area: ["600px", "425px"],
+          title: [data.title],
+          fixed: false,
+          shadeClose: true,
+          maxmin: true,
+          resize: true,
+          end: function () {  //刷新页面
+            location.reload();
+          }
+        })
+      }
+      else if(layEvent === 'agree')
+      {
+        $.ajax({
+          url: 'http://localhost:8080/manager/agreeHealthKnowledge?id=' + data.healthKnowledgeId,
+          async: true,
+          type: "Get",
+          contentType: "application/json; charset=utf-8",
+          dataType:"text",
+          success: function (data) {
+            if(data === "success")
+            {
+              layer.msg('通过成功！', {icon: 1});
+            }else{
+              layer.msg('操作失败！', {icon: 1});
+            }
+            tableInfo.reload({
+              page:{
+                curr:1
+              }
+            })
+          },
+          error: function (err) {
+            layer.msg('操作失败！', {icon: 2});
+            tableInfo.reload({})
+          }
+        });
+        return false;
+      }
+      else if(layEvent === 'disagree')
+      {
+        $.ajax({
+          url: 'http://localhost:8080/manager/disagreeHealthKnowledge?id=' + data.healthKnowledgeId,
+          async: true,
+          type: "Get",
+          contentType: "application/json; charset=utf-8",
+          dataType:"text",
+          success: function (data) {
+            if(data === "success")
+            {
+              layer.msg('已否决！', {icon: 1});
+            }else{
+              layer.msg('操作失败！', {icon: 1});
+            }
+            tableInfo.reload({
+              page:{
+                curr:1
+              }
+            })
+          },
+          error: function (err) {
+            layer.msg('操作失败！', {icon: 2});
+            tableInfo.reload({})
+          }
+        });
+        return false;
+      }
     });
   });
 

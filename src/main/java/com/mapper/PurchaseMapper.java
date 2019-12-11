@@ -1,7 +1,11 @@
 package com.mapper;
 
 import com.entity.Purchase;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
+@Mapper
 public interface PurchaseMapper {
     int deleteByPrimaryKey(Long purchaseId);
 

@@ -4,7 +4,9 @@ import com.entity.Notice;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 @Mapper
 public interface NoticeMapper {
     int deleteByPrimaryKey(Long noticeId);

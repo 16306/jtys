@@ -1,12 +1,14 @@
 package com.mapper;
 
-import com.entity.Role;
+
 import com.entity.UserRole;
 import com.entity.UserRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 @Mapper
 public interface UserRoleMapper {
     int countByExample(UserRoleExample example);

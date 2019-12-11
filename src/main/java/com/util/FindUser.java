@@ -1,4 +1,4 @@
-package com.controller;
+package com.util;
 
 
 import com.service.UserService;
@@ -26,6 +26,7 @@ public class FindUser
     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Long Id = Long.parseLong(user.getAuthorities().toArray()[0].toString());
     com.entity.User user1 = findUser.userService.selectByPrimaryKey(Id);
+    user1.setPassword("[protected]");
     return user1;
   }
 }

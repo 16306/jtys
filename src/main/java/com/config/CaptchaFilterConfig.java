@@ -24,8 +24,11 @@ public class CaptchaFilterConfig implements Filter {
         //只拦截登录请求，且开发环境下不拦截
         if("POST".equals(request.getMethod()) && "/login".equals(request.getRequestURI()) && captchaEnable){
             //从session中获取生成的验证码
-            String verifyCode = request.getSession().getAttribute("verifyCode").toString();
-
+            String verifyCode = null;
+            if(request.getSession().getAttribute("verifyCode") != null)
+            {
+                verifyCode = request.getSession().getAttribute("verifyCode").toString();
+            }
             if (!verifyCode.toLowerCase().equals(request.getParameter("captcha").toLowerCase())){
                 response.sendRedirect("/login");
                 return;

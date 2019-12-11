@@ -42,4 +42,10 @@ public class HealthKnowledgeService
     PageInfo<HealthKnowledge> pageInfo = new PageInfo<>(list);
     return pageInfo;
   }
+
+  @Transactional
+  public int updateByPrimaryKey(HealthKnowledge record)
+  {
+    return healthKnowledgeMapper.updateByPrimaryKey(record);
+  }
 }

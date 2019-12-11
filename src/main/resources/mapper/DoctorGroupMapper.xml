@@ -10,10 +10,11 @@
     <result column="second_leader_phone" property="secondLeaderPhone" jdbcType="VARCHAR" />
     <result column="speciality" property="speciality" jdbcType="VARCHAR" />
     <result column="service_area" property="serviceArea" jdbcType="VARCHAR" />
+    <result column="hospital_id" property="hospitalId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     doctor_group_id, name, group_leader_name, group_leader_phone, second_leader_name, 
-    second_leader_phone, speciality, service_area
+    second_leader_phone, speciality, service_area, hospital_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -21,6 +22,27 @@
     from doctor_group_form
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
   </select>
+
+  <select id="getAllDoctorGroupList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doctor_group_form
+    where hospital_id = #{hospitalId,jdbcType=BIGINT}
+    <if test="name!='null'">
+      AND name LIKE  '%${name}%'
+    </if>
+    <if test="groupLeaderName!='null'">
+      AND group_leader_name LIKE  '%${groupLeaderName}%'
+    </if>
+    <if test="serviceArea!='null'">
+      AND service_area LIKE  '%${serviceArea}%'
+    </if>
+  </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select top 1 * from doctor_group_form order by doctor_group_id desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from doctor_group_form
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
@@ -28,10 +50,10 @@
   <insert id="insert" parameterType="com.entity.DoctorGroup" >
     insert into doctor_group_form (doctor_group_id, name, group_leader_name, 
       group_leader_phone, second_leader_name, second_leader_phone, 
-      speciality, service_area)
+      speciality, service_area,hospital_id)
     values (#{doctorGroupId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{groupLeaderName,jdbcType=VARCHAR}, 
       #{groupLeaderPhone,jdbcType=VARCHAR}, #{secondLeaderName,jdbcType=VARCHAR}, #{secondLeaderPhone,jdbcType=VARCHAR}, 
-      #{speciality,jdbcType=VARCHAR}, #{serviceArea,jdbcType=VARCHAR})
+      #{speciality,jdbcType=VARCHAR}, #{serviceArea,jdbcType=VARCHAR}, #{hospitalId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.DoctorGroup" >
     insert into doctor_group_form
@@ -60,6 +82,9 @@
       <if test="serviceArea != null" >
         service_area,
       </if>
+      <if test="hospitalId != null" >
+        hospital_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="doctorGroupId != null" >
@@ -85,6 +110,9 @@
       </if>
       <if test="serviceArea != null" >
         #{serviceArea,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null" >
+        #{hospitalId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -112,6 +140,9 @@
       <if test="serviceArea != null" >
         service_area = #{serviceArea,jdbcType=VARCHAR},
       </if>
+      <if test="hospitalId != null" >
+        hospital_id = #{hospitalId,jdbcType=BIGINT},
+      </if>
     </set>
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
   </update>
@@ -123,7 +154,8 @@
       second_leader_name = #{secondLeaderName,jdbcType=VARCHAR},
       second_leader_phone = #{secondLeaderPhone,jdbcType=VARCHAR},
       speciality = #{speciality,jdbcType=VARCHAR},
-      service_area = #{serviceArea,jdbcType=VARCHAR}
+      service_area = #{serviceArea,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=BIGINT}
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
   </update>
 </mapper>

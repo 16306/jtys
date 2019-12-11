@@ -1,7 +1,11 @@
 package com.mapper;
 
 import com.entity.Surgery;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
+@Mapper
 public interface SurgeryMapper {
     int deleteByPrimaryKey(Long surgeryId);
 

@@ -1,7 +1,11 @@
 package com.mapper;
 
 import com.entity.Evaluation;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
+@Mapper
 public interface EvaluationMapper {
     int deleteByPrimaryKey(Long evaluationId);
 

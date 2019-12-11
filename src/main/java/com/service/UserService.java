@@ -77,4 +77,12 @@ public class UserService
   {
     return userMapper.updateByPrimaryKey(record);
   }
+
+  public  Long getMaxId()
+  {
+    UserExample example = new UserExample();
+    example.setOrderByClause("uesr_id desc");
+    Long userId= selectByExample(example).get(0).getUesrId() + 1;
+    return userId;
+  }
 }

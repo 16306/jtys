@@ -9,6 +9,10 @@ public class Family {
 
     private String householderPhone;
 
+    private String address;
+
+    private Long hospitalId;
+
     public Long getFamilyId() {
         return familyId;
     }
@@ -39,5 +43,23 @@ public class Family {
 
     public void setHouseholderPhone(String householderPhone) {
         this.householderPhone = householderPhone == null ? null : householderPhone.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public Long getHospitalId()
+    {
+        return hospitalId;
+    }
+
+    public void setHospitalId(Long hospitalId)
+    {
+        this.hospitalId = hospitalId;
     }
 }

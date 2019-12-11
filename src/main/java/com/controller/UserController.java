@@ -1,5 +1,9 @@
 package com.controller;
 
+import com.entity.Doctor;
+import com.entity.User;
+import com.service.DoctorService;
+import com.util.FindUser;
 import com.util.VerifyCodeImageUtil;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -7,13 +11,19 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UserController
 {
+
+  @Autowired
+  private DoctorService doctorService;
+
   @RequestMapping("/login")
   public String login()
   {
@@ -28,9 +38,17 @@ public class UserController
 
   @RequestMapping("/self_center/my_info")
   @PreAuthorize("hasPermission('/self_center/my_info','r&c')")
-  public String text()
+  public String text(Model model)
   {
-    return "Index";
+    FindUser findUser = new FindUser();
+    User user = findUser.getuser();
+    if(user.getDoctorId() != null)
+    {
+      Doctor info = doctorService.selectByPrimaryKey(user.getDoctorId());
+      model.addAttribute("info", info);
+      return "self_info";
+    }
+    return "self_info";
   }
 
   @RequestMapping("/getVerifyCodeImage")

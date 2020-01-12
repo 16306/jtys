@@ -19,6 +19,8 @@ public class ServiceRecord {
 
     private String serviceEvaluation;
 
+    private Long hospitalId;
+
     public Long getServiceId() {
         return serviceId;
     }
@@ -81,5 +83,13 @@ public class ServiceRecord {
 
     public void setServiceEvaluation(String serviceEvaluation) {
         this.serviceEvaluation = serviceEvaluation == null ? null : serviceEvaluation.trim();
+    }
+
+    public Long getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(Long hospitalId) {
+        this.hospitalId = hospitalId;
     }
 }

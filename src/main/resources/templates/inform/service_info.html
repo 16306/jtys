@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>服务信息</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          <div class="layui-row">
+            <div class="layui-col-md8">
+              <div class="layui-layout-right">
+                <div class="layui-input-inline">
+                  <input type="text" id="familyMemberName" name="familyMemberName" placeholder="名字" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" id="doctorGroupLeaderName" name="doctorGroupLeaderName" placeholder="负责人" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" onclick="search()">搜索</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-card-body">
+          <table id="service" lay-filter="service"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+
+  layui.use(['jquery','layer', 'table', 'carousel', 'upload', 'element'],function(){
+    var layer = layui.layer //弹层
+        ,table = layui.table //表格
+        ,element = layui.element; //元素操作
+    var $ = layui.jquery;
+
+    var tableInfo = table.render({
+      id: 'service'
+      ,elem: '#service'
+      ,height: 'full-123'
+      ,limit:10
+      ,url: 'http://localhost:8080/inform/getServiceRecord' //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'familyMemberName', title: '名字', width:170, sort: true}
+          ,{field: 'familyHouseholderName', title: '户主', width:100, align: 'left'}
+          ,{field:'doctorGroupLeaderName', title:'医生组负责人',width:150,align:'center',unresize:true}
+          ,{field:'time', title:'时间',width:220,align:'center',unresize:true}
+          ,{field:'type', title:'类型',align:'center',width:135,unresize:true}
+          ,{field:'content', title:'内容',align:'center',width:375,unresize:true}
+          ,{field:'evaluation', title:'评价',align:'center',width:120,unresize:true}
+        ]
+      ]
+    });
+    window.tableInfo = tableInfo;
+
+    table.on('tool(service)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+      var data = obj.data //获得当前行数据
+          ,layEvent = obj.event;//获得 lay-event 对应的值
+    });
+
+  });
+
+  function search(){
+    layui.use(['jquery','table'],function(){
+      var $ = layui.jquery;
+      var table = layui.table;
+      var familyMemberName = $('#familyMemberName').val();
+      var doctorGroupLeaderName = $('#doctorGroupLeaderName').val();
+      table.reload('service',{
+        where:{
+          familyMemberName:familyMemberName,
+          doctorGroupLeaderName:doctorGroupLeaderName
+        }
+        ,page:{
+          curr:1
+        }
+      })
+    });
+  }
+
+</script>
+</html>

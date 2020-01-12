@@ -10,12 +10,15 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="family_id" property="familyId" jdbcType="BIGINT" />
     <result column="family_member_id" property="familyMemberId" jdbcType="BIGINT" />
+    <result column="doctor_id" property="doctorId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.entity.FollowUp" extends="BaseResultMap" >
     <result column="health_assessment" property="healthAssessment" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Follow_up_id, doctor, accompanying, type, time, content, family_id, family_member_id
+    Follow_up_id, doctor, accompanying, type, time, content, family_id, family_member_id, 
+    doctor_id, status
   </sql>
   <sql id="Blob_Column_List" >
     health_assessment
@@ -35,12 +38,12 @@
   <insert id="insert" parameterType="com.entity.FollowUp" >
     insert into Follow_up_form (Follow_up_id, doctor, accompanying, 
       type, time, content, 
-      family_id, family_member_id, health_assessment
-      )
+      family_id, family_member_id, doctor_id, 
+      status, health_assessment)
     values (#{followUpId,jdbcType=BIGINT}, #{doctor,jdbcType=VARCHAR}, #{accompanying,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
-      #{familyId,jdbcType=BIGINT}, #{familyMemberId,jdbcType=BIGINT}, #{healthAssessment,jdbcType=LONGVARCHAR}
-      )
+      #{familyId,jdbcType=BIGINT}, #{familyMemberId,jdbcType=BIGINT}, #{doctorId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{healthAssessment,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.FollowUp" >
     insert into Follow_up_form
@@ -68,6 +71,12 @@
       </if>
       <if test="familyMemberId != null" >
         family_member_id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="healthAssessment != null" >
         health_assessment,
@@ -98,6 +107,12 @@
       <if test="familyMemberId != null" >
         #{familyMemberId,jdbcType=BIGINT},
       </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="healthAssessment != null" >
         #{healthAssessment,jdbcType=LONGVARCHAR},
       </if>
@@ -127,6 +142,12 @@
       <if test="familyMemberId != null" >
         family_member_id = #{familyMemberId,jdbcType=BIGINT},
       </if>
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="healthAssessment != null" >
         health_assessment = #{healthAssessment,jdbcType=LONGVARCHAR},
       </if>
@@ -142,6 +163,8 @@
       content = #{content,jdbcType=VARCHAR},
       family_id = #{familyId,jdbcType=BIGINT},
       family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      doctor_id = #{doctorId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
       health_assessment = #{healthAssessment,jdbcType=LONGVARCHAR}
     where Follow_up_id = #{followUpId,jdbcType=BIGINT}
   </update>
@@ -153,7 +176,9 @@
       time = #{time,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=VARCHAR},
       family_id = #{familyId,jdbcType=BIGINT},
-      family_member_id = #{familyMemberId,jdbcType=BIGINT}
+      family_member_id = #{familyMemberId,jdbcType=BIGINT},
+      doctor_id = #{doctorId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
     where Follow_up_id = #{followUpId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -15,7 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController
@@ -49,6 +53,15 @@ public class UserController
       return "self_info";
     }
     return "self_info";
+  }
+
+  @GetMapping("/self_center/edit")
+  @PreAuthorize("hasPermission('/self_center/my_info','u')")
+  public String userDoctor(Model model, Long id)
+  {
+    Doctor Doctor = doctorService.selectByPrimaryKey(id);
+    model.addAttribute("member", Doctor);
+    return "/inform/addDoctor";
   }
 
   @RequestMapping("/getVerifyCodeImage")

@@ -17,6 +17,8 @@ public interface FamilyMemberMapper {
 
     FamilyMember selectByPrimaryKey(Long familyMemberId);
 
+    FamilyMember selectByCardId(String cardId);
+
     List<FamilyMember> getAllMemberList(Long familyId);
 
     FamilyMember getAll();

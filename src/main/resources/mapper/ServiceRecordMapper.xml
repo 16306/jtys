@@ -10,11 +10,84 @@
     <result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
     <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
     <result column="service_evaluation" property="serviceEvaluation" jdbcType="VARCHAR" />
+    <result column="hospital_id" property="hospitalId" jdbcType="BIGINT" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     Service_id, service_time, doctor_group_id, family_id, family_member_id, service_content, 
-    service_type, service_evaluation
+    service_type, service_evaluation, hospital_id
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.ServiceRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Service_record_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -25,13 +98,21 @@
     delete from Service_record_form
     where Service_id = #{serviceId,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByExample" parameterType="com.entity.ServiceRecordExample" >
+    delete from Service_record_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.entity.ServiceRecord" >
     insert into Service_record_form (Service_id, service_time, doctor_group_id, 
       family_id, family_member_id, service_content, 
-      service_type, service_evaluation)
+      service_type, service_evaluation, hospital_id
+      )
     values (#{serviceId,jdbcType=BIGINT}, #{serviceTime,jdbcType=TIMESTAMP}, #{doctorGroupId,jdbcType=BIGINT}, 
       #{familyId,jdbcType=BIGINT}, #{familyMemberId,jdbcType=BIGINT}, #{serviceContent,jdbcType=VARCHAR}, 
-      #{serviceType,jdbcType=VARCHAR}, #{serviceEvaluation,jdbcType=VARCHAR})
+      #{serviceType,jdbcType=VARCHAR}, #{serviceEvaluation,jdbcType=VARCHAR}, #{hospitalId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.ServiceRecord" >
     insert into Service_record_form
@@ -60,6 +141,9 @@
       <if test="serviceEvaluation != null" >
         service_evaluation,
       </if>
+      <if test="hospitalId != null" >
+        hospital_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="serviceId != null" >
@@ -86,8 +170,67 @@
       <if test="serviceEvaluation != null" >
         #{serviceEvaluation,jdbcType=VARCHAR},
       </if>
+      <if test="hospitalId != null" >
+        #{hospitalId,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.entity.ServiceRecordExample" resultType="java.lang.Integer" >
+    select count(*) from Service_record_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Service_record_form
+    <set >
+      <if test="record.serviceId != null" >
+        Service_id = #{record.serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceTime != null" >
+        service_time = #{record.serviceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.doctorGroupId != null" >
+        doctor_group_id = #{record.doctorGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.familyId != null" >
+        family_id = #{record.familyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.familyMemberId != null" >
+        family_member_id = #{record.familyMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceContent != null" >
+        service_content = #{record.serviceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceEvaluation != null" >
+        service_evaluation = #{record.serviceEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalId != null" >
+        hospital_id = #{record.hospitalId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Service_record_form
+    set Service_id = #{record.serviceId,jdbcType=BIGINT},
+      service_time = #{record.serviceTime,jdbcType=TIMESTAMP},
+      doctor_group_id = #{record.doctorGroupId,jdbcType=BIGINT},
+      family_id = #{record.familyId,jdbcType=BIGINT},
+      family_member_id = #{record.familyMemberId,jdbcType=BIGINT},
+      service_content = #{record.serviceContent,jdbcType=VARCHAR},
+      service_type = #{record.serviceType,jdbcType=VARCHAR},
+      service_evaluation = #{record.serviceEvaluation,jdbcType=VARCHAR},
+      hospital_id = #{record.hospitalId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.ServiceRecord" >
     update Service_record_form
     <set >
@@ -112,6 +255,9 @@
       <if test="serviceEvaluation != null" >
         service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR},
       </if>
+      <if test="hospitalId != null" >
+        hospital_id = #{hospitalId,jdbcType=BIGINT},
+      </if>
     </set>
     where Service_id = #{serviceId,jdbcType=BIGINT}
   </update>
@@ -123,7 +269,8 @@
       family_member_id = #{familyMemberId,jdbcType=BIGINT},
       service_content = #{serviceContent,jdbcType=VARCHAR},
       service_type = #{serviceType,jdbcType=VARCHAR},
-      service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR}
+      service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=BIGINT}
     where Service_id = #{serviceId,jdbcType=BIGINT}
   </update>
 </mapper>

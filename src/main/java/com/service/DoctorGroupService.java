@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class DoctorGroupSrevice
+public class DoctorGroupService
 {
   @Autowired
   private DoctorGroupMapper doctorGroupMapper;

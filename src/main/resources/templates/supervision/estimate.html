@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          <div class="layui-row">
+            <div class="layui-col-md8">
+              <div class="layui-layout-right">
+                <div class="layui-input-inline">
+                  <input type="text" id="Evaluator" name="Evaluator" placeholder="反馈者" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" id="doctorName" name="doctorName" placeholder="医生" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" onclick="search()">搜索</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-card-body">
+          <table id="estimate" lay-filter="estimate"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:src="@{/layui/layui.all.js}"></script>
+<script>
+  layui.use(['jquery','layer', 'table', 'carousel', 'upload', 'element'],function(){
+    var layer = layui.layer //弹层
+        ,table = layui.table //表格
+        ,element = layui.element; //元素操作
+    var $= layui.jquery;
+
+    //第一个实例
+    table.render({
+      id: 'estimate'
+      ,elem: '#estimate'
+      ,height: 'full-123'
+      ,limit:10
+      ,url: 'http://localhost:8080/supervision/estimate_info' //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'evaluator', title: '反馈者', width:200, sort: true}
+          ,{field: 'evaluationContent', title: '内容', width:570, align: 'center'}
+          ,{field:'doctor', title:'医生',width:200,align:'center',unresize:true}
+          ,{field:'time', title:'时间',width:300,align:'center',unresize:true}
+        ]
+      ]
+    });
+  });
+
+  function search(){
+    layui.use(['jquery','table'],function(){
+      var $ = layui.jquery;
+      var table = layui.table;
+      var Evaluator = $('#Evaluator').val();
+      var doctorName = $('#doctorName').val();
+      table.reload('estimate',{
+        where:{
+          Evaluator:Evaluator,
+          doctorName:doctorName
+        }
+        ,page:{
+          curr:1
+        }
+      })
+    });
+  }
+
+</script>
+</html>

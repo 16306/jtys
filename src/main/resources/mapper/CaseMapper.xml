@@ -17,6 +17,14 @@
     from case_form
     where Case_id = #{caseId,jdbcType=BIGINT}
   </select>
+  <select id="selectByCardId" resultMap="BaseResultMap">
+    select
+    *
+    from case_form
+    where card_id = #{cardId,jdbcType=VARCHAR}
+    order by case_form.date desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from case_form
     where Case_id = #{caseId,jdbcType=BIGINT}

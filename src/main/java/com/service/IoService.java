@@ -39,7 +39,7 @@ public class IoService
   private DoctorService doctorService;
 
   @Autowired
-  private DoctorGroupSrevice doctorGroupSrevice;
+  private DoctorGroupService doctorGroupService;
 
 
   @Transactional(rollbackFor = Exception.class)
@@ -132,7 +132,7 @@ public class IoService
       {
         DoctorGroup doctorGroup = new DoctorGroup();
         //从excel第二行开始获取每个单元格的数据
-        doctorGroup.setDoctorGroupId(doctorGroupSrevice.getAll().getDoctorGroupId() + 1);
+        doctorGroup.setDoctorGroupId(doctorGroupService.getAll().getDoctorGroupId() + 1);
         doctorGroup.setName(row.getCell(1).getStringCellValue());
         doctorGroup.setGroupLeaderName(row.getCell(2).getStringCellValue());
         doctorGroup.setGroupLeaderPhone(row.getCell(3).getStringCellValue());
@@ -265,7 +265,7 @@ public class IoService
 
       for (Long doctorGroupId : listId)
       {
-        DoctorGroup doctorGroup = doctorGroupSrevice.selectByPrimaryKey(doctorGroupId);
+        DoctorGroup doctorGroup = doctorGroupService.selectByPrimaryKey(doctorGroupId);
         List.add(doctorGroup);
       }
 

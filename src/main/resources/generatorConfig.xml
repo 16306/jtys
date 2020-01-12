@@ -102,10 +102,10 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <table tableName="family_form" domainObjectName="Family" enableCountByExample="false"
-      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-      selectByExampleQueryId="false">
-    </table>
+    <!--<table tableName="family_form" domainObjectName="Family" enableCountByExample="false"-->
+      <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+      <!--selectByExampleQueryId="false">-->
+    <!--</table>-->
     <!--<table tableName="obsterical_history_form" domainObjectName="ObstericalHistory" enableCountByExample="false"-->
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
@@ -126,10 +126,8 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <!--<table tableName="Service_record_form" domainObjectName="ServiceRecord" enableCountByExample="false"-->
-      <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-      <!--selectByExampleQueryId="false">-->
-    <!--</table>-->
+    <table tableName="Service_record_form" domainObjectName="ServiceRecord">
+    </table>
     <!--<table tableName="Surgery_form" domainObjectName="Surgery" enableCountByExample="false"-->
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->

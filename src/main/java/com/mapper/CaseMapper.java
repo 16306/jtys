@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.Case;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,8 @@ public interface CaseMapper {
     int insertSelective(Case record);
 
     Case selectByPrimaryKey(Long caseId);
+
+    List<Case> selectByCardId(String cardId);
 
     int updateByPrimaryKeySelective(Case record);
 

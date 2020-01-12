@@ -4,7 +4,7 @@ import com.entity.Family;
 import com.entity.FamilyDoctor;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.service.DoctorGroupSrevice;
+import com.service.DoctorGroupService;
 import com.service.FamilyDoctorService;
 import com.service.FamilyService;
 import com.util.FindUser;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +33,7 @@ public class InfoManager
   private FamilyService familyService;
 
   @Autowired
-  private DoctorGroupSrevice doctorGroupSrevice;
+  private DoctorGroupService doctorGroupService;
 
 
   @RequestMapping("/doctor_manager")

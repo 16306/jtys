@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.Inspection;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,8 @@ public interface InspectionMapper {
     int insertSelective(Inspection record);
 
     Inspection selectByPrimaryKey(Long inspectionId);
+
+    Inspection selectByCaseId(Long caseId);
 
     int updateByPrimaryKeySelective(Inspection record);
 

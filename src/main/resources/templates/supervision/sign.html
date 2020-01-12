@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>签约情况</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body onload="getData();getData1()">
+  <div class="layui-row">
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">签约情况扇形图</div>
+        <div class="layui-card-body">
+          <div id="EchartZhu" style="width: 500px;height: 500px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">人员情况扇形图</div>
+        <div class="layui-card-body">
+          <div id="Echart" style="width: 500px;height: 500px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/echarts.min.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript">
+  function getData() {
+    $.ajax({
+      type: 'post',
+      dataType: 'text',
+      url:  '/supervision/sign_info',
+      data: {},
+      cache: false,
+      async: false,
+      success: function (data) {
+        var chartZhu = echarts.init(document.getElementById('EchartZhu'));
+        var data = eval('(' + data + ')');
+        var optionchartBing = {
+          title: {
+            text: '签约情况', //副标题
+            x: 'center' //标题居中
+          },
+          tooltip: {
+            trigger: 'item' //悬浮显示对比
+          },
+          legend: {
+            orient: 'vertical', //类型垂直,默认水平
+            left: 'left', //类型区分在左 默认居中
+            data: ['已签约','未签约']
+          },
+          series: [{
+            type: 'pie', //饼状
+            radius: '60%', //圆的大小
+            center: ['50%', '50%'], //居中
+            data: [{
+              value: data.sign,
+              name: '已签约'
+            },
+              {
+                value: data.no_sign,
+                name: '未签约'
+              }
+            ]
+          }]
+        };
+        chartZhu.setOption(optionchartBing,true);
+      }
+    });
+  }
+  function getData1() {
+    $.ajax({
+      type: 'post',
+      dataType: 'text',
+      url:  '/supervision/people_info',
+      data: {},
+      cache: false,
+      async: false,
+      success: function (data) {
+        var chart = echarts.init(document.getElementById('Echart'));
+        var data = eval('(' + data + ')');
+        var optionchart = {
+          title: {
+            text: '人员情况', //副标题
+            x: 'center' //标题居中
+          },
+          tooltip: {
+            trigger: 'item' //悬浮显示对比
+          },
+          legend: {
+            orient: 'vertical', //类型垂直,默认水平
+            left: 'left', //类型区分在左 默认居中
+            data: ['医生组', '家庭', '医生', '家庭成员']
+          },
+          series: [{
+            type: 'pie', //饼状
+            radius: '60%', //圆的大小
+            center: ['50%', '50%'], //居中
+            data: [{
+              value: data.doctorGroup,
+              name: '医生组'
+            },
+              {
+                value: data.family,
+                name: '家庭'
+              },
+              {
+                value: data.doctor,
+                name: '医生'
+              },
+              {
+                value: data.familyMember,
+                name: '家庭成员'
+              }
+            ]
+          }]
+        };
+        chart.setOption(optionchart, true);
+      }
+    });
+  }
+  document.getElementById('EchartZhu').removeAttribute('_echarts_instance_');
+  document.getElementById('Echart').removeAttribute('_echarts_instance_');
+
+</script>
+</html>

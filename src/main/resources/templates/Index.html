@@ -49,16 +49,16 @@
 								<th:block sec:authentication="name"></th:block>
 							</span>
 						</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;" class="layTabPlus" tab_url="http://localhost:8080/self_center/my_info">我的资料</a>
-							</dd>
-							<dd>
-								<a href="javascript:;" class="layTabPlus" tab_url="http://localhost:8080/self_center/my_team">我的团队</a>
-							</dd>
-							<dd>
-								<a href="">安全设置</a>
-							</dd>
+						<dl class="layui-nav-child child">
+							<!--<dd>-->
+								<!--<a href="javascript:;" class="layTabPlus" tab_url="http://localhost:8080/self_center/my_info">我的资料</a>-->
+							<!--</dd>-->
+							<!--<dd>-->
+								<!--<a href="javascript:;" class="layTabPlus" tab_url="http://localhost:8080/self_center/my_team">我的团队</a>-->
+							<!--</dd>-->
+							<!--<dd>-->
+								<!--<a href="">安全设置</a>-->
+							<!--</dd>-->
 						</dl>
 					</li>
 					<li class="layui-nav-item">
@@ -79,48 +79,19 @@
 				<!-- 内容主体区域 -->
 				<div class="layui-tab" lay-filter="demoTab" lay-allowClose="true">
 					<ul class="layui-tab-title">
-											<li class="layui-this noclose" lay-id='base_info'>基本信息</li>
-										</ul>
-											<div class="layui-tab-content" style="padding:0px;">
-												<div class="layui-tab-item layui-show">
-													<div class="sysNotice col">
-														<blockquote class="layui-elem-quote title">基本信息</blockquote>
-														<table class="layui-table">
-															<tbody>
-															<tr>
-																<td>当前版本</td>
-											<td class="version">V1.2</td>
-										</tr>
-										<tr>
-											<td>开发作者</td>
-											<td class="author">Leytton</td>
-										</tr>
-										<tr>
-											<td>项目首页</td>
-											<td class="homePage"><a href="https://gitee.com/Leytton/layTabPlus">https://gitee.com/Leytton/layTabPlus</a></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<script src='https://gitee.com/Leytton/layTabPlus/widget_preview'></script>
-												<style>
-												.pro_name a{color: #4183c4;}
-												.osc_git_title{background-color: #fff;}
-												.osc_git_box{background-color: #fff;}
-												.osc_git_box{border-color: #E3E9ED;}
-												.osc_git_info{color: #666;}
-												.osc_git_main a{color: #9B9B9B;}
-												</style>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+						<li class="layui-this noclose" lay-id='base_info'>家庭医生</li>
+					</ul>
+					<div class="layui-tab-content" style="padding:0px;">
+						<div class="layui-tab-item layui-show">
+							<div class="sysNotice col"style="width: 100%">
+								<h1 style="text-align: center;margin-top: 250px">欢迎使用家庭医生系统</h1>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="layui-footer">
-				<!--© 2018 <a href="https://gitee.com/Leytton/layTabPlus">layTabPlus</a> - by Leytton-->
+			<div class="layui-footer" style="text-align: right">
+				让人痛苦的不是事情本身，而是你的思维方式和态度。
 			</div>
 		</div>
 		<script th:src="@{/layui/layui.all.js}"></script>
@@ -144,6 +115,7 @@
 					dataType : 'json',
 					success : function(data) {
 						var menu = ""; //定义变量存储
+						var child_nav = "";
 						for(var i = 0;i<data.length;i++){
 							menu += "<li class='layui-nav-item layui-nav-itemed'>";
 							if(data[i].parentId === -1 && data[i].type === "menu"){ //取出父元素的菜单，拼进页面
@@ -158,9 +130,15 @@
 									}
 								}
 							}
+							else if(data[i].parentId === -1 && data[i].type === "button"){
+								child_nav += "<dd>"
+										+ '<a href="javascript:;" class="layTabPlus" tab_url="'+data[i].url+'">'+data[i].menuName+'</a>'
+										+ "</dd>"
+							}
 							menu += "</li>";
 						}
 						$(".layui-nav-tree").append(menu);
+						$(".child").append(child_nav);
 						layui.use('element', function() {
 							element.init();
 						});

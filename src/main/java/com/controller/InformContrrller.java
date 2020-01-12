@@ -8,12 +8,13 @@ import com.entity.FamilyMember;
 import com.entity.User;
 import com.entity.UserRole;
 import com.github.pagehelper.PageInfo;
-import com.service.DoctorGroupSrevice;
+import com.service.DoctorGroupService;
 import com.service.DoctorService;
 import com.service.FamilyDoctorService;
 import com.service.FamilyMemberService;
 import com.service.FamilyService;
 import com.service.IoService;
+import com.service.ServiceRecordService;
 import com.service.UserRoleService;
 import com.service.UserService;
 import com.util.FindUser;
@@ -49,7 +50,7 @@ public class InformContrrller
   private FamilyMemberService familyMemberService;
 
   @Autowired
-  private DoctorGroupSrevice doctorGroupSrevice;
+  private DoctorGroupService doctorGroupService;
 
   @Autowired
   private DoctorService doctorService;
@@ -63,6 +64,25 @@ public class InformContrrller
   @Autowired
   private FamilyDoctorService familyDoctorService;
 
+  @Autowired
+  private ServiceRecordService serviceRecordService;
+
+
+  @ResponseBody
+  @RequestMapping("/getServiceRecord")
+  @PreAuthorize("hasPermission('/inform/service_info','r')")
+  public Map<String, Object> getServiceRecord(@RequestParam("page")int page, @RequestParam("limit")int limit,
+      @RequestParam(value = "familyMemberName",defaultValue = "null")String familyMemberName,
+      @RequestParam(value = "doctorGroupLeaderName",defaultValue = "null")String doctorGroupLeaderName)
+  {
+    FindUser findUser = new FindUser();
+    com.entity.User user = findUser.getuser();
+    PageInfo pageInfo;
+    pageInfo = serviceRecordService.selectByHospitalId(user.getHospitalId(),page,limit,1,familyMemberName,doctorGroupLeaderName);
+    Map<String, Object> result = SetData.setdata(pageInfo);
+    return result;
+  }
+
   @ResponseBody
   @RequestMapping("/getDoctorGroupList")
   @PreAuthorize("hasPermission('/inform/doctor_group_info','r')")
@@ -74,7 +94,8 @@ public class InformContrrller
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
     PageInfo<DoctorGroup> pageInfo;
-    pageInfo = doctorGroupSrevice.getAllDoctorGroupList(user.getHospitalId(),name,groupLeaderName,serviceArea,page,limit,1);
+    pageInfo = doctorGroupService
+        .getAllDoctorGroupList(user.getHospitalId(),name,groupLeaderName,serviceArea,page,limit,1);
     Map<String, Object> result = SetData.setdata(pageInfo);
     return result;
   }
@@ -99,6 +120,13 @@ public class InformContrrller
   public String doctor_group_info()
   {
     return "/inform/user_doctorgroup_info";
+  }
+
+  @RequestMapping("/service_info")
+  @PreAuthorize("hasPermission('/inform/service_info','r')")
+  public String service_info()
+  {
+    return "/inform/service_info";
   }
 
   @RequestMapping("/user_family_info")
@@ -129,10 +157,10 @@ public class InformContrrller
   {
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
-    Long id = doctorGroupSrevice.getAll().getDoctorGroupId() + 1;
+    Long id = doctorGroupService.getAll().getDoctorGroupId() + 1;
     doctorGroup.setDoctorGroupId(id);
     doctorGroup.setHospitalId(user.getHospitalId());
-    int s = doctorGroupSrevice.insert(doctorGroup);
+    int s = doctorGroupService.insert(doctorGroup);
     if(s == 1)
     {
       return "success";
@@ -208,7 +236,6 @@ public class InformContrrller
   }
 
   @GetMapping("/addDoctor")
-  @PreAuthorize("hasPermission('/inform/doctor_group_info','c')")
   public String addDoctor()
   {
     return "/inform/addDoctor";
@@ -261,13 +288,13 @@ public class InformContrrller
   @PreAuthorize("hasPermission('/inform/doctor_group_info','d')")
   public String deleteDoctorGroupById(Long id)
   {
-    DoctorGroup doctorGroup = doctorGroupSrevice.selectByPrimaryKey(id);
+    DoctorGroup doctorGroup = doctorGroupService.selectByPrimaryKey(id);
     List<Doctor> mlist = doctorService.getAllDoctorList(doctorGroup.getDoctorGroupId());
     for(Doctor doctor : mlist)
     {
       doctorService.deleteByPrimaryKey(doctor.getDoctorId());
     }
-    doctorGroupSrevice.deleteByPrimaryKey(id);
+    doctorGroupService.deleteByPrimaryKey(id);
     return "删除成功";
   }
 
@@ -284,7 +311,6 @@ public class InformContrrller
 
   @ResponseBody
   @PostMapping("/saveDoctor")
-  @PreAuthorize("hasPermission('/inform/doctor_group_info','c')")
   public String saveDoctor(Doctor doctor)
   {
     Long id;

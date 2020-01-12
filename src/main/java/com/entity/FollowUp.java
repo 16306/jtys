@@ -19,6 +19,10 @@ public class FollowUp {
 
     private Long familyMemberId;
 
+    private Long doctorId;
+
+    private Integer status;
+
     private String healthAssessment;
 
     public Long getFollowUpId() {
@@ -83,6 +87,22 @@ public class FollowUp {
 
     public void setFamilyMemberId(Long familyMemberId) {
         this.familyMemberId = familyMemberId;
+    }
+
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getHealthAssessment() {

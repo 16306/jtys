@@ -5,53 +5,105 @@
 
   <title>信息页</title>
   <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+  <style>
+    #febs-user-profile #user-profile, #febs-user-profile .user-profile-card {
+      display: inline-block;
+    }
+
+    #febs-user-profile #user-img, #febs-user-profile #user-info {
+      display: inline-block;
+      float: left;
+    }
+
+    #febs-user-profile #user-img img {
+      width: 7rem;
+      margin: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    #febs-user-profile #user-info {
+      margin: .95rem 0 .95rem 1.2rem;
+    }
+
+    #febs-user-profile #user-info div {
+      margin: 3px 0;
+      max-width: 22rem;
+    }
+
+    #febs-user-profile #options-wrapper {
+      text-align: center;
+      margin-top: .5rem;
+    }
+
+    #febs-user-profile #update-user-info {
+      cursor: pointer;
+      margin-left: -1rem;
+    }
+
+    #febs-user-profile #options-wrapper a {
+      padding: 4px 6px;
+      color: rgba(0, 0, 0, 0.65);
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+    }
+
+    #febs-user-profile #options-wrapper a:hover {
+      color: #40a9ff;
+      border-color: #40a9ff;
+    }
+
+    #febs-user-profile .layui-form-item {
+      margin-bottom: 0;
+    }
+  </style>
 </head>
 <body>
-<form class="layui-form" action="" style="margin: 50px;">
-  <div class="head" style="float:left;height:50px;width:30px;border: #009E94 2px solid;padding: 30px 20px 20px 20px;margin-right: 1px">
-    <i class="layui-icon layui-icon-add-circle-fine input-head" style="color: #b2b2b2;font-size:30px;"></i>
+<div class="layui-fluid layui-anim febs-anim" id="febs-user-profile" lay-title="个人中心">
+  <div class="layui-row layui-col-space8 febs-container">
+    <div class="layui-col-md6 layui-col-sm6 layui-col-xs12 layui-col-md-offset3">
+      <div class="layui-card">
+        <div class="layui-card-header">个人信息</div>
+        <div class="layui-card-body user-profile-card">
+          <div id="user-profile">
+            <div id="user-img">
+              <img alt="头像" title="点我更换头像" src="https://gitee.com/uploads/66/890966_Leytton.png?1512991922">
+              <div id="options-wrapper">
+                <div id="update-user-info">
+                  <a>
+                    <span class="layui-icon layui-icon-setting"></span>
+                    编辑资料
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div id="user-info">
+              <input type="hidden" id="d_id" name="doctorId" th:value="${info!=null?info.doctorId:''}" />
+              <div><span class="layui-icon layui-icon-user"></span> 姓名：
+                <span th:text="${info!=null?info.name:''}"></span>
+              </div>
+              <div><span class="layui-icon layui-icon-tree"></span> 年龄：
+                <span th:text="${info!=null?info.age:''}"></span>
+              </div>
+              <div><span class="layui-icon layui-icon-male"></span> 性别：
+                <span th:text="${info!=null?info.sex:''}"></span>
+              </div>
+              <div><span class="layui-icon layui-icon-cellphone"></span> 电话：
+                <span th:text="${info!=null?info.phone:''}"></span>
+              </div>
+              <div><span class="layui-icon layui-icon-home"></span> 部门：
+                <span th:text="${info!=null?info.department:''}"></span>
+              </div>
+              <div><span class="layui-icon layui-icon-friends"></span> 职务：
+                <span th:text="${info!=null?info.duty:''}"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="layui-inline">
-    <div class="layui-form-item">
-      <div class="layui-inline">
-        <label class="layui-form-label" style="width: 30px;">姓名</label>
-        <div class="layui-input-inline">
-          <input type="text" name="name" th:value="${info!=null?info.name:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-        <label class="layui-form-label" style="width: 30px;">性别</label>
-        <div class="layui-input-inline">
-          <input type="text" name="sex" th:value="${info!=null?info.sex:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-    </div>
-    <div class="layui-form-item">
-      <div class="layui-inline">
-        <label class="layui-form-label" style="width: 30px;">年龄</label>
-        <div class="layui-input-inline">
-          <input type="text" name="age" th:value="${info!=null?info.age:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-        <label class="layui-form-label" style="width: 30px;">电话</label>
-        <div class="layui-input-inline">
-          <input type="text" name="phone" th:value="${info!=null?info.phone:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-    </div>
-    <div class="layui-form-item">
-      <div class="layui-inline">
-        <label class="layui-form-label" style="width: 30px;">职务</label>
-        <div class="layui-input-inline">
-          <input type="text" name="duty" th:value="${info!=null?info.duty:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-        <label class="layui-form-label" style="width: 30px;">科室</label>
-        <div class="layui-input-inline">
-          <input type="text" name="department" th:value="${info!=null?info.department:''}" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
-
+</div>
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript">
   layui.use(['form','layer','jquery'], function () {
@@ -59,9 +111,23 @@
     // 操作对象
     var form = layui.form;
     var $ = layui.jquery;
-    form.on('submit(formDemo)',function (data) {
-    })
-
+    $view = $('#febs-user-profile');
+    var id = d_id.value
+    $view.on('click', '#update-user-info', function () {
+      layer.open({
+        type: 2,
+        content: "http://localhost:8080/self_center/edit?id=" + id,
+        area: ["800px", "525px"],
+        title: ['修改'],
+        fixed: false,
+        shadeClose: true,
+        maxmin: true,
+        resize: true,
+        end: function () {
+          location.reload()
+        }
+      });
+    });
   });
 </script>
 </body>

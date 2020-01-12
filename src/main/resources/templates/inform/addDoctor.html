@@ -55,6 +55,7 @@
     </div>
     <input type="hidden" name="doctorGroupId" th:value="${member!=null?member.doctorGroupId:''}" />
     <input type="hidden" name="doctorId" th:value="${member!=null?member.doctorId:''}" />
+    <input type="hidden" name="hospitalId" th:value="${member!=null?member.hospitalId:''}" />
     <button lay-filter="doctorAdd" class="layui-btn"  lay-submit="" style="float: right;margin: 5px">提交</button>
   </form>
 </body>
@@ -86,7 +87,10 @@
            title: '最终的提交信息'
        })*/
       //ajax 提交
-      data.field.doctorGroupId = parent.PartitionId;
+      if(parent.PartitionId != null)
+      {
+        data.field.doctorGroupId = parent.PartitionId;
+      }
       $.ajax({
         type: "Post",
         dataType: "text",

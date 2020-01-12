@@ -24,6 +24,13 @@
     where family_member_id = #{familyMemberId,jdbcType=BIGINT}
   </select>
 
+  <select id="selectByCardId" resultMap="BaseResultMap">
+    select
+    *
+    from family_member_form
+    where card_id = #{cardId,jdbcType=VARCHAR}
+  </select>
+
   <select id="getAllMemberList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />

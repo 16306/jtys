@@ -59,6 +59,11 @@ public class FamilyAppService
   @Autowired
   private FollowUpMapper followUpMapper;
 
+  /**
+   * familyAPP登录功能
+   * @param familyMember
+   * @return
+   */
   public FamilyMember login(FamilyMember familyMember)
   {
     FamilyMember member = familyMemberMapper.selectByCardId(familyMember.getCardId());
@@ -70,6 +75,11 @@ public class FamilyAppService
     return member;
   }
 
+  /**
+   * 查找相同familyId的家庭成员
+   * @param familyId
+   * @return
+   */
   public List<FamilyMember> getAllMember(Long familyId)
   {
     List<FamilyMember> members = new ArrayList<>();
@@ -85,6 +95,13 @@ public class FamilyAppService
     return members;
   }
 
+  /**
+   * 查找家庭所在的医院的通知
+   * @param familyId
+   * @param title
+   * @param publisher
+   * @return
+   */
   public List<Notice> getAllNotice(Long familyId, String title, String publisher)
   {
     Family family = familyMapper.selectByPrimaryKey(familyId);
@@ -96,6 +113,11 @@ public class FamilyAppService
     return notice;
   }
 
+  /**
+   * 查找用户的检查报告
+   * @param cardId
+   * @return
+   */
   public List<Inspection> getAllInspection(String cardId)
   {
     List<Case> cases = caseMapper.selectByCardId(cardId);
@@ -110,11 +132,20 @@ public class FamilyAppService
     return inspection;
   }
 
+  /**
+   * 查找所有过审了的健康知识
+   * @return
+   */
   public List<HealthKnowledge> getAllHealthKnowledge()
   {
     return healthKnowledgeMapper.getHealthKnowledgeList("1");
   }
 
+  /**
+   * 创建随访记录
+   * @param record
+   * @return
+   */
   @Transactional(rollbackFor=Exception.class)
   public int createFollowUp(FollowUp record)
   {
@@ -130,6 +161,11 @@ public class FamilyAppService
     return followUpMapper.insert(record);
   }
 
+  /**
+   * 创建病例记录
+   * @param record
+   * @return
+   */
   @Transactional(rollbackFor=Exception.class)
   public int createCase(Case record)
   {
@@ -145,6 +181,11 @@ public class FamilyAppService
     return caseMapper.insert(record);
   }
 
+  /**
+   * 创建检查记录
+   * @param record
+   * @return
+   */
   @Transactional(rollbackFor=Exception.class)
   public int createInspection(Inspection record)
   {
@@ -160,6 +201,11 @@ public class FamilyAppService
     return inspectionMapper.insert(record);
   }
 
+  /**
+   * 创建住院记录
+   * @param record
+   * @return
+   */
   @Transactional(rollbackFor=Exception.class)
   public int createHospitalization(Hospitalization record)
   {

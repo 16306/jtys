@@ -21,12 +21,26 @@ public class NoticeService
     return noticeMapper.selectByPrimaryKey(noticeId);
   }
 
+  /**
+   * 得到Notice最后一条
+   * @return
+   */
   public Notice getAll()
   {
     return noticeMapper.getAll();
   }
 
 
+  /**
+   * 得到某医院的所有通知
+   * @param hospitalId
+   * @param title
+   * @param publisher
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 分页器
+   */
   public PageInfo<Notice> getNoticeList(Long hospitalId, String title, String publisher,int page,int limit,int mark) {
 
     if(mark==1) {
@@ -37,6 +51,10 @@ public class NoticeService
     return pageInfo;
   }
 
+  /**
+   * 批量删除通知
+   * @param ids
+   */
   @Transactional
   public void batchDeleteNotice(List<Long> ids)
   {

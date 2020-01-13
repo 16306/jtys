@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 public class SetData
 {
 
+  /**
+   * 将分页器数据处理成layUI规定的数据
+   * @param data
+   * @return
+   */
   public static Map<String, Object> setdata(@NotNull PageInfo<?> data)
   {
     Map<String,Object> result = new HashMap<>();
@@ -23,6 +28,9 @@ public class SetData
     return result;
   }
 
+  /**
+   * 得到并格式化当前时间
+   */
   public static Date setDate()
   {
     Date date = new Date();

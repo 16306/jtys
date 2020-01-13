@@ -52,6 +52,16 @@ public class FamilyService
     return familyMapper.getAll();
   }
 
+  /**
+   * 查找所有相对应hospitalId的家庭
+   * @param hospitalId
+   * @param householderName
+   * @param householderPhone
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 一个分页器
+   */
   public PageInfo<Family> getFamilyList(Long hospitalId, String householderName, String householderPhone,int page,int limit,int mark)
   {
 
@@ -68,6 +78,11 @@ public class FamilyService
     return new PageInfo<>(list);
   }
 
+  /**
+   * 得到一个医院的所有家庭
+   * @param hospitalId
+   * @return 列表
+   */
   public List<Family> getAllFamilyList(Long hospitalId)
   {
     return familyMapper.getAllFamilyList(hospitalId);

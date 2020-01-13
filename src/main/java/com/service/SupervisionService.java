@@ -40,6 +40,11 @@ public class SupervisionService
   @Autowired
   private EvaluationMapper evaluationMapper;
 
+
+  /**
+   * 查找医院签约信息
+   * @return
+   */
   public Map<String, Object> get_sign_info()
   {
     Map<String, Object> result = new HashMap<>();
@@ -50,6 +55,10 @@ public class SupervisionService
     return result;
   }
 
+  /**
+   * 查找医院人员信息
+   * @return
+   */
   public Map<String,Object> get_people_info()
   {
     Map<String, Object> result = new HashMap<>();
@@ -71,6 +80,14 @@ public class SupervisionService
     return result;
   }
 
+  /**
+   * 数据处理
+   * @param Evaluator
+   * @param EvaluationContent
+   * @param Name
+   * @param Time
+   * @return
+   */
   public Map<Object,Object> setResult(Object Evaluator,Object EvaluationContent,Object Name,Object Time)
   {
     Map<Object, Object> result = new HashMap<>();
@@ -81,6 +98,15 @@ public class SupervisionService
     return result;
   }
 
+  /**
+   * 查找评价信息
+   * @param page
+   * @param limit
+   * @param mark
+   * @param Evaluator
+   * @param doctorName
+   * @return
+   */
   public PageInfo<Map<Object, Object>> get_estimate_info(int page,int limit,int mark,String Evaluator, String doctorName)
   {
     if(mark==1) {

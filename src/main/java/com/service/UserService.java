@@ -53,6 +53,11 @@ public class UserService
     return userMapper.selectByNameAndPassword(name,password);
   }
 
+  /**
+   * 通过用户名查找user
+   * @param name
+   * @return
+   */
   public User selectByName(String name)
   {
     return userMapper.selectByName(name);

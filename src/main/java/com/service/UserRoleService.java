@@ -14,6 +14,11 @@ public class UserRoleService
   @Autowired
   private UserRoleMapper userRoleMapper;
 
+  /**
+   * 通过UserId查找UserRole列表
+   * @param userId
+   * @return
+   */
   public List<UserRole> selectByUserId(Long userId)
   {
     return userRoleMapper.selectByUserId(userId);
@@ -29,6 +34,10 @@ public class UserRoleService
     return userRoleMapper.insert(record);
   }
 
+  /**
+   * 得到最后一条UserRoleId + 1
+   * @return
+   */
   public Long getMaxId()
   {
     UserRoleExample example = new UserRoleExample();

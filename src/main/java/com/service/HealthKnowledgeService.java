@@ -33,6 +33,14 @@ public class HealthKnowledgeService
     return healthKnowledgeMapper.insert(record);
   }
 
+  /**
+   * 得到某个状态的HealthKnowledge
+   * @param reviewStatus
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 分页器
+   */
   public PageInfo<HealthKnowledge> getHealthKnowledgeList(String reviewStatus,int page,int limit,int mark)
   {
     if(mark==1) {

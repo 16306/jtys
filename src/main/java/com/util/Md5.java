@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 public class Md5
 {
 
+  /**
+   * 没用到的MD5加密
+   * @param plainText
+   * @return
+   */
   public static String md5(String plainText)
   {
 

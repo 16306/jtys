@@ -14,6 +14,9 @@ public class FindUser
   @Autowired
   private UserService userService;
 
+  /**
+   * 查找当前用户
+   */
   public  static FindUser findUser ;
   @PostConstruct //通过@PostConstruct实现初始化bean之前进行的操作
   public void init() {

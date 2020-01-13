@@ -12,6 +12,11 @@ public class MenuRoleService
   @Autowired
   private MenuRoleMapper menuRoleMapper;
 
+  /**
+   * 通过roleid得到MenuRole列表
+   * @param roleId
+   * @return MenuRole列表
+   */
   public List<MenuRole> selectByRoleId(Long roleId)
   {
     return menuRoleMapper.selectByRoleId(roleId);

@@ -39,6 +39,10 @@ public class DoctorService
     return doctorMapper.updateByPrimaryKey(record);
   }
 
+  /**
+   * 查找最后插入的医生，若无则返回一个Doctor对象DoctorId为1
+   * @return
+   */
   public Doctor getAll()
   {
     Doctor doctor = new Doctor();
@@ -50,6 +54,14 @@ public class DoctorService
     return doctorMapper.getAll();
   }
 
+  /**
+   * 查找所有相对应doctorGroupId的医生
+   * @param doctorGroupId
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 一个分页器
+   */
   public PageInfo<Doctor> getDoctorList(Long doctorGroupId,int page,int limit,int mark)
   {
 
@@ -60,6 +72,11 @@ public class DoctorService
     return new PageInfo<>(list);
   }
 
+  /**
+   * 查找所有相对应doctorGroupId的医生
+   * @param doctorGroupId
+   * @return 医生列表
+   */
   public List<Doctor> DoctorList(Long doctorGroupId)
   {
     return doctorMapper.getDoctorList(doctorGroupId);

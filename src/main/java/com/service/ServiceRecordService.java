@@ -31,6 +31,17 @@ public class ServiceRecordService
   private DoctorGroupMapper doctorGroupMapper;
 
 
+  /**
+   * 处理数据
+   * @param familyMemberName
+   * @param familyHouseholderName
+   * @param doctorGroupLeaderName
+   * @param time
+   * @param type
+   * @param content
+   * @param evaluation
+   * @return
+   */
   public Map<Object,Object> setResult(Object familyMemberName, Object familyHouseholderName, Object doctorGroupLeaderName, Object time, Object type, Object content, Object evaluation)
   {
     Map<Object, Object> result = new HashMap<>();
@@ -45,6 +56,16 @@ public class ServiceRecordService
   }
 
 
+  /**
+   * 查找某一医院的服务记录，允许通过FamilyMemberName和DoctorLeaderName筛选数据
+   * @param id
+   * @param page
+   * @param limit
+   * @param mark
+   * @param MemberName
+   * @param LeaderName
+   * @return 分页器
+   */
   public PageInfo<Map<Object, Object>> selectByHospitalId(Long id,int page,int limit,int mark,String MemberName, String LeaderName)
   {
     if(mark==1) {

@@ -15,6 +15,11 @@ public class FamilyDoctorService
   @Autowired
   private FamilyDoctorMapper familyDoctorMapper;
 
+  /**
+   * 查找未签约的家庭
+   * @param doctorGroupId
+   * @return
+   */
   public List<Long> selectByNoContract(Long doctorGroupId)
   {
     List<Long> list = new ArrayList<>();
@@ -25,11 +30,20 @@ public class FamilyDoctorService
     return list;
   }
 
+  /**
+   * 查找家庭
+   * @param familyId
+   * @return
+   */
   public FamilyDoctor selectByFamilyId(Long familyId)
   {
     return familyDoctorMapper.selectByFamilyId(familyId);
   }
 
+  /**
+   * 得到familydoctor表的最后一条记录
+   * @return
+   */
   public FamilyDoctor getAll()
   {
     FamilyDoctor familyDoctor = new FamilyDoctor();

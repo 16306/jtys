@@ -53,6 +53,11 @@ public class RoleService
     return roleMapper.selectByPrimaryKey(roleId);
   }
 
+  /**
+   * 通过rolename查找role
+   * @param name
+   * @return
+   */
   public Role selectByName(String name)
   {
     return roleMapper.selectByName(name);

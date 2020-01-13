@@ -42,6 +42,13 @@ public class IoService
   private DoctorGroupService doctorGroupService;
 
 
+  /**
+   * 将execl文件里的数据导入数据库
+   * @param filename
+   * @param file
+   * @return
+   * @throws IOException
+   */
   @Transactional(rollbackFor = Exception.class)
   public String importService(String filename, MultipartFile file) throws IOException
   {
@@ -185,6 +192,12 @@ public class IoService
     return str;
   }
 
+  /**
+   * 将数据库家庭和医生数据导出
+   * @param response
+   * @param ids
+   * @throws IOException
+   */
   @Transactional(rollbackFor = Exception.class)
   public void OutputInfo(HttpServletResponse response, String ids) throws IOException
   {

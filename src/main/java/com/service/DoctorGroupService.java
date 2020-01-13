@@ -15,6 +15,7 @@ public class DoctorGroupService
   @Autowired
   private DoctorGroupMapper doctorGroupMapper;
 
+
   @Transactional(rollbackFor=Exception.class)
   public int deleteByPrimaryKey(Long doctorGroupId)
   {
@@ -27,6 +28,17 @@ public class DoctorGroupService
     return doctorGroupMapper.insert(record);
   }
 
+  /**
+   * 查找所有相对应hospitalId的医生组
+   * @param hospitalId
+   * @param name
+   * @param groupLeaderName
+   * @param serviceArea
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 一个分页器
+   */
   public PageInfo<DoctorGroup> getAllDoctorGroupList(Long hospitalId, String name, String groupLeaderName,String serviceArea,int page,int limit,int mark)
   {
 
@@ -37,6 +49,14 @@ public class DoctorGroupService
     return new PageInfo<>(list);
   }
 
+  /**
+   * 查找所有相对应hospitalId的医生组，现在没用到
+   * @param hospitalId
+   * @param name
+   * @param groupLeaderName
+   * @param serviceArea
+   * @return 一个医生组列表
+   */
   public List<DoctorGroup> getAllDoctorGroupList(Long hospitalId, String name, String groupLeaderName,String serviceArea)
   {
     return doctorGroupMapper.getAllDoctorGroupList(hospitalId,name,groupLeaderName,serviceArea);
@@ -47,6 +67,10 @@ public class DoctorGroupService
     return doctorGroupMapper.selectByPrimaryKey(familyMemberId);
   }
 
+  /**
+   * 查找最后插入的医生组，若无则返回一个DoctorGroup对象DoctorGroupId为1
+   * @return
+   */
   public DoctorGroup getAll()
   {
     DoctorGroup doctorGroup = new DoctorGroup();

@@ -27,6 +27,14 @@ public class FamilyMemberService
     return familyMemberMapper.insert(record);
   }
 
+  /**
+   * 得到某家庭的所有家庭成员
+   * @param familyId
+   * @param page
+   * @param limit
+   * @param mark
+   * @return 一个分页器
+   */
   public PageInfo<FamilyMember> getAllMemberList(Long familyId,int page,int limit,int mark)
   {
 
@@ -37,6 +45,11 @@ public class FamilyMemberService
     return new PageInfo<>(list);
   }
 
+  /**
+   * 得到某家庭的所有家庭成员
+   * @param familyId
+   * @return 列表
+   */
   public List<FamilyMember> getAllMember(Long familyId)
   {
     return familyMemberMapper.getAllMemberList(familyId);
@@ -47,6 +60,10 @@ public class FamilyMemberService
     return familyMemberMapper.selectByPrimaryKey(familyMemberId);
   }
 
+  /**
+   * 得到FamilyMember最新记录
+   * @return
+   */
   public FamilyMember getAll()
   {
     FamilyMember familyMember = new FamilyMember();

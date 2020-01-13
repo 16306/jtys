@@ -4,7 +4,9 @@ package com.service;
 import com.entity.Case;
 import com.entity.Family;
 import com.entity.FamilyMember;
+import com.entity.FollowUp;
 import com.entity.HealthKnowledge;
+import com.entity.Hospitalization;
 import com.entity.Inspection;
 import com.entity.Notice;
 import com.mapper.CaseMapper;
@@ -12,15 +14,17 @@ import com.mapper.DoctorGroupMapper;
 import com.mapper.DoctorMapper;
 import com.mapper.FamilyMapper;
 import com.mapper.FamilyMemberMapper;
+import com.mapper.FollowUpMapper;
 import com.mapper.HealthKnowledgeMapper;
+import com.mapper.HospitalizationMapper;
 import com.mapper.InspectionMapper;
 import com.mapper.NoticeMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FamilyAppService
@@ -47,7 +51,13 @@ public class FamilyAppService
   private CaseMapper caseMapper;
 
   @Autowired
+  private HospitalizationMapper hospitalizationMapper;
+
+  @Autowired
   private HealthKnowledgeMapper healthKnowledgeMapper;
+
+  @Autowired
+  private FollowUpMapper followUpMapper;
 
   public FamilyMember login(FamilyMember familyMember)
   {
@@ -104,5 +114,67 @@ public class FamilyAppService
   {
     return healthKnowledgeMapper.getHealthKnowledgeList("1");
   }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int createFollowUp(FollowUp record)
+  {
+    FollowUp followUp = followUpMapper.getAll();
+    if(null == followUp)
+    {
+      record.setFollowUpId((long)0);
+    }
+    else
+    {
+      record.setFollowUpId(followUp.getFollowUpId()+1);
+    }
+    return followUpMapper.insert(record);
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int createCase(Case record)
+  {
+    Case item = caseMapper.getAll();
+    if(null == item)
+    {
+      record.setCaseId((long)0);
+    }
+    else
+    {
+      record.setCaseId(item.getCaseId()+1);
+    }
+    return caseMapper.insert(record);
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int createInspection(Inspection record)
+  {
+    Inspection item = inspectionMapper.getAll();
+    if(null == item)
+    {
+      record.setInspectionId((long)0);
+    }
+    else
+    {
+      record.setInspectionId(item.getInspectionId()+1);
+    }
+    return inspectionMapper.insert(record);
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int createHospitalization(Hospitalization record)
+  {
+    Hospitalization item = hospitalizationMapper.getAll();
+    if(null == item)
+    {
+      record.setHospitalizationId((long)0);
+    }
+    else
+    {
+      record.setHospitalizationId(item.getHospitalizationId()+1);
+    }
+    return hospitalizationMapper.insert(record);
+  }
+
+
 
 }

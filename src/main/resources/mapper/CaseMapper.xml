@@ -25,6 +25,10 @@
     order by case_form.date desc
   </select>
 
+  <select id="getAll" resultMap="BaseResultMap">
+    select top 1 * from case_form order by Case_id desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from case_form
     where Case_id = #{caseId,jdbcType=BIGINT}

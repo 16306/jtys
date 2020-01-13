@@ -6,10 +6,10 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="preset_value" property="presetValue" jdbcType="VARCHAR" />
     <result column="measurement_type" property="measurementType" jdbcType="VARCHAR" />
-    <result column="warning_id" property="warningId" jdbcType="BIGINT" />
+    <result column="Measurement_id" property="measurementId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, preset_value, measurement_type, warning_id
+    id, code, preset_value, measurement_type, Measurement_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -23,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.entity.Threshold" >
     insert into Threshold_form (id, code, preset_value, 
-      measurement_type, warning_id)
+      measurement_type, Measurement_id)
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{presetValue,jdbcType=VARCHAR}, 
-      #{measurementType,jdbcType=VARCHAR}, #{warningId,jdbcType=BIGINT})
+      #{measurementType,jdbcType=VARCHAR}, #{measurementId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Threshold" >
     insert into Threshold_form
@@ -42,8 +42,8 @@
       <if test="measurementType != null" >
         measurement_type,
       </if>
-      <if test="warningId != null" >
-        warning_id,
+      <if test="measurementId != null" >
+        Measurement_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -59,8 +59,8 @@
       <if test="measurementType != null" >
         #{measurementType,jdbcType=VARCHAR},
       </if>
-      <if test="warningId != null" >
-        #{warningId,jdbcType=BIGINT},
+      <if test="measurementId != null" >
+        #{measurementId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -76,8 +76,8 @@
       <if test="measurementType != null" >
         measurement_type = #{measurementType,jdbcType=VARCHAR},
       </if>
-      <if test="warningId != null" >
-        warning_id = #{warningId,jdbcType=BIGINT},
+      <if test="measurementId != null" >
+        Measurement_id = #{measurementId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -87,7 +87,7 @@
     set code = #{code,jdbcType=VARCHAR},
       preset_value = #{presetValue,jdbcType=VARCHAR},
       measurement_type = #{measurementType,jdbcType=VARCHAR},
-      warning_id = #{warningId,jdbcType=BIGINT}
+      Measurement_id = #{measurementId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

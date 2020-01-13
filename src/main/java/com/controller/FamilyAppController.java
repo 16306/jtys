@@ -2,8 +2,11 @@ package com.controller;
 
 
 import com.entity.FamilyMember;
+import com.entity.FollowUp;
+import com.entity.HealthKnowledge;
 import com.entity.Inspection;
 import com.entity.Notice;
+import com.google.gson.Gson;
 import com.service.FamilyAppService;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +89,36 @@ public class FamilyAppController
     return result;
   }
 
+  @ResponseBody
+  @PostMapping("/getAllHealthKnowledge")
+  public Map<Object,Object> getAllHealthKnowledge(@RequestBody Map<Object,Object> requests)
+  {
+    Map<Object,Object> result = new HashMap<>();
+    List<HealthKnowledge> list = familyAppService.getAllHealthKnowledge();
+    if(null !=  list && (int)requests.get("status") == 1)
+    {
+      result.put("HealthKnowledge", list);
+      result.put("status",1);
+      return result;
+    }
+    result.put("status",0);
+    return result;
+  }
 
 
+  @ResponseBody
+  @PostMapping("/saveFollowUp")
+  public int saveFollowUp(@RequestBody Map<Object,Object> requests)
+  {
+    Gson gson = new Gson();
+    String followjson = gson.toJson(requests.get("followup"));
+    FollowUp followUp =  gson.fromJson(followjson, FollowUp.class);
+    int status = 0;
+    if((int)requests.get("status") == 1)
+    {
+      status = familyAppService.createFollowUp(followUp);
+      return status;
+    }
+    return status;
+  }
 }

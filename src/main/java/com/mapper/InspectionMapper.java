@@ -16,6 +16,8 @@ public interface InspectionMapper {
 
     Inspection selectByPrimaryKey(Long inspectionId);
 
+    Inspection getAll();
+
     Inspection selectByCaseId(Long caseId);
 
     int updateByPrimaryKeySelective(Inspection record);

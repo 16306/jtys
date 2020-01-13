@@ -126,16 +126,16 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <table tableName="Service_record_form" domainObjectName="ServiceRecord">
-    </table>
+    <!--<table tableName="Service_record_form" domainObjectName="ServiceRecord">-->
+    <!--</table>-->
     <!--<table tableName="Surgery_form" domainObjectName="Surgery" enableCountByExample="false"-->
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <!--<table tableName="Threshold_form" domainObjectName="Threshold" enableCountByExample="false"-->
-      <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-      <!--selectByExampleQueryId="false">-->
-    <!--</table>-->
+    <table tableName="Threshold_form" domainObjectName="Threshold" enableCountByExample="false"
+      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+      selectByExampleQueryId="false">
+    </table>
     <!--<table tableName="unit_form" domainObjectName="Unit" enableCountByExample="false"-->
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->

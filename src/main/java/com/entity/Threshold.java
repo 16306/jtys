@@ -9,7 +9,7 @@ public class Threshold {
 
     private String measurementType;
 
-    private Long warningId;
+    private Long measurementId;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class Threshold {
         this.measurementType = measurementType == null ? null : measurementType.trim();
     }
 
-    public Long getWarningId() {
-        return warningId;
+    public Long getMeasurementId() {
+        return measurementId;
     }
 
-    public void setWarningId(Long warningId) {
-        this.warningId = warningId;
+    public void setMeasurementId(Long measurementId) {
+        this.measurementId = measurementId;
     }
 }

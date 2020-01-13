@@ -12,7 +12,7 @@
  Target Server Version : 11002100
  File Encoding         : 65001
 
- Date: 03/01/2020 11:45:09
+ Date: 13/01/2020 20:23:48
 */
 
 
@@ -47,11 +47,18 @@ CREATE TABLE [dbo].[case_form] (
   [type] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [hospital] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [date] datetime2(7)  NOT NULL,
-  [Case_id] bigint  IDENTITY(1,1) NOT NULL
+  [Case_id] bigint  NOT NULL
 )
 GO
 
 ALTER TABLE [dbo].[case_form] SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of case_form
+-- ----------------------------
+INSERT INTO [dbo].[case_form] VALUES (N'452123199405075678', N'1', N'1', N'2020-01-11 23:55:10.0000000', N'1')
 GO
 
 
@@ -129,6 +136,9 @@ GO
 INSERT INTO [dbo].[doctor_form] VALUES (N'1', N'张三', N'38', N'男', N'452123198105061234', N'主任', N'心脑', N'13878754236', N'1', N'1')
 GO
 
+INSERT INTO [dbo].[doctor_form] VALUES (N'2', N'李五', N'45', N'男', N'452123789654231572', N'医师', N'心脑', N'15246786698', N'2', N'1')
+GO
+
 
 -- ----------------------------
 -- Table structure for doctor_group_form
@@ -185,6 +195,13 @@ GO
 
 
 -- ----------------------------
+-- Records of evaluation_form
+-- ----------------------------
+INSERT INTO [dbo].[evaluation_form] VALUES (N'1', N'张5', N'1', N'123', N'2020-01-08 22:14:37.0000000')
+GO
+
+
+-- ----------------------------
 -- Table structure for family_doctor_form
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[family_doctor_form]') AND type IN ('U'))
@@ -214,7 +231,7 @@ GO
 INSERT INTO [dbo].[family_doctor_form] VALUES (N'3', N'-1', N'7', N'2019-12-05 01:04:38.0000000', N'合同内容', N'1')
 GO
 
-INSERT INTO [dbo].[family_doctor_form] VALUES (N'4', N'1', N'8', N'2019-12-09 11:56:09.0000000', N'合同内容', N'1')
+INSERT INTO [dbo].[family_doctor_form] VALUES (N'4', N'2', N'8', N'2020-01-06 11:50:30.0000000', N'合同内容', N'1')
 GO
 
 
@@ -245,7 +262,7 @@ GO
 INSERT INTO [dbo].[family_form] VALUES (N'1', N'黎明', N'3', N'13878890236', N'广西桂林灵川县灵田村', N'1')
 GO
 
-INSERT INTO [dbo].[family_form] VALUES (N'3', N'滴滴滴', N'0', N'13578555434', N'啦啦啦啦', N'1')
+INSERT INTO [dbo].[family_form] VALUES (N'3', N'滴滴滴', N'2', N'13578555434', N'啦啦啦啦', N'1')
 GO
 
 INSERT INTO [dbo].[family_form] VALUES (N'4', N'黎明', N'0', N'13878890236', N'广西桂林灵川县灵田村', N'1')
@@ -312,13 +329,19 @@ GO
 -- ----------------------------
 -- Records of family_member_form
 -- ----------------------------
-INSERT INTO [dbo].[family_member_form] VALUES (N'1', N'黎明加', N'25', N'男', N'452123199405075678', N'13878960568', N'$2a$10$l/aQzQXTo3qVXDXW3C/GmeuLA1vO0n1ofXREL57BnZNN.r7z8mf7G', N'1', N'黎明', N'13878960568')
+INSERT INTO [dbo].[family_member_form] VALUES (N'1', N'黎明加', N'25', N'男', N'452123199405075678', N'13878960568', N'$2a$10$eRLP1HGgBZAtt8lNuZJvaurvxutABHcudbbvIsby3WNYsxce/c0Sy', N'1', N'黎明', N'13878960568')
 GO
 
 INSERT INTO [dbo].[family_member_form] VALUES (N'2', N'黎明否', N'18', N'男', N'452456200101023412', N'13435689764', N'$2a$10$aLEqDLbqw87GfKDfLAiXeeoVaEDYaIgC6zlTd45XByqKrfYt7IJYK', N'1', N'黎明', N'13435689764')
 GO
 
 INSERT INTO [dbo].[family_member_form] VALUES (N'3', N'黎明', N'56', N'男', N'453123497402067612', N'13845678965', N'$2a$10$7JA51d9WF0wpWrVcGygNh.4v.DeNaDYpQVW4unplsh2fa1wDDG7si', N'1', N'黎明否', N'13845678965')
+GO
+
+INSERT INTO [dbo].[family_member_form] VALUES (N'4', N'滴水', N'18', N'男', N'452123200201015874', N'15278963356', N'$2a$10$moD/PwVvyCqi6kKO7eXu0Os96V539loi8W/DRSr07g1hx0TV5ZRrm', N'3', N'滴滴滴', N'13578555434')
+GO
+
+INSERT INTO [dbo].[family_member_form] VALUES (N'5', N'滴滴滴', N'45', N'男', N'452123197524311254', N'13578555434', N'$2a$10$TOgVOOrjsEGrkJMo/JAVR.Mp4rco7Z.eq6aqc9mzo50JGM59iTtvG', N'3', N'滴滴滴', N'13578555434')
 GO
 
 
@@ -338,11 +361,23 @@ CREATE TABLE [dbo].[Follow_up_form] (
   [content] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [family_id] bigint  NOT NULL,
   [family_member_id] bigint  NOT NULL,
-  [health_assessment] text COLLATE Chinese_PRC_CI_AS  NOT NULL
+  [health_assessment] text COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [doctor_id] bigint  NOT NULL,
+  [status] int  NOT NULL
 )
 GO
 
 ALTER TABLE [dbo].[Follow_up_form] SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of Follow_up_form
+-- ----------------------------
+INSERT INTO [dbo].[Follow_up_form] VALUES (N'0', N'张三', N'无', N'走访', N'2019-01-12 12:30:30.0000000', N'医疗后回访', N'1', N'1', N'健康', N'1', N'1')
+GO
+
+INSERT INTO [dbo].[Follow_up_form] VALUES (N'1', N'张三', N'无', N'走访', N'2019-01-13 12:30:30.0000000', N'医疗后回访', N'1', N'1', N'健康', N'1', N'1')
 GO
 
 
@@ -405,6 +440,13 @@ GO
 
 
 -- ----------------------------
+-- Records of hospital_form
+-- ----------------------------
+INSERT INTO [dbo].[hospital_form] VALUES (N'1', N'桂林人民医院', N'桂林市', N'政府', N'0771-885965')
+GO
+
+
+-- ----------------------------
 -- Table structure for Hospitalization_form
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[Hospitalization_form]') AND type IN ('U'))
@@ -444,6 +486,13 @@ CREATE TABLE [dbo].[Inspection_form] (
 GO
 
 ALTER TABLE [dbo].[Inspection_form] SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of Inspection_form
+-- ----------------------------
+INSERT INTO [dbo].[Inspection_form] VALUES (N'1', N'1', N'1', N'2020-01-11 23:55:31.0000000', N'1')
 GO
 
 
@@ -552,7 +601,7 @@ GO
 INSERT INTO [dbo].[menu_form] VALUES (N'15', N'我的团队', N'-1', N'1', N'/self_center/my_team', N'button')
 GO
 
-INSERT INTO [dbo].[menu_form] VALUES (N'16', N'修改密码', N'-1', N'1', N'/changepassword', N'button')
+INSERT INTO [dbo].[menu_form] VALUES (N'16', N'安全设置', N'-1', N'1', N'/changepassword', N'button')
 GO
 
 INSERT INTO [dbo].[menu_form] VALUES (N'17', N'通知管理', N'-1', N'1', N'javascript:;', N'menu')
@@ -595,6 +644,9 @@ INSERT INTO [dbo].[menu_form] VALUES (N'29', N'医院信息', N'27', N'2', N'/su
 GO
 
 INSERT INTO [dbo].[menu_form] VALUES (N'30', N'居民反馈', N'27', N'2', N'/supervision/estimate', N'menu')
+GO
+
+INSERT INTO [dbo].[menu_form] VALUES (N'31', N'服务信息', N'21', N'2', N'/inform/service_info', N'menu')
 GO
 
 
@@ -665,9 +717,6 @@ GO
 INSERT INTO [dbo].[menu_role_form] VALUES (N'15', N'1', N'16', N'001100')
 GO
 
-INSERT INTO [dbo].[menu_role_form] VALUES (N'16', N'2', N'14', N'111100')
-GO
-
 INSERT INTO [dbo].[menu_role_form] VALUES (N'17', N'2', N'16', N'001100')
 GO
 
@@ -710,9 +759,6 @@ GO
 INSERT INTO [dbo].[menu_role_form] VALUES (N'30', N'3', N'28', N'000100')
 GO
 
-INSERT INTO [dbo].[menu_role_form] VALUES (N'31', N'3', N'29', N'000100')
-GO
-
 INSERT INTO [dbo].[menu_role_form] VALUES (N'32', N'3', N'30', N'000100')
 GO
 
@@ -729,6 +775,9 @@ INSERT INTO [dbo].[menu_role_form] VALUES (N'36', N'2', N'28', N'000100')
 GO
 
 INSERT INTO [dbo].[menu_role_form] VALUES (N'37', N'2', N'30', N'000100')
+GO
+
+INSERT INTO [dbo].[menu_role_form] VALUES (N'38', N'2', N'31', N'000100')
 GO
 
 
@@ -808,6 +857,9 @@ INSERT INTO [dbo].[Notice_form] VALUES (N'21', N'2', N'<p><br></p><p>24</p><p>2<
 GO
 
 INSERT INTO [dbo].[Notice_form] VALUES (N'22', N'2525', N'2552525', N'2019-12-04 21:01:54.0000000', N'李四', N'1')
+GO
+
+INSERT INTO [dbo].[Notice_form] VALUES (N'23', N'123', N'4354045433453<strike>4534343</strike>4535344<u>5343445<i>345345</i>453453453</u>453<b>45343453453</b>', N'2020-01-08 22:26:42.0000000', N'王五', N'1')
 GO
 
 
@@ -957,11 +1009,19 @@ CREATE TABLE [dbo].[Service_record_form] (
   [family_member_id] bigint  NOT NULL,
   [service_content] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [service_type] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
-  [service_evaluation] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL
+  [service_evaluation] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [hospital_id] bigint  NOT NULL
 )
 GO
 
 ALTER TABLE [dbo].[Service_record_form] SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of Service_record_form
+-- ----------------------------
+INSERT INTO [dbo].[Service_record_form] VALUES (N'1', N'2020-01-07 01:07:56.0000000', N'1', N'1', N'1', N'123', N'123', N'123', N'1')
 GO
 
 
@@ -998,7 +1058,7 @@ CREATE TABLE [dbo].[Threshold_form] (
   [code] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [preset_value] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [measurement_type] varchar(255) COLLATE Chinese_PRC_CI_AS  NOT NULL,
-  [warning_id] bigint  NOT NULL
+  [Measurement_id] bigint  NOT NULL
 )
 GO
 
@@ -1049,7 +1109,7 @@ GO
 -- ----------------------------
 -- Records of user_form
 -- ----------------------------
-INSERT INTO [dbo].[user_form] VALUES (N'1', N'张三', N'$2a$10$f0DEGrkIpYyzcFrf/fTMSOAKl1Y/XHpKaijWdfiWnOOzGTEs8diLi', N'1', NULL)
+INSERT INTO [dbo].[user_form] VALUES (N'1', N'张三', N'$2a$10$f0DEGrkIpYyzcFrf/fTMSOAKl1Y/XHpKaijWdfiWnOOzGTEs8diLi', N'1', N'1')
 GO
 
 INSERT INTO [dbo].[user_form] VALUES (N'2', N'李四', N'$2a$10$f0DEGrkIpYyzcFrf/fTMSOAKl1Y/XHpKaijWdfiWnOOzGTEs8diLi', N'1', NULL)
@@ -1059,6 +1119,9 @@ INSERT INTO [dbo].[user_form] VALUES (N'3', N'王五', N'$2a$10$f0DEGrkIpYyzcFrf
 GO
 
 INSERT INTO [dbo].[user_form] VALUES (N'4', N'061234', N'$2a$10$gDaYeQt96JykryY0duEBruQhAjI0aMZEBWlUkFkjDNDwn6uThIUhm', N'1', N'1')
+GO
+
+INSERT INTO [dbo].[user_form] VALUES (N'5', N'231572', N'$2a$10$DwUPw03bRR8IFBpH/SBmQe1kM0tUm93PrQ9RPEPBDgzpzUcwGIGUW', N'1', N'2')
 GO
 
 
@@ -1093,6 +1156,9 @@ INSERT INTO [dbo].[user_role_form] VALUES (N'3', N'3', N'3')
 GO
 
 INSERT INTO [dbo].[user_role_form] VALUES (N'4', N'4', N'1')
+GO
+
+INSERT INTO [dbo].[user_role_form] VALUES (N'5', N'5', N'1')
 GO
 
 
@@ -1150,16 +1216,9 @@ GO
 
 
 -- ----------------------------
--- Auto increment value for case_form
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[case_form]', RESEED, 1)
-GO
-
-
--- ----------------------------
 -- Primary Key structure for table case_form
 -- ----------------------------
-ALTER TABLE [dbo].[case_form] ADD CONSTRAINT [PK__case_for__D061E8FDC7AB53E2] PRIMARY KEY CLUSTERED ([Case_id])
+ALTER TABLE [dbo].[case_form] ADD CONSTRAINT [PK__case_for__D061E8FD498E3BF4] PRIMARY KEY CLUSTERED ([Case_id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO

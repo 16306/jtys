@@ -15,6 +15,8 @@ public interface HospitalizationMapper {
 
     Hospitalization selectByPrimaryKey(Long hospitalizationId);
 
+    Hospitalization getAll();
+
     int updateByPrimaryKeySelective(Hospitalization record);
 
     int updateByPrimaryKey(Hospitalization record);

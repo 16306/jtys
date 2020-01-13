@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class FollowUp {
     private Long followUpId;
@@ -11,6 +12,7 @@ public class FollowUp {
 
     private String type;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private String content;

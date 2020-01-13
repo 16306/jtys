@@ -21,6 +21,11 @@
     from Hospitalization_form
     where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
   </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select top 1 * from Hospitalization_form order by Hospitalization_id desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Hospitalization_form
     where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}

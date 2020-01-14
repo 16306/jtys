@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.ObstericalHistory;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,10 @@ public interface ObstericalHistoryMapper {
     int insertSelective(ObstericalHistory record);
 
     ObstericalHistory selectByPrimaryKey(Long obstericalId);
+
+    List<ObstericalHistory> selectByCardId(String cardId);
+
+    ObstericalHistory getAll();
 
     int updateByPrimaryKeySelective(ObstericalHistory record);
 

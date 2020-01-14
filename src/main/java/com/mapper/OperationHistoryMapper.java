@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.OperationHistory;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,10 @@ public interface OperationHistoryMapper {
     int insertSelective(OperationHistory record);
 
     OperationHistory selectByPrimaryKey(Long operationId);
+
+    List<OperationHistory> selectByCardId(String cardId);
+
+    OperationHistory getAll();
 
     int updateByPrimaryKeySelective(OperationHistory record);
 

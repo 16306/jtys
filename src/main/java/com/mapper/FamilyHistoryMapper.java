@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.FamilyHistory;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,10 @@ public interface FamilyHistoryMapper {
     int insertSelective(FamilyHistory record);
 
     FamilyHistory selectByPrimaryKey(Long familyHistoryId);
+
+    List<FamilyHistory> selectByCardId(String cardId);
+
+    FamilyHistory getAll();
 
     int updateByPrimaryKeySelective(FamilyHistory record);
 

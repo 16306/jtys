@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.AllergyHistory;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,10 @@ public interface AllergyHistoryMapper {
     int insertSelective(AllergyHistory record);
 
     AllergyHistory selectByPrimaryKey(Long allergyId);
+
+    List<AllergyHistory> selectByCardId(String cardId);
+
+    AllergyHistory getAll();
 
     int updateByPrimaryKeySelective(AllergyHistory record);
 

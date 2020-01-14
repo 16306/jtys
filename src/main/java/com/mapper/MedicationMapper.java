@@ -15,6 +15,10 @@ public interface MedicationMapper {
 
     Medication selectByPrimaryKey(Long medicationId);
 
+    Medication getAll();
+
+    Medication selectByCaseId(Long caseId);
+
     int updateByPrimaryKeySelective(Medication record);
 
     int updateByPrimaryKey(Medication record);

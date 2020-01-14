@@ -15,6 +15,10 @@ public interface SurgeryMapper {
 
     Surgery selectByPrimaryKey(Long surgeryId);
 
+    Surgery getAll();
+
+    Surgery selectByCaseId(Long caseId);
+
     int updateByPrimaryKeySelective(Surgery record);
 
     int updateByPrimaryKey(Surgery record);

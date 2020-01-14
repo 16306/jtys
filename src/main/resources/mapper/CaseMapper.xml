@@ -17,6 +17,7 @@
     from case_form
     where Case_id = #{caseId,jdbcType=BIGINT}
   </select>
+
   <select id="selectByCardId" resultMap="BaseResultMap">
     select
     *

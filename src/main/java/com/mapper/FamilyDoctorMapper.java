@@ -20,7 +20,7 @@ public interface FamilyDoctorMapper {
 
     List<FamilyDoctor> selectByDoctorGroupId(Long doctorGroupId);
 
-    FamilyDoctor getAll();
+    FamilyDoctor getLastOne();
 
     int updateByPrimaryKeySelective(FamilyDoctor record);
 

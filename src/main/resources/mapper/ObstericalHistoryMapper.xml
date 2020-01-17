@@ -25,7 +25,7 @@
     order by obsterical_id desc
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from obsterical_history_form order by obsterical_id desc
   </select>
 

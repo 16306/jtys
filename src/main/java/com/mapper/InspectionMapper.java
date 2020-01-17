@@ -16,7 +16,7 @@ public interface InspectionMapper {
 
     Inspection selectByPrimaryKey(Long inspectionId);
 
-    Inspection getAll();
+    Inspection getLastOne();
 
     Inspection selectByCaseId(Long caseId);
 

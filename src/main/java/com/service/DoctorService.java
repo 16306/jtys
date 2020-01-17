@@ -43,15 +43,15 @@ public class DoctorService
    * 查找最后插入的医生，若无则返回一个Doctor对象DoctorId为1
    * @return
    */
-  public Doctor getAll()
+  public Doctor getLastOne()
   {
     Doctor doctor = new Doctor();
     doctor.setDoctorId((long) 0);
-    if(doctorMapper.getAll() == null)
+    if(doctorMapper.getLastOne() == null)
     {
       return doctor;
     }
-    return doctorMapper.getAll();
+    return doctorMapper.getLastOne();
   }
 
   /**

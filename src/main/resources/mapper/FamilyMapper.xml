@@ -102,7 +102,7 @@
     where family_id = #{familyId,jdbcType=BIGINT}
   </update>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from family_form order by family_id desc
   </select>
 

@@ -23,7 +23,7 @@
     where past_id = #{pastId,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByCardId" resultMap="BaseResultMap">
+  <select id="selectByCardId" resultMap="ResultMapWithBLOBs">
     select
     *
     from past_history_form
@@ -31,7 +31,7 @@
     order by past_id desc
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from past_history_form order by past_id desc
   </select>
 

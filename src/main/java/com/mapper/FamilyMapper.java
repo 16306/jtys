@@ -22,7 +22,7 @@ public interface FamilyMapper {
 
     List<Family> getAllFamilyList(Long hospitalId);
 
-    Family getAll();
+    Family getLastOne();
 
     int updateByPrimaryKeySelective(Family record);
 

@@ -105,7 +105,7 @@
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from doctor_form order by doctor_id desc
   </select>
 

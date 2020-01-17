@@ -24,7 +24,7 @@
     where case_id = #{caseId,jdbcType=BIGINT}
     order by inspection_time desc
   </select>
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from Inspection_form order by Inspection_id desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

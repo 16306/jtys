@@ -19,7 +19,7 @@ public interface DoctorGroupMapper {
 
     List<DoctorGroup> getAllDoctorGroupList(Long hospitalId,@Param("name")String name,@Param("groupLeaderName")String groupLeaderName,@Param("serviceArea")String serviceArea);
 
-    DoctorGroup getAll();
+    DoctorGroup getLastOne();
 
     int updateByPrimaryKeySelective(DoctorGroup record);
 

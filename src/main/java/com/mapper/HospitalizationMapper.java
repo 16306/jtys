@@ -15,7 +15,7 @@ public interface HospitalizationMapper {
 
     Hospitalization selectByPrimaryKey(Long hospitalizationId);
 
-    Hospitalization getAll();
+    Hospitalization getLastOne();
 
     Hospitalization selectByCaseId(Long caseId);
 

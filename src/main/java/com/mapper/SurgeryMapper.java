@@ -15,7 +15,7 @@ public interface SurgeryMapper {
 
     Surgery selectByPrimaryKey(Long surgeryId);
 
-    Surgery getAll();
+    Surgery getLastOne();
 
     Surgery selectByCaseId(Long caseId);
 

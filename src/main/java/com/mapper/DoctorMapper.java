@@ -26,7 +26,7 @@ public interface DoctorMapper {
 
     List<Doctor> getAllDoctorList(Long hospitalId);
 
-    Doctor getAll();
+    Doctor getLastOne();
 
     Doctor selectByPrimaryKey(Long doctorId);
 

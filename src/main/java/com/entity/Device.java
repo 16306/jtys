@@ -2,7 +2,8 @@ package com.entity;
 
 import java.util.Date;
 
-public class device {
+public class Device
+{
     private Long deviceId;
 
     private String model;

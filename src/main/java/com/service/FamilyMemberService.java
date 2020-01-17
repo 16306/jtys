@@ -64,15 +64,15 @@ public class FamilyMemberService
    * 得到FamilyMember最新记录
    * @return
    */
-  public FamilyMember getAll()
+  public FamilyMember getLastOne()
   {
     FamilyMember familyMember = new FamilyMember();
     familyMember.setFamilyMemberId((long) 1);
-    if(familyMemberMapper.getAll() == null)
+    if(familyMemberMapper.getLastOne() == null)
     {
       return familyMember;
     }
-    return familyMemberMapper.getAll();
+    return familyMemberMapper.getLastOne();
   }
 
   @Transactional(rollbackFor=Exception.class)

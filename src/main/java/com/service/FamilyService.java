@@ -41,15 +41,15 @@ public class FamilyService
     return familyMapper.updateByPrimaryKey(record);
   }
 
-  public Family getAll()
+  public Family getLastOne()
   {
     Family family = new Family();
     family.setFamilyId((long) 0);
-    if(familyMapper.getAll() == null)
+    if(familyMapper.getLastOne() == null)
     {
       return family;
     }
-    return familyMapper.getAll();
+    return familyMapper.getLastOne();
   }
 
   /**

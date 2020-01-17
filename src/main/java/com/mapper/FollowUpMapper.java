@@ -15,7 +15,7 @@ public interface FollowUpMapper {
 
     FollowUp selectByPrimaryKey(Long followUpId);
 
-    FollowUp getAll();
+    FollowUp getLastOne();
 
     int updateByPrimaryKeySelective(FollowUp record);
 

@@ -18,7 +18,7 @@ public interface OperationHistoryMapper {
 
     List<OperationHistory> selectByCardId(String cardId);
 
-    OperationHistory getAll();
+    OperationHistory getLastOne();
 
     int updateByPrimaryKeySelective(OperationHistory record);
 

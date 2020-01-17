@@ -113,7 +113,7 @@
   </update>
 
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from Notice_form order by Notice_id desc
   </select>
 

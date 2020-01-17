@@ -18,7 +18,7 @@ public interface ObstericalHistoryMapper {
 
     List<ObstericalHistory> selectByCardId(String cardId);
 
-    ObstericalHistory getAll();
+    ObstericalHistory getLastOne();
 
     int updateByPrimaryKeySelective(ObstericalHistory record);
 

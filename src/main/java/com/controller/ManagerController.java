@@ -77,7 +77,7 @@ public class ManagerController
   {
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
-    Long id = noticeService.getAll().getNoticeId() + 1;
+    Long id = noticeService.getLastOne().getNoticeId() + 1;
     notice.setNoticeId(id);
     notice.setPublisher(user.getUserName());
     notice.setHospitalId(user.getHospitalId());

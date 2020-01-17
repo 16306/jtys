@@ -26,7 +26,7 @@
     order by case_form.date desc
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from case_form order by Case_id desc
   </select>
 

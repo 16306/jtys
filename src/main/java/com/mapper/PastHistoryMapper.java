@@ -18,7 +18,7 @@ public interface PastHistoryMapper {
 
     List<PastHistory> selectByCardId(String cardId);
 
-    PastHistory getAll();
+    PastHistory getLastOne();
 
     int updateByPrimaryKeySelective(PastHistory record);
 

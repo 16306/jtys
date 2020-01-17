@@ -18,7 +18,7 @@ public interface AllergyHistoryMapper {
 
     List<AllergyHistory> selectByCardId(String cardId);
 
-    AllergyHistory getAll();
+    AllergyHistory getLastOne();
 
     int updateByPrimaryKeySelective(AllergyHistory record);
 

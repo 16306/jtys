@@ -48,11 +48,11 @@ public class FamilyDoctorService
   {
     FamilyDoctor familyDoctor = new FamilyDoctor();
     familyDoctor.setFamilyDoctorId((long) 1);
-    if(familyDoctorMapper.getAll() == null)
+    if(familyDoctorMapper.getLastOne() == null)
     {
       return familyDoctor;
     }
-    return familyDoctorMapper.getAll();
+    return familyDoctorMapper.getLastOne();
   }
 
   @Transactional(rollbackFor=Exception.class)

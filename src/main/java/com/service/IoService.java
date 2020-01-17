@@ -87,7 +87,7 @@ public class IoService
       {
         Family family = new Family();
         //从excel第二行开始获取每个单元格的数据
-        family.setFamilyId(familyService.getAll().getFamilyId() + 1);
+        family.setFamilyId(familyService.getLastOne().getFamilyId() + 1);
         family.setHouseholderName(row.getCell(1).getStringCellValue());
         family.setPopulation((int) row.getCell(3).getNumericCellValue());
         family.setHouseholderPhone(row.getCell(2).getStringCellValue());
@@ -111,7 +111,7 @@ public class IoService
 
         FamilyMember member = new FamilyMember();
         //从excel第二行开始获取每个单元格的数据
-        member.setFamilyMemberId(familyMemberService.getAll().getFamilyMemberId() + 1);
+        member.setFamilyMemberId(familyMemberService.getLastOne().getFamilyMemberId() + 1);
         member.setName(row.getCell(1).getStringCellValue());
         member.setAge((int) row.getCell(2).getNumericCellValue());
         member.setSex(row.getCell(3).getStringCellValue());
@@ -119,7 +119,7 @@ public class IoService
         member.setPhone(row.getCell(5).getStringCellValue());
         String encodedPassword = passwordEncoder.encode(row.getCell(6).getStringCellValue().trim());
         member.setPassword(encodedPassword);
-        member.setFamilyId(familyService.getAll().getFamilyId());
+        member.setFamilyId(familyService.getLastOne().getFamilyId());
         member.setEmergencyContactName(row.getCell(7).getStringCellValue());
         member.setEmergencyContactPhone(row.getCell(8).getStringCellValue());
         if (member.getName().isEmpty() || member.getEmergencyContactName().isEmpty() || member
@@ -139,7 +139,7 @@ public class IoService
       {
         DoctorGroup doctorGroup = new DoctorGroup();
         //从excel第二行开始获取每个单元格的数据
-        doctorGroup.setDoctorGroupId(doctorGroupService.getAll().getDoctorGroupId() + 1);
+        doctorGroup.setDoctorGroupId(doctorGroupService.getLastOne().getDoctorGroupId() + 1);
         doctorGroup.setName(row.getCell(1).getStringCellValue());
         doctorGroup.setGroupLeaderName(row.getCell(2).getStringCellValue());
         doctorGroup.setGroupLeaderPhone(row.getCell(3).getStringCellValue());
@@ -164,7 +164,7 @@ public class IoService
       {
         Doctor doctor = new Doctor();
         //从excel第二行开始获取每个单元格的数据
-        doctor.setDoctorId(doctorService.getAll().getDoctorId() + 1);
+        doctor.setDoctorId(doctorService.getLastOne().getDoctorId() + 1);
         doctor.setName(row.getCell(1).getStringCellValue());
         doctor.setAge((int) row.getCell(2).getNumericCellValue());
         doctor.setSex(row.getCell(3).getStringCellValue());

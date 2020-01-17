@@ -38,6 +38,17 @@ public class CaseService
   private InspectionMapper inspectionMapper;
 
 
+  public List<Case> getAllCase(String cardId)
+  {
+    List<Case> cases = caseMapper.selectByCardId(cardId);
+    if(null != cases)
+    {
+      return cases;
+    }
+    return null;
+  }
+
+
   public List<Hospitalization> getAllHospitalization(String cardId)
   {
     List<Case> cases = caseMapper.selectByCardId(cardId);
@@ -57,8 +68,8 @@ public class CaseService
 
   /**
    * 查找用户的检查报告
-   * @param cardId
-   * @return
+   * @param cardId 身份证号
+   * @return List<Inspection>
    */
   public List<Inspection> getAllInspection(String cardId)
   {
@@ -113,7 +124,7 @@ public class CaseService
     return surgeries;
   }
 
-  public void setResult(Map<Object,Object> result,int i,Long caseId,int control)
+  private void setResult(Map<Object,Object> result,int i,Long caseId,int control)
   {
     if(control == 1)
     {
@@ -174,14 +185,14 @@ public class CaseService
   }
 
   /**
-   * 创建病例记录
-   * @param record
-   * @return
+   * 插入病例记录
+   * @param record Case
+   * @return int
    */
   @Transactional(rollbackFor=Exception.class)
   public int createCase(Case record)
   {
-    Case item = caseMapper.getAll();
+    Case item = caseMapper.getLastOne();
     if(null == item)
     {
       record.setCaseId((long)0);
@@ -194,14 +205,14 @@ public class CaseService
   }
 
   /**
-   * 创建检查记录
-   * @param record
-   * @return
+   * 插入检查记录
+   * @param record Inspection
+   * @return int
    */
   @Transactional(rollbackFor=Exception.class)
   public int createInspection(Inspection record)
   {
-    Inspection item = inspectionMapper.getAll();
+    Inspection item = inspectionMapper.getLastOne();
     if(null == item)
     {
       record.setInspectionId((long)0);
@@ -214,14 +225,14 @@ public class CaseService
   }
 
   /**
-   * 创建住院记录
-   * @param record
-   * @return
+   * 插入住院记录
+   * @param record Hospitalization
+   * @return int
    */
   @Transactional(rollbackFor=Exception.class)
   public int createHospitalization(Hospitalization record)
   {
-    Hospitalization item = hospitalizationMapper.getAll();
+    Hospitalization item = hospitalizationMapper.getLastOne();
     if(null == item)
     {
       record.setHospitalizationId((long)0);
@@ -234,14 +245,14 @@ public class CaseService
   }
 
   /**
-   * 创建用药记录
-   * @param record
-   * @return
+   * 插入用药记录
+   * @param record Medication
+   * @return int
    */
   @Transactional(rollbackFor=Exception.class)
   public int createMedication(Medication record)
   {
-    Medication item = medicationMapper.getAll();
+    Medication item = medicationMapper.getLastOne();
     if(null == item)
     {
       record.setMedicationId((long)0);
@@ -254,14 +265,14 @@ public class CaseService
   }
 
   /**
-   * 创建手术记录
-   * @param record
-   * @return
+   * 插入手术记录
+   * @param record Surgery
+   * @return int
    */
   @Transactional(rollbackFor=Exception.class)
   public int createSurgery(Surgery record)
   {
-    Surgery item = surgeryMapper.getAll();
+    Surgery item = surgeryMapper.getLastOne();
     if(null == item)
     {
       record.setSurgeryId((long)0);
@@ -271,6 +282,136 @@ public class CaseService
       record.setSurgeryId(item.getSurgeryId()+1);
     }
     return surgeryMapper.insert(record);
+  }
+
+  /**
+   * 更新病例记录
+   * @param record Case
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int updateCase(Case record)
+  {
+    if(null != caseMapper.selectByPrimaryKey(record.getCaseId()))
+      return caseMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  /**
+   * 更新检查记录
+   * @param record Inspection
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int updateInspection(Inspection record)
+  {
+    if(null != inspectionMapper.selectByPrimaryKey(record.getCaseId()))
+      return inspectionMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  /**
+   * 更新住院记录
+   * @param record Hospitalization
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int updateHospitalization(Hospitalization record)
+  {
+    if(null != hospitalizationMapper.selectByPrimaryKey(record.getCaseId()))
+      return hospitalizationMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  /**
+   * 更新用药记录
+   * @param record Medication
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int updateMedication(Medication record)
+  {
+    if(null != medicationMapper.selectByPrimaryKey(record.getCaseId()))
+      return medicationMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  /**
+   * 更新手术记录
+   * @param record Surgery
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int updateSurgery(Surgery record)
+  {
+    if(null != surgeryMapper.selectByPrimaryKey(record.getCaseId()))
+      return surgeryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  /**
+   * delete病例记录
+   * @param record Case
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int deleteCase(Case record)
+  {
+    if(null != caseMapper.selectByPrimaryKey(record.getCaseId()))
+      return caseMapper.deleteByPrimaryKey(record.getCaseId());
+    return 0;
+  }
+
+  /**
+   * delete检查记录
+   * @param record Inspection
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int deleteInspection(Inspection record)
+  {
+    if(null != inspectionMapper.selectByPrimaryKey(record.getCaseId()))
+      return inspectionMapper.deleteByPrimaryKey(record.getCaseId());
+    return 0;
+  }
+
+  /**
+   * delete住院记录
+   * @param record Hospitalization
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int deleteHospitalization(Hospitalization record)
+  {
+    if(null != hospitalizationMapper.selectByPrimaryKey(record.getCaseId()))
+      return hospitalizationMapper.deleteByPrimaryKey(record.getCaseId());
+    return 0;
+  }
+
+  /**
+   * delete用药记录
+   * @param record Medication
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int deleteMedication(Medication record)
+  {
+    if(null != medicationMapper.selectByPrimaryKey(record.getCaseId()))
+      return medicationMapper.deleteByPrimaryKey(record.getCaseId());
+    return 0;
+  }
+
+  /**
+   * delete手术记录
+   * @param record Surgery
+   * @return int
+   */
+  @Transactional(rollbackFor=Exception.class)
+  public int deleteSurgery(Surgery record)
+  {
+    if(null != surgeryMapper.selectByPrimaryKey(record.getCaseId()))
+      return surgeryMapper.deleteByPrimaryKey(record.getCaseId());
+    return 0;
   }
 
 }

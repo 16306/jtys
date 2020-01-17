@@ -18,7 +18,7 @@ public interface FamilyHistoryMapper {
 
     List<FamilyHistory> selectByCardId(String cardId);
 
-    FamilyHistory getAll();
+    FamilyHistory getLastOne();
 
     int updateByPrimaryKeySelective(FamilyHistory record);
 

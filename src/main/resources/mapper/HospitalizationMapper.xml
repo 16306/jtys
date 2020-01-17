@@ -22,7 +22,7 @@
     where Hospitalization_id = #{hospitalizationId,jdbcType=BIGINT}
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from Hospitalization_form order by Hospitalization_id desc
   </select>
 

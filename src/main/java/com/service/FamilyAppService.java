@@ -1,12 +1,15 @@
 package com.service;
 
+import com.entity.Doctor;
 import com.entity.Family;
+import com.entity.FamilyDoctor;
 import com.entity.FamilyMember;
 import com.entity.FollowUp;
 import com.entity.HealthKnowledge;
 import com.entity.Notice;
 import com.mapper.DoctorGroupMapper;
 import com.mapper.DoctorMapper;
+import com.mapper.FamilyDoctorMapper;
 import com.mapper.FamilyMapper;
 import com.mapper.FamilyMemberMapper;
 import com.mapper.FollowUpMapper;
@@ -35,6 +38,9 @@ public class FamilyAppService
   private DoctorGroupMapper doctorGroupMapper;
 
   @Autowired
+  private FamilyDoctorMapper familyDoctorMapper;
+
+  @Autowired
   private NoticeMapper noticeMapper;
 
   @Autowired
@@ -55,8 +61,9 @@ public class FamilyAppService
     if(null != member && passwordEncoder.matches(familyMember.getPassword(),member.getPassword()))
     {
       member.setPassword("protected");
+      return member;
     }
-    return member;
+    return null;
   }
 
   /**
@@ -78,6 +85,19 @@ public class FamilyAppService
     }
     return members;
   }
+
+  public List<Doctor> getDoctor(Long familyId)
+  {
+
+    FamilyDoctor familyDoctor = familyDoctorMapper.selectByFamilyId(familyId);
+    List<Doctor> doctors = doctorMapper.getDoctorList(familyDoctor.getDoctorGroupId());
+    if(null != doctors)
+    {
+      return doctors;
+    }
+    return null;
+  }
+
 
   /**
    * 查找家庭所在的医院的通知
@@ -114,7 +134,7 @@ public class FamilyAppService
   @Transactional(rollbackFor=Exception.class)
   public int createFollowUp(FollowUp record)
   {
-    FollowUp followUp = followUpMapper.getAll();
+    FollowUp followUp = followUpMapper.getLastOne();
     if(null == followUp)
     {
       record.setFollowUpId((long)0);

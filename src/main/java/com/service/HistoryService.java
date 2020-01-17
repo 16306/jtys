@@ -87,7 +87,7 @@ public class HistoryService
   @Transactional(rollbackFor=Exception.class)
   public int createAllergyHistory(AllergyHistory record)
   {
-    AllergyHistory item = allergyHistoryMapper.getAll();
+    AllergyHistory item = allergyHistoryMapper.getLastOne();
     if(null == item)
     {
       record.setAllergyId((long)0);
@@ -102,7 +102,7 @@ public class HistoryService
   @Transactional(rollbackFor=Exception.class)
   public int createFamilyHistory(FamilyHistory record)
   {
-    FamilyHistory item = familyHistoryMapper.getAll();
+    FamilyHistory item = familyHistoryMapper.getLastOne();
     if(null == item)
     {
       record.setFamilyHistoryId((long)0);
@@ -117,7 +117,7 @@ public class HistoryService
   @Transactional(rollbackFor=Exception.class)
   public int createObstericalHistory(ObstericalHistory record)
   {
-    ObstericalHistory item = obstericalHistoryMapper.getAll();
+    ObstericalHistory item = obstericalHistoryMapper.getLastOne();
     if(null == item)
     {
       record.setObstericalId((long)0);
@@ -132,7 +132,7 @@ public class HistoryService
   @Transactional(rollbackFor=Exception.class)
   public int createOperationHistory(OperationHistory record)
   {
-    OperationHistory item = operationHistoryMapper.getAll();
+    OperationHistory item = operationHistoryMapper.getLastOne();
     if(null == item)
     {
       record.setOperationId((long)0);
@@ -148,7 +148,7 @@ public class HistoryService
   @Transactional(rollbackFor=Exception.class)
   public int createPastHistory(PastHistory record)
   {
-    PastHistory item = pastHistoryMapper.getAll();
+    PastHistory item = pastHistoryMapper.getLastOne();
     if(null == item)
     {
       record.setPastId((long)0);
@@ -158,6 +158,88 @@ public class HistoryService
       record.setPastId(item.getPastId()+1);
     }
     return pastHistoryMapper.insert(record);
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int updateAllergyHistory(AllergyHistory record)
+  {
+    if(null != allergyHistoryMapper.selectByPrimaryKey(record.getAllergyId()))
+      return allergyHistoryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int updateFamilyHistory(FamilyHistory record)
+  {
+    if(null != familyHistoryMapper.selectByPrimaryKey(record.getFamilyHistoryId()))
+      return familyHistoryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int updateObstericalHistory(ObstericalHistory record)
+  {
+    if(null != obstericalHistoryMapper.selectByPrimaryKey(record.getObstericalId()))
+      return obstericalHistoryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int updateOperationHistory(OperationHistory record)
+  {
+    if(null != operationHistoryMapper.selectByPrimaryKey(record.getOperationId()))
+      return operationHistoryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+
+  @Transactional(rollbackFor=Exception.class)
+  public int updatePastHistory(PastHistory record)
+  {
+    if(null != pastHistoryMapper.selectByPrimaryKey(record.getPastId()))
+      return pastHistoryMapper.updateByPrimaryKey(record);
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int delectAllergyHistory(AllergyHistory record)
+  {
+    if(null != allergyHistoryMapper.selectByPrimaryKey(record.getAllergyId()))
+      return allergyHistoryMapper.deleteByPrimaryKey(record.getAllergyId());
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int delectFamilyHistory(FamilyHistory record)
+  {
+    if(null != familyHistoryMapper.selectByPrimaryKey(record.getFamilyHistoryId()))
+      return familyHistoryMapper.deleteByPrimaryKey(record.getFamilyHistoryId());
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int delectObstericalHistory(ObstericalHistory record)
+  {
+    if(null != obstericalHistoryMapper.selectByPrimaryKey(record.getObstericalId()))
+      return obstericalHistoryMapper.deleteByPrimaryKey(record.getObstericalId());
+    return 0;
+  }
+
+  @Transactional(rollbackFor=Exception.class)
+  public int delectOperationHistory(OperationHistory record)
+  {
+    if(null != operationHistoryMapper.selectByPrimaryKey(record.getOperationId()))
+      return operationHistoryMapper.deleteByPrimaryKey(record.getOperationId());
+    return 0;
+  }
+
+
+  @Transactional(rollbackFor=Exception.class)
+  public int delectPastHistory(PastHistory record)
+  {
+    if(null != pastHistoryMapper.selectByPrimaryKey(record.getPastId()))
+      return pastHistoryMapper.deleteByPrimaryKey(record.getPastId());
+    return 0;
   }
 
 }

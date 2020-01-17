@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.SelfCheck;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,10 @@ public interface SelfCheckMapper {
     int insertSelective(SelfCheck record);
 
     SelfCheck selectByPrimaryKey(Long selfCheckId);
+
+    List<SelfCheck> selectByCardId(String cardId);
+
+    SelfCheck getLastOne();
 
     int updateByPrimaryKeySelective(SelfCheck record);
 

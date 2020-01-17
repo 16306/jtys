@@ -16,7 +16,7 @@ public interface CaseMapper {
 
     Case selectByPrimaryKey(Long caseId);
 
-    Case getAll();
+    Case getLastOne();
 
     List<Case> selectByCardId(String cardId);
 

@@ -21,7 +21,7 @@ public interface FamilyMemberMapper {
 
     List<FamilyMember> getAllMemberList(Long familyId);
 
-    FamilyMember getAll();
+    FamilyMember getLastOne();
 
     int updateByPrimaryKeySelective(FamilyMember record);
 

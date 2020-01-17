@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mapper.deviceMapper" >
-  <resultMap id="BaseResultMap" type="com.entity.device" >
+<mapper namespace="com.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Device" >
     <id column="device_id" property="deviceId" jdbcType="BIGINT" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="equipment_name" property="equipmentName" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     delete from device_form
     where device_id = #{deviceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.entity.device" >
+  <insert id="insert" parameterType="com.entity.Device" >
     insert into device_form (device_id, model, equipment_name, 
       type, purchase_time, purchaser, 
       price, purchase_quantity)
@@ -32,7 +32,7 @@
       #{type,jdbcType=VARCHAR}, #{purchaseTime,jdbcType=TIMESTAMP}, #{purchaser,jdbcType=VARCHAR}, 
       #{price,jdbcType=DOUBLE}, #{purchaseQuantity,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.device" >
+  <insert id="insertSelective" parameterType="com.entity.Device" >
     insert into device_form
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="deviceId != null" >
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.entity.device" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Device" >
     update device_form
     <set >
       <if test="model != null" >
@@ -114,7 +114,7 @@
     </set>
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.entity.device" >
+  <update id="updateByPrimaryKey" parameterType="com.entity.Device" >
     update device_form
     set model = #{model,jdbcType=VARCHAR},
       equipment_name = #{equipmentName,jdbcType=VARCHAR},

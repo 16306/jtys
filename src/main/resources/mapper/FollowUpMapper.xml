@@ -31,7 +31,7 @@
     from Follow_up_form
     where Follow_up_id = #{followUpId,jdbcType=BIGINT}
   </select>
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from Follow_up_form order by Follow_up_id desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

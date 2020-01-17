@@ -15,7 +15,7 @@ public interface MedicationMapper {
 
     Medication selectByPrimaryKey(Long medicationId);
 
-    Medication getAll();
+    Medication getLastOne();
 
     Medication selectByCaseId(Long caseId);
 

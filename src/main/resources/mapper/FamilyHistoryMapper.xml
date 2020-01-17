@@ -26,7 +26,7 @@
     order by family_history_id desc
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
+  <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from family_history_form order by family_history_id desc
   </select>
 

@@ -17,7 +17,7 @@ public interface NoticeMapper {
 
     Notice selectByPrimaryKey(Long noticeId);
 
-    Notice getAll();
+    Notice getLastOne();
 
     void batchDeleteNotice(List<Long> ids);
 

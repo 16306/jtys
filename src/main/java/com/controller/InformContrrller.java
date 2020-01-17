@@ -157,7 +157,7 @@ public class InformContrrller
   {
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
-    Long id = doctorGroupService.getAll().getDoctorGroupId() + 1;
+    Long id = doctorGroupService.getLastOne().getDoctorGroupId() + 1;
     doctorGroup.setDoctorGroupId(id);
     doctorGroup.setHospitalId(user.getHospitalId());
     int s = doctorGroupService.insert(doctorGroup);
@@ -176,7 +176,7 @@ public class InformContrrller
   {
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
-    Long id = familyService.getAll().getFamilyId() + 1;
+    Long id = familyService.getLastOne().getFamilyId() + 1;
     family.setFamilyId(id);
     family.setHospitalId(user.getHospitalId());
     FamilyDoctor familyDoctor = new FamilyDoctor();
@@ -332,7 +332,7 @@ public class InformContrrller
       BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
       encodedPassword = passwordEncoder.encode(doctor.getCardId().substring(doctor.getCardId().length()-6).trim());
       user.setPassword(encodedPassword);
-      id = doctorService.getAll().getDoctorId() + 1;
+      id = doctorService.getLastOne().getDoctorId() + 1;
       user.setDoctorId(id);
       doctor.setDoctorId(id);
       doctor.setHospitalId(hospitalId);
@@ -383,7 +383,7 @@ public class InformContrrller
     if(familyMember.getFamilyMemberId() == null)
     {
 
-      id = familyMemberService.getAll().getFamilyMemberId() + 1;
+      id = familyMemberService.getLastOne().getFamilyMemberId() + 1;
       familyMember.setFamilyMemberId(id);
       familyMember.setPassword(encodedPassword);
       s = familyMemberService.insert(familyMember);

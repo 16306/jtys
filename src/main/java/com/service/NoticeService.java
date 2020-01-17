@@ -25,9 +25,9 @@ public class NoticeService
    * 得到Notice最后一条
    * @return
    */
-  public Notice getAll()
+  public Notice getLastOne()
   {
-    return noticeMapper.getAll();
+    return noticeMapper.getLastOne();
   }
 
 

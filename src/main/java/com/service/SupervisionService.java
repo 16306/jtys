@@ -49,7 +49,7 @@ public class SupervisionService
   {
     Map<String, Object> result = new HashMap<>();
     List<Long> no_sign = familyDoctorService.selectByNoContract((long)-1);
-    List<Long> sign = familyDoctorService.selectByNoContract((long)1);
+    List<Long> sign = familyDoctorService.selectByNoContract((long)-2);
     result.put("no_sign",no_sign.size());
     result.put("sign",sign.size());
     return result;

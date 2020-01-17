@@ -30,6 +30,12 @@ public class FamilyDoctorService
     return list;
   }
 
+  public List<FamilyDoctor> selectByDoctorGroupId(Long doctorGroupId)
+  {
+    List<FamilyDoctor> list = familyDoctorMapper.selectByDoctorGroupId(doctorGroupId);
+    return list;
+  }
+
   /**
    * 查找家庭
    * @param familyId

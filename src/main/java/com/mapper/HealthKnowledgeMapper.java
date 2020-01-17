@@ -18,6 +18,10 @@ public interface HealthKnowledgeMapper {
 
     List<HealthKnowledge> getHealthKnowledgeList(String reviewStatus);
 
+    List<HealthKnowledge> selectByPublisherId(Long publisherId);
+
+    HealthKnowledge getLastOng();
+
     int updateByPrimaryKeySelective(HealthKnowledge record);
 
     int updateByPrimaryKey(HealthKnowledge record);

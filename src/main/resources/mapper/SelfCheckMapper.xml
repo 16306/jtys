@@ -22,7 +22,7 @@
     where Self_check_id = #{selfCheckId,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByCardId" resultMap="ResultMapWithBLOBs">
+  <select id="selectByCardId" resultMap="BaseResultMap">
     select
     *
     from Self_check_form

@@ -21,6 +21,22 @@ public class HealthKnowledgeService
     return healthKnowledgeMapper.selectByPrimaryKey(healthKnowledgeId);
   }
 
+  public PageInfo<HealthKnowledge> selectByPublisherId(Long publisherId,int page,int limit,int mark)
+  {
+    if(mark==1) {
+      PageHelper.startPage(page, limit);
+    }
+    List<HealthKnowledge> list = healthKnowledgeMapper.selectByPublisherId(publisherId);
+    PageInfo<HealthKnowledge> pageInfo = new PageInfo<>(list);
+    return pageInfo;
+  }
+
+  public HealthKnowledge getLastOng()
+  {
+    return healthKnowledgeMapper.getLastOng();
+  }
+
+
   @Transactional
   public int deleteByPrimaryKey(Long healthKnowledgeId)
   {

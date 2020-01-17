@@ -31,6 +31,22 @@
     from Follow_up_form
     where Follow_up_id = #{followUpId,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByDoctorId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    *
+    from Follow_up_form
+    where doctor_id = #{doctorId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKeyAndDoctorId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    *
+    from Follow_up_form
+    where Follow_up_id = #{followUpId,jdbcType=BIGINT}
+    AND doctor_id = #{doctorId,jdbcType=BIGINT}
+  </select>
+
   <select id="getLastOne" resultMap="BaseResultMap">
     select top 1 * from Follow_up_form order by Follow_up_id desc
   </select>

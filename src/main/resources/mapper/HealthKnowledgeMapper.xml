@@ -25,6 +25,18 @@
     from Health_knowledge_form
     where review_status = #{reviewStatus,jdbcType=VARCHAR}
   </select>
+
+  <select id="getLastOng" resultMap="BaseResultMap">
+    select top 1 * from Health_knowledge_form order by Health_knowledge_id desc
+  </select>
+
+  <select id="selectByPublisherId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    *
+    from Health_knowledge_form
+    where publisher_id = #{PublisherId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Health_knowledge_form
     where Health_knowledge_id = #{healthKnowledgeId,jdbcType=BIGINT}

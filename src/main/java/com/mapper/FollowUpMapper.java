@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.FollowUp;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,10 @@ public interface FollowUpMapper {
     FollowUp selectByPrimaryKey(Long followUpId);
 
     FollowUp getLastOne();
+
+    List<FollowUp> selectByDoctorId(Long doctorId);
+
+    List<FollowUp> selectByPrimaryKeyAndDoctorId(Long followUpId,Long doctorId);
 
     int updateByPrimaryKeySelective(FollowUp record);
 

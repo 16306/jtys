@@ -34,8 +34,11 @@
     <if test="doctorGroupId == -1">
       AND doctor_group_id = ${doctorGroupId,jdbcType=BIGINT}
     </if>
-    <if test="doctorGroupId != -1">
+    <if test="doctorGroupId == -2">
       AND doctor_group_id != -1
+    </if>
+    <if test="doctorGroupId > -1  ">
+      AND doctor_group_id = ${doctorGroupId,jdbcType=BIGINT}
     </if>
   </select>
 

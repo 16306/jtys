@@ -51,11 +51,11 @@ public class DoctorGroupSrevice
   {
     DoctorGroup doctorGroup = new DoctorGroup();
     doctorGroup.setDoctorGroupId((long) 1);
-    if(doctorGroupMapper.getAll() == null)
+    if(doctorGroupMapper.getLastOne() == null)
     {
       return doctorGroup;
     }
-    return doctorGroupMapper.getAll();
+    return doctorGroupMapper.getLastOne();
   }
 
   @Transactional(rollbackFor=Exception.class)

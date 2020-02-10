@@ -24,17 +24,25 @@
     *
     from Health_knowledge_form
     where review_status = #{reviewStatus,jdbcType=VARCHAR}
+    <if test="title != 'null'" >
+      and title LIKE  '%${title}%'
+    </if>
+    order by review_time
   </select>
 
   <select id="getLastOng" resultMap="BaseResultMap">
-    select top 1 * from Health_knowledge_form order by Health_knowledge_id desc
+    select * from Health_knowledge_form order by Health_knowledge_id desc limit 1
   </select>
 
   <select id="selectByPublisherId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     *
     from Health_knowledge_form
-    where publisher_id = #{PublisherId,jdbcType=BIGINT}
+    where publisher_id = #{publisherId,jdbcType=BIGINT}
+    <if test="title != 'null'" >
+    and title LIKE '%${title}%'
+    </if>
+    order by Health_knowledge_id desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

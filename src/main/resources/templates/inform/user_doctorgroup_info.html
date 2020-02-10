@@ -9,7 +9,7 @@
 <div class="layui-fluid">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
-      <div class="layui-card">
+      <div class="layui-card"  style="margin-top: 5px">
         <div class="layui-card-header">
           <div class="layui-row">
             <div class="layui-col-md4">
@@ -20,11 +20,10 @@
                 <div class="layui-input-inline">
                   <input type="text" id="name" name="name" placeholder="组名" autocomplete="off" class="layui-input">
                 </div>
-                <button class="layui-btn" onclick="searchName()">搜索</button>
                 <div class="layui-input-inline">
                   <input type="text" id="groupLeaderName" name="groupLeaderName" placeholder="组长" autocomplete="off" class="layui-input">
                 </div>
-                <button class="layui-btn" onclick="searchPhone()">搜索</button>
+                <button class="layui-btn" onclick="search()">搜索</button>
                 <button class="layui-btn" id="inputFile">
                   <i class="layui-icon" style="font-size: 22px;">&#xe62f;</i>导入
                 </button>
@@ -186,29 +185,15 @@
     });
   }
 
-  function searchName(){
+  function search(){
     layui.use(['jquery','table'],function(){
       var $ = layui.jquery;
       var table = layui.table;
       var name = $('#name').val();
-      table.reload('doctorGroup',{
-        where:{
-          name:name
-        }
-        ,page:{
-          curr:1
-        }
-      })
-    });
-  }
-
-  function searchPhone(){
-    layui.use(['jquery','table'],function(){
-      var $ = layui.jquery;
-      var table = layui.table;
       var groupLeaderName = $('#groupLeaderName').val();
       table.reload('doctorGroup',{
         where:{
+          name:name,
           groupLeaderName:groupLeaderName
         }
         ,page:{
@@ -217,6 +202,7 @@
       })
     });
   }
+
   layui.use(['upload', 'jquery','table','layer'],function(){
 
     var $ = layui.jquery,

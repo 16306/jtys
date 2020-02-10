@@ -87,7 +87,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    <include refid="Base_Column_List" />
+    *
     from menu_form
     where menu_id = #{menuId,jdbcType=BIGINT}
   </select>

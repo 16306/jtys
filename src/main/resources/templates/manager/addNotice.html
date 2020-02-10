@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <title>添加通知</title>
   <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+  <style>
+    img {
+      display: inline-block;
+      height: auto;
+      max-width: 100%;
+    }
+  </style>
 </head>
 <body>
 
@@ -39,6 +46,13 @@
         ,layedit = layui.layedit
         ,laydate = layui.laydate
         ,$ = layui.jquery;
+
+    layedit.set({	//设置图片接口
+      uploadImage: {
+        url: 'http://localhost:8080/layEdit/upload', //接口url
+        type: 'post'
+      }
+    });
 
     var index = layedit.build('content');
 

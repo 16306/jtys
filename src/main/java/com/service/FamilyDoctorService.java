@@ -1,8 +1,11 @@
 package com.service;
 
 
+import com.entity.Doctor;
 import com.entity.FamilyDoctor;
+import com.entity.User;
 import com.mapper.FamilyDoctorMapper;
+import com.util.FindUser;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,10 @@ public class FamilyDoctorService
 {
   @Autowired
   private FamilyDoctorMapper familyDoctorMapper;
+
+  @Autowired
+  private DoctorService doctorService;
+
 
   /**
    * 查找未签约的家庭
@@ -36,6 +43,20 @@ public class FamilyDoctorService
     return list;
   }
 
+  public List<FamilyDoctor> getFamilyDoctor()
+  {
+    FindUser findUser = new FindUser();
+    User user = findUser.getuser();
+    Long doctorId= user.getDoctorId();
+
+    Doctor doctor= doctorService.selectByPrimaryKey(doctorId);
+
+    Long doctorGroupId = doctor.getDoctorGroupId();
+
+    List<FamilyDoctor> familyDoctorList = selectByDoctorGroupId(doctorGroupId);
+    return familyDoctorList;
+  }
+
   /**
    * 查找家庭
    * @param familyId
@@ -50,7 +71,7 @@ public class FamilyDoctorService
    * 得到familydoctor表的最后一条记录
    * @return
    */
-  public FamilyDoctor getAll()
+  public FamilyDoctor getLastOne()
   {
     FamilyDoctor familyDoctor = new FamilyDoctor();
     familyDoctor.setFamilyDoctorId((long) 1);

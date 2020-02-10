@@ -11,6 +11,8 @@ public class Threshold {
 
     private Long measurementId;
 
+    private String cardId;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Threshold {
 
     public void setMeasurementId(Long measurementId) {
         this.measurementId = measurementId;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId == null ? null : cardId.trim();
     }
 }

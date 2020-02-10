@@ -7,9 +7,10 @@
     <result column="preset_value" property="presetValue" jdbcType="VARCHAR" />
     <result column="measurement_type" property="measurementType" jdbcType="VARCHAR" />
     <result column="Measurement_id" property="measurementId" jdbcType="BIGINT" />
+    <result column="cardId" property="cardId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, preset_value, measurement_type, Measurement_id
+    id, code, preset_value, measurement_type, Measurement_id, cardId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -17,15 +18,29 @@
     from Threshold_form
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getLastOne" resultMap="BaseResultMap">
+    select * from Threshold_form order by id desc limit 1
+  </select>
+
+  <select id="selectByCardId" resultMap="BaseResultMap">
+    select
+    *
+    from Threshold_form
+    where cardId = #{cardId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Threshold_form
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.entity.Threshold" >
     insert into Threshold_form (id, code, preset_value, 
-      measurement_type, Measurement_id)
+      measurement_type, Measurement_id, cardId
+      )
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{presetValue,jdbcType=VARCHAR}, 
-      #{measurementType,jdbcType=VARCHAR}, #{measurementId,jdbcType=BIGINT})
+      #{measurementType,jdbcType=VARCHAR}, #{measurementId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Threshold" >
     insert into Threshold_form
@@ -45,6 +60,9 @@
       <if test="measurementId != null" >
         Measurement_id,
       </if>
+      <if test="cardId != null" >
+        cardId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -61,6 +79,9 @@
       </if>
       <if test="measurementId != null" >
         #{measurementId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,6 +100,9 @@
       <if test="measurementId != null" >
         Measurement_id = #{measurementId,jdbcType=BIGINT},
       </if>
+      <if test="cardId != null" >
+        cardId = #{cardId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -87,7 +111,8 @@
     set code = #{code,jdbcType=VARCHAR},
       preset_value = #{presetValue,jdbcType=VARCHAR},
       measurement_type = #{measurementType,jdbcType=VARCHAR},
-      Measurement_id = #{measurementId,jdbcType=BIGINT}
+      Measurement_id = #{measurementId,jdbcType=BIGINT},
+      cardId = #{cardId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

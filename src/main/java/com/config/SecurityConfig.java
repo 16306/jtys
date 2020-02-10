@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
         // 如果有允许匿名的url，填在下面
-        .antMatchers("/familyApp/**","/doctor/login","/getVerifyCodeImage").permitAll()
+        .antMatchers("/familyApp/**","/doctor/login","/getVerifyCodeImage","/layEdit/download").permitAll()
         .anyRequest().authenticated()
         .and()
         // 设置登陆页

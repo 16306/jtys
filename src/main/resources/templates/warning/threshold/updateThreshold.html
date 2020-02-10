@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>添加</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<form id="form" class="layui-form layui-form-pane" style="margin: 10px" action="/warning/saveThreshold" method="post" lay-filter="form">
+  <div class="layui-form-item">
+    <label class="layui-form-label">类型</label>
+    <div class="layui-input-block" style="margin-bottom: 10px">
+      <input type="radio" name="measurementType" value="1" title="血压">
+      <input type="radio" name="measurementType" value="2" title="血糖">
+      <input type="radio" name="measurementType" value="3" title="心率">
+      <input type="radio" name="measurementType" value="4" title="体温">
+      <input type="radio" name="measurementType" value="5" title="体重">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">预防方向</label>
+    <div class="layui-input-block" style="margin-bottom: 10px">
+      <input type="radio" name="code" value="1" title="高">
+      <input type="radio" name="code" value="0" title="低">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">阈值</label>
+    <div class="layui-input-block">
+      <textarea id="presetValue" name="presetValue" placeholder="请输入阈值" class="layui-textarea" lay-verify="required"></textarea>
+    </div>
+  </div>
+  <input type="hidden" id="cardId" name="cardId" th:value="${threshold.cardId!=null?threshold.cardId:''}" />
+  <input type="hidden" id="id" name="id" th:value="${threshold.Id!=null?threshold.Id:''}" />
+  <button lay-filter="addThreshold" class="layui-btn"  lay-submit="" style="float: right;margin: 5px">提交</button>
+</form>
+
+
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.use(['jquery','form', 'layedit', 'laydate'], function(){
+    var form = layui.form
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate
+        ,$ = layui.jquery;
+
+    var index = layedit.build('content');
+
+    form.verify({
+      article_desc: function(value) {
+        return layedit.sync(index);
+      }
+      ,required: function (value) {
+        if(!value)
+        {
+          return "不能为空！";
+        }
+      }
+    });
+
+
+    //监听submit提交按钮 button ，lay-filter 为 userAdd 的
+    form.on('submit(addThreshold)', function(data){
+      //此段代码可以获取提交的数据
+      /* layer.alert(JSON.stringify(data.field), {
+           title: '最终的提交信息'
+       })*/
+      //ajax 提交
+      $.ajax({
+        type: "Post",
+        dataType: "text",
+        url: "http://localhost:8080/warning/update" ,//url
+        data: data.field,  //表单数据
+        success: function (result) {
+          if (result === "success") {
+            layer.msg('添加成功，1秒后自动关闭该窗口');
+            //延迟1秒执行，目的是让用户看到提示
+            setTimeout( function(){
+              //1、先得到当前iframe层（弹出层）的索引  ///2、提交成功关闭弹出层窗口
+              var index = parent.layer.getFrameIndex(window.name);
+              parent.layer.close(index);
+            }, 1 * 1000 );
+          }
+          else
+          {
+            layer.msg('修改失败');
+          }
+        },
+        error : function() {
+          layer.msg('后台异常！未添加成功');
+        }
+      });
+      //阻止页面跳转
+      return false;
+    });
+  });
+</script>
+
+</html>

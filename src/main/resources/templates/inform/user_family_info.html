@@ -9,7 +9,7 @@
 <div class="layui-fluid">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
-      <div class="layui-card">
+      <div class="layui-card" style="margin-top: 5px">
         <div class="layui-card-header">
           <div class="layui-row">
             <div class="layui-col-md4">
@@ -20,11 +20,10 @@
                 <div class="layui-input-inline">
                   <input type="text" id="householderName" name="householderName" placeholder="户主" autocomplete="off" class="layui-input">
                 </div>
-                <button class="layui-btn" onclick="searchName()">搜索</button>
                 <div class="layui-input-inline">
                   <input type="text" id="householderPhone" name="householderPhone" placeholder="电话" autocomplete="off" class="layui-input">
                 </div>
-                <button class="layui-btn" onclick="searchPhone()">搜索</button>
+                <button class="layui-btn" onclick="search()">搜索</button>
                 <button class="layui-btn" id="inputFile">
                   <i class="layui-icon" style="font-size: 22px;">&#xe62f;</i>导入
                 </button>
@@ -77,7 +76,7 @@
         [ //表头
           {type:'checkbox'}
           ,{field: 'familyId', title: 'ID', width:170, sort: true, hide:true}
-          ,{field: 'householderName', title: '户主', width:120, align: 'left'}
+          ,{field: 'householderName', title: '户主', width:120, align: 'center'}
           ,{field:'householderPhone', title:'户主电话',width:200,align:'center',unresize:true}
           ,{field:'population', title:'家庭人数',width:100,align:'center',unresize:true}
           ,{field:'address', title:'地址',align:'center',width:495,unresize:true}
@@ -185,28 +184,15 @@
     });
   }
 
-  function searchName(){
+  function search(){
     layui.use(['jquery','table'],function(){
       var $ = layui.jquery;
       var table = layui.table;
       var householderName = $('#householderName').val();
-      table.reload('family',{
-        where:{
-          householderName:householderName
-        }
-        ,page:{
-          curr:1
-        }
-      })
-    });
-  }
-  function searchPhone(){
-    layui.use(['jquery','table'],function(){
-      var $ = layui.jquery;
-      var table = layui.table;
       var householderPhone = $('#householderPhone').val();
       table.reload('family',{
         where:{
+          householderName:householderName,
           householderPhone:householderPhone
         }
         ,page:{
@@ -215,6 +201,7 @@
       })
     });
   }
+
   layui.use(['upload', 'jquery','table','layer'],function(){
 
     var $ = layui.jquery,

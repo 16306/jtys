@@ -124,7 +124,7 @@ public class CaseService
     return surgeries;
   }
 
-  private void setResult(Map<Object,Object> result,int i,Long caseId,int control)
+  private void setResult(Map<String,Object> result,int i,Long caseId,int control)
   {
     if(control == 1)
     {
@@ -164,9 +164,9 @@ public class CaseService
     }
   }
 
-  public Map<Object,Object> getCaseByCaseId(Long caseId)
+  public Map<String,Object> getCaseByCaseId(Long caseId)
   {
-    Map<Object,Object> result = new HashMap<>();
+    Map<String,Object> result = new HashMap<>();
     Case item = caseMapper.selectByPrimaryKey(caseId);
     result.put("case",item);
     for(int i = 0; i < item.getType().length(); i++)

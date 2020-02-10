@@ -15,12 +15,12 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from Surgery_form
+    from surgery_form
     where Surgery_id = #{surgeryId,jdbcType=BIGINT}
   </select>
 
   <select id="getLastOne" resultMap="BaseResultMap">
-    select top 1 * from Surgery_form order by Surgery_id desc
+    select * from surgery_form order by Surgery_id desc limit 1
   </select>
 
   <select id="selectByCaseId" resultMap="BaseResultMap">

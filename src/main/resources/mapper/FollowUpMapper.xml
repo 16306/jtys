@@ -25,9 +25,7 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    *
     from Follow_up_form
     where Follow_up_id = #{followUpId,jdbcType=BIGINT}
   </select>
@@ -37,6 +35,7 @@
     *
     from Follow_up_form
     where doctor_id = #{doctorId,jdbcType=BIGINT}
+    order by time desc
   </select>
 
   <select id="selectByPrimaryKeyAndDoctorId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
@@ -48,7 +47,7 @@
   </select>
 
   <select id="getLastOne" resultMap="BaseResultMap">
-    select top 1 * from Follow_up_form order by Follow_up_id desc
+    select * from Follow_up_form order by Follow_up_id desc limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Follow_up_form

@@ -19,6 +19,10 @@ public interface WarningHistoryMapper
 
     List<WarningHistory> selectByCardId(String cardId);
 
+    List<WarningHistory> selectByTime(String cardId);
+
+    WarningHistory getLastOne();
+
     int updateByPrimaryKeySelective(WarningHistory record);
 
     int updateByPrimaryKey(WarningHistory record);

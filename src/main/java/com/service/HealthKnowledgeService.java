@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class HealthKnowledgeService
@@ -21,12 +22,12 @@ public class HealthKnowledgeService
     return healthKnowledgeMapper.selectByPrimaryKey(healthKnowledgeId);
   }
 
-  public PageInfo<HealthKnowledge> selectByPublisherId(Long publisherId,int page,int limit,int mark)
+  public PageInfo<HealthKnowledge> selectByPublisherId(Long publisherId,String title,int page,int limit,int mark)
   {
     if(mark==1) {
       PageHelper.startPage(page, limit);
     }
-    List<HealthKnowledge> list = healthKnowledgeMapper.selectByPublisherId(publisherId);
+    List<HealthKnowledge> list = healthKnowledgeMapper.selectByPublisherId(publisherId,title);
     PageInfo<HealthKnowledge> pageInfo = new PageInfo<>(list);
     return pageInfo;
   }
@@ -57,12 +58,12 @@ public class HealthKnowledgeService
    * @param mark
    * @return 分页器
    */
-  public PageInfo<HealthKnowledge> getHealthKnowledgeList(String reviewStatus,int page,int limit,int mark)
+  public PageInfo<HealthKnowledge> getHealthKnowledgeList(String reviewStatus,String title,int page,int limit,int mark)
   {
     if(mark==1) {
       PageHelper.startPage(page, limit);
     }
-    List<HealthKnowledge> list = healthKnowledgeMapper.getHealthKnowledgeList(reviewStatus);
+    List<HealthKnowledge> list = healthKnowledgeMapper.getHealthKnowledgeList(reviewStatus,title);
     PageInfo<HealthKnowledge> pageInfo = new PageInfo<>(list);
     return pageInfo;
   }

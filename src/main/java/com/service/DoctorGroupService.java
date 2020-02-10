@@ -62,9 +62,9 @@ public class DoctorGroupService
     return doctorGroupMapper.getAllDoctorGroupList(hospitalId,name,groupLeaderName,serviceArea);
   }
 
-  public DoctorGroup selectByPrimaryKey(Long familyMemberId)
+  public DoctorGroup selectByPrimaryKey(Long doctorGroupId)
   {
-    return doctorGroupMapper.selectByPrimaryKey(familyMemberId);
+    return doctorGroupMapper.selectByPrimaryKey(doctorGroupId);
   }
 
   /**

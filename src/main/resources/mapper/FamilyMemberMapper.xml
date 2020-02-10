@@ -19,7 +19,7 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    <include refid="Base_Column_List" />
+    *
     from family_member_form
     where family_member_id = #{familyMemberId,jdbcType=BIGINT}
   </select>
@@ -39,7 +39,7 @@
   </select>
 
   <select id="getLastOne" resultMap="BaseResultMap">
-    select top 1 * from family_member_form order by family_member_id desc
+    select * from family_member_form order by family_member_id desc limit 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

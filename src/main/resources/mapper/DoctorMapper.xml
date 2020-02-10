@@ -96,17 +96,13 @@
     where doctor_id = #{doctorId,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select top 1 * from doctor_form where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
-  </select>
-
   <select id="getDoctorList" resultMap="BaseResultMap">
     SELECT * FROM doctor_form
     where doctor_group_id = #{doctorGroupId,jdbcType=BIGINT}
   </select>
 
   <select id="getLastOne" resultMap="BaseResultMap">
-    select top 1 * from doctor_form order by doctor_id desc
+    select * from doctor_form order by doctor_id desc limit 1
   </select>
 
   <select id="getAllDoctorList" resultMap="BaseResultMap">

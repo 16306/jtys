@@ -7,20 +7,17 @@ import com.service.HealthKnowledgeService;
 import com.service.NoticeService;
 import com.util.FindUser;
 import com.util.SetData;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/manager")
@@ -33,15 +30,15 @@ public class ManagerController
   private HealthKnowledgeService healthKnowledgeService;
 
   @RequestMapping("/inform")
-  @PreAuthorize("hasPermission('/manager/inform','c&d&u&r')")
+  @PreAuthorize("hasPermission('/manager/inform','r')")
   public String inform()
   {
-    return "/manager/manager_inform";
+    return "manager/manager_inform";
   }
 
   @ResponseBody
   @RequestMapping("/getNoticeList")
-  @PreAuthorize("hasPermission('/manager/inform','c&d&u&r')")
+  @PreAuthorize("hasPermission('/manager/inform','r')")
   public Map<String, Object> get_notice_list(@RequestParam("page")int page, @RequestParam("limit")int limit,
                                              @RequestParam(value = "title",defaultValue = "null")String title,
                                              @RequestParam(value = "publisher",defaultValue = "null")String publisher)
@@ -67,7 +64,7 @@ public class ManagerController
   @PreAuthorize("hasPermission('/manager/inform','c')")
   public String addNotice()
   {
-   return "/manager/addNotice";
+   return "manager/addNotice";
   }
 
   @ResponseBody
@@ -96,7 +93,7 @@ public class ManagerController
   {
     Notice notice = noticeService.selectByPrimaryKey(id);
     model.addAttribute("notice", notice);
-    return "/manager/showNotice";
+    return "manager/showNotice";
   }
 
   @ResponseBody
@@ -118,16 +115,18 @@ public class ManagerController
   @PreAuthorize("hasPermission('/manager/audit','d&u&r')")
   public String audit()
   {
-    return "/manager/audit";
+    return "manager/audit";
   }
 
   @ResponseBody
   @RequestMapping("/getHealthKnowledgeList")
   @PreAuthorize("hasPermission('/manager/audit','d&u&r')")
-  public Map<String, Object> getHealthKnowledgeList(@RequestParam("page")int page, @RequestParam("limit")int limit)
+  public Map<String, Object> getHealthKnowledgeList(
+      @RequestParam("page")int page, @RequestParam("limit")int limit,
+      @RequestParam(value = "title",defaultValue = "null")String title)
   {
     PageInfo<HealthKnowledge> pageInfo;
-    pageInfo = healthKnowledgeService.getHealthKnowledgeList("0",page,limit,1);
+    pageInfo = healthKnowledgeService.getHealthKnowledgeList("0",title,page,limit,1);
 
     Map<String, Object> result = SetData.setdata(pageInfo);
 
@@ -140,7 +139,7 @@ public class ManagerController
   {
     HealthKnowledge healthKnowledge = healthKnowledgeService.selectByPrimaryKey(id);
     model.addAttribute("healthKnowledge", healthKnowledge);
-    return "/manager/showHealthKnowledge";
+    return "manager/showHealthKnowledge";
   }
 
   @ResponseBody

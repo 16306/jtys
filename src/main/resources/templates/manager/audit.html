@@ -9,7 +9,19 @@
 <div class="layui-fluid">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
-      <div class="layui-card">
+      <div class="layui-card" style="margin-top: 5px">
+        <div class="layui-card-header">
+          <div class="layui-row">
+            <div class="layui-col-md4 layui-col-md-offset8">
+              <div class="layui-layout-right">
+                <div class="layui-input-inline">
+                  <input type="text" id="title" name="title" placeholder="标题" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" onclick="search()">搜索</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="layui-card-body">
           <table id="HealthKnowledge" lay-filter="HealthKnowledge"></table>
           <div class="layui-hide" id="tools">
@@ -130,6 +142,22 @@
       }
     });
   });
+
+  function search(){
+    layui.use(['jquery','table'],function(){
+      var $ = layui.jquery;
+      var table = layui.table;
+      var title = $('#title').val();
+      table.reload('HealthKnowledge',{
+        where:{
+          title:title
+        }
+        ,page:{
+          curr:1
+        }
+      })
+    });
+  }
 
 </script>
 

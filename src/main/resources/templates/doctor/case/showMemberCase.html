@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>healthKnowledge</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<input type="hidden" id="caseId" name="caseId" th:value="${caseId!=null?caseId:''}" />
+<div class="content" style="margin: 7px">
+  <div class="layui-card hospitalization">
+
+  </div>
+  <div class="layui-card inspection">
+
+  </div>
+  <div class="layui-card medication">
+
+  </div>
+  <div class="layui-card surgery">
+
+  </div>
+</div>
+
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.use(['jquery', 'element'],function() {
+    var element = layui.element; //元素操作
+    var $ = layui.jquery;
+    var caseId = $("#caseId").val();
+    $.ajax({
+      url: 'http://localhost:8080/doctor/selectCaseByCaseId?id=' + caseId,
+      async: true,
+      type: "Get",
+      contentType: "application/json; charset=utf-8",
+      dataType:"text",
+      success: function (obj) {
+        var data = JSON.parse(obj);
+        if(data.hospitalization !== null)
+        {
+          var hospitalization = "";
+          hospitalization += "<div class='layui-card-header layui-bg-cyan' style='text-align: center;color: #00F7DE'>住院信息</div>";
+          hospitalization += "<div class='layui-card-body layui-bg-gray' style='text-align: center'>";
+          hospitalization += '主任医师  :' + data.hospitalization.chiefPhysician + '<br>';
+          hospitalization += '住院号码  :' + data.hospitalization.hospitalizationNumber + '<br>';
+          hospitalization += '疾病类型  :' + data.hospitalization.diseaseType + '<br>';
+          hospitalization += '住院时间  :' + data.hospitalization.admissionTime + '<br>';
+          hospitalization += '出院时间  :' + data.hospitalization.dischargeTime + '</div>';
+          $(".hospitalization").append(hospitalization);
+        }
+        if(data.inspection !== null)
+        {
+          var inspection = "";
+          inspection += "<div class='layui-card-header layui-bg-cyan' style='text-align: center;color: #00F7DE'>检查信息</div>";
+          inspection += "<div class='layui-card-body layui-bg-gray' style='text-align: center'>";
+          inspection += '检查类型  :' + data.inspection.inspectionItem + '<br>';
+          inspection += '检查时间  :' + data.inspection.inspectionTime + '<br>';
+          inspection += '检查结论  :' + data.inspection.inspectionConclusion + '</div>';
+          $(".inspection").append(inspection);
+        }
+        if(data.medication !== null)
+        {
+          var medication = "";
+          medication += "<div class='layui-card-header layui-bg-cyan' style='text-align: center;color: #00F7DE'>用药信息</div>";
+          medication += "<div class='layui-card-body layui-bg-gray' style='text-align: center'>";
+          medication += '药物名称  :' + data.medication.drugName + '<br>';
+          medication += '服药时间  :' + data.medication.medicationTime + '<br>';
+          medication += '开始时间  :' + data.medication.startTime + '<br>';
+          medication += '注意事项  :' + data.medication.precautions + '</div>';
+          $(".medication").append(medication);
+        }
+        if(data.surgery !== null)
+        {
+          var surgery = "";
+          surgery += "<div class='layui-card-header layui-bg-cyan' style='text-align: center;color: #00F7DE'>手术信息</div>";
+          surgery += "<div class='layui-card-body layui-bg-gray' style='text-align: center'>";
+          surgery += '手术名称  :' + data.surgery.surgicalName + '<br>';
+          surgery += '手术描述  :' + data.surgery.surgicalDescription + '<br>';
+          surgery += '手术医生  :' + data.surgery.surgeon + '<br>';
+          surgery += '手术时间  :' + data.surgery.operativeTime + '</div>';
+          $(".surgery").append(surgery);
+        }
+      },
+      error: function (err) {
+        layer.msg('操作失败！', {icon: 2});
+      }
+    });
+    return false;
+  });
+</script>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>信息页</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <style>
+        #febs-user-profile #user-profile, #febs-user-profile .user-profile-card {
+            display: inline-block;
+        }
+
+        #febs-user-profile #user-img, #febs-user-profile #user-info {
+            display: inline-block;
+            float: left;
+        }
+
+        #febs-user-profile #user-img img {
+            width: 7rem;
+            margin: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #febs-user-profile #user-info {
+            margin: .95rem 0 .95rem 1.2rem;
+        }
+
+        #febs-user-profile #user-info div {
+            margin: 3px 0;
+            max-width: 22rem;
+        }
+
+        #febs-user-profile #options-wrapper {
+            text-align: center;
+            margin-top: .5rem;
+        }
+
+        #febs-user-profile #update-user-info {
+            cursor: pointer;
+            margin-left: -1rem;
+        }
+
+        #febs-user-profile #options-wrapper a {
+            padding: 4px 6px;
+            color: rgba(0, 0, 0, 0.65);
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+        }
+
+        #febs-user-profile #options-wrapper a:hover {
+            color: #40a9ff;
+            border-color: #40a9ff;
+        }
+
+        #febs-user-profile .layui-form-item {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid layui-anim febs-anim" id="febs-user-profile" lay-title="个人中心">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12 layui-col-md-offset3">
+            <div class="layui-card">
+                <div class="layui-card-header">团队信息</div>
+                <div class="layui-card-body user-profile-card">
+                    <div id="user-profile">
+                        <div id="user-info">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'], function () {
+        const form = layui.form;
+        const $ = layui.jquery;
+
+        $.ajax({
+            url: 'http://localhost:8080/self_center/getDoctorList',
+            async: true,
+            type: "Get",
+            contentType: "application/json; charset=utf-8",
+            dataType:"text",
+            success: function (obj) {
+                const data = JSON.parse(obj);
+                for(let i = 0; i<data.length; i++){
+                    let info = "";
+                    console.log(data[i],data[i].name);
+                    info += '<div><span class="layui-icon layui-icon-user"></span> 姓名：<span>';
+                    info += data[i].name;
+                    info += '</span></div>';
+                    info += '<div><span class="layui-icon layui-icon-tree"></span> 年龄：<span>';
+                    info += data[i].age;
+                    info += '</span></div>';
+                    info += '<div><span class="layui-icon layui-icon-male"></span> 性别：<span>';
+                    info += data[i].sex;
+                    info += '</span></div>';
+                    info += '<div><span class="layui-icon layui-icon-cellphone"></span> 电话：<span>';
+                    info += data[i].phone;
+                    info += '</span></div>';
+                    info += '<div><span class="layui-icon layui-icon-home"></span> 部门：<span>';
+                    info += data[i].department;
+                    info += '</span></div>';
+                    info += '<div><span class="layui-icon layui-icon-friends"></span> 职务：<span>';
+                    info += data[i].duty;
+                    info += '</span></div>';
+                    $("#user-info").append(info);
+                }
+
+            },
+            error: function (err) {
+                layer.msg('无数据！');
+            }
+        });
+        return false;
+
+    });
+</script>
+</body>
+</html>

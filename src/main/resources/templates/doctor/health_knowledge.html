@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>推送审核</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card" style="margin-top: 5px">
+        <div class="layui-card-header">
+          <div class="layui-row">
+            <div class="layui-col-md4">
+              <button class="layui-btn" onclick="healthKnowledgeAdd()"><i class="layui-icon">&#xe654;</i>新增</button>
+              <button class="layui-btn layui-btn-danger" onclick="healthKnowledgeDelete()">批量删除</button>
+            </div>
+            <div class="layui-col-md4 layui-col-md-offset4">
+              <div class="layui-layout-right">
+                <div class="layui-input-inline">
+                  <input type="text" id="title" name="title" placeholder="标题" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" onclick="search()">搜索</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-card-body">
+          <table id="HealthKnowledge" lay-filter="HealthKnowledge"></table>
+          <script type="text/html" id="buttonTpl">
+            {{#  if(d.reviewStatus == 1){ }}
+            <button class="layui-btn layui-btn-xs">已审核</button>
+            {{#  } else if(d.reviewStatus == 0) { }}
+            <button class="layui-btn layui-btn-primary layui-btn-xs">未审核</button>
+            {{#  } else if(d.reviewStatus == -1){ }}
+            <button class="layui-btn layui-btn-danger layui-btn-xs">未通过</button>
+            {{#  } }}
+          </script>
+          <div class="layui-hide" id="tools">
+            <button class="layui-btn layui-btn-sm" lay-event="detail">查看</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+
+  layui.use(['jquery','layer', 'table', 'carousel', 'upload', 'element'],function(){
+    var layer = layui.layer //弹层
+        ,table = layui.table //表格
+        ,element = layui.element; //元素操作
+    var $ = layui.jquery;
+
+    //第一个实例
+    var tableInfo = table.render({
+      id: 'HealthKnowledge'
+      ,elem: '#HealthKnowledge'
+      ,height: 'full-123'
+      ,limit:10
+      ,url: 'http://localhost:8080/doctor/selectHealthKnowledgeByDoctorIdAndHospitalId' //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {type:'checkbox'}
+          ,{field: 'healthKnowledgeId', title: 'ID', width:97, sort: true, hide:true}
+          ,{field: 'title', title: '标题', width:350, align: 'left',unresize:true}
+          ,{field:'content', title:'内容',align:'center',width:547,unresize:true}
+          ,{field: 'reviewStatus', title:'审核状态', templet: '#buttonTpl', minWidth:100, align: 'center'}
+          ,{title:'操作',width: 225, align:'center', toolbar: '#tools'}
+        ]
+      ]
+    });
+
+    table.on('tool(HealthKnowledge)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+      var data = obj.data //获得当前行数据
+          , layEvent = obj.event;//获得 lay-event 对应的值
+
+      if(layEvent === 'detail')
+      {
+        layer.open({
+          type: 2,
+          content: "http://localhost:8080/manager/showHealthKnowledge?id=" + data.healthKnowledgeId,
+          area: ["600px", "425px"],
+          title: [data.title],
+          fixed: false,
+          shadeClose: true,
+          maxmin: true,
+          resize: true
+        })
+      }
+      else if(layEvent === 'delete')
+      {
+        $.ajax({
+          url: 'http://localhost:8080/doctor/deleteByHealthKnowledgeId?id=' + data.healthKnowledgeId,
+          async: true,
+          type: "Get",
+          contentType: "application/json; charset=utf-8",
+          dataType:"text",
+          success: function (data) {
+            if(data.toString() === "1")
+            {
+              layer.msg('删除成功！', {icon: 1});
+            }else{
+              layer.msg('删除失败！', {icon: 2});
+            }
+            tableInfo.reload({
+              page:{
+                curr:1
+              }
+            })
+          },
+          error: function (err) {
+            layer.msg('删除失败！', {icon: 2});
+            tableInfo.reload({})
+          }
+        });
+        return false;
+      }
+    });
+  });
+
+  function healthKnowledgeAdd() {
+    layui.use(['layer'], function () {
+      var layer = layui.layer;
+      layer.open({
+        type: 2,
+        content: "http://localhost:8080/doctor/addHealthKnowledge",   //添加页，后台controller转发到指定页
+        area: ["580px", "525px"],
+        title: ['添加'],
+        fixed: false,
+        shadeClose: true,
+        end: function () {  //刷新页面
+          location.reload();
+        }
+      })
+    })
+  }
+
+  function healthKnowledgeDelete() {
+    layui.use(['jquery','table'],function(){
+      var table = layui.table
+          ,$ = layui.jquery;
+      var checkStatus = table.checkStatus('HealthKnowledge');
+      var da = checkStatus.data;
+      if(da.length === 0){
+        layer.msg('至少选中一行！', {icon: 0});
+      }else {
+        var ids = "";
+        for(var i=0;i<da.length;i++){
+          if(i === da.length-1)
+            ids+=da[i].healthKnowledgeId;
+          else
+            ids+=da[i].healthKnowledgeId+",";
+        }
+        console.log("ids:"+ids);
+        layer.confirm('确定要删除吗？', {
+          title:'提示',
+          icon:3,
+          btn: ['确定', '取消']
+        }, function(index){
+          $.ajax({
+            url:"/doctor/batchDeleteHealthKnowledge",
+            type:"get",
+            async:true,
+            data: {
+              ids: ids
+            },
+            dataType: "text",
+            success: function(data){
+              layer.msg(data, {icon: 1});
+              table.reload('HealthKnowledge',{
+                page:{
+                  curr:1
+                }
+              })
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+              layer.msg('删除操作失败！', {icon: 2});
+            }
+          });
+        }, function(index){
+          layer.close(index);
+        });
+      }
+    });
+  }
+
+  function search(){
+    layui.use(['jquery','table'],function(){
+      var $ = layui.jquery;
+      var table = layui.table;
+      var title = $('#title').val();
+      table.reload('HealthKnowledge',{
+        where:{
+          title:title
+        }
+        ,page:{
+          curr:1
+        }
+      })
+    });
+  }
+
+</script>
+
+</html>

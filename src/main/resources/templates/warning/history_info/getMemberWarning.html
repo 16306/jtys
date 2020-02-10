@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>FamilyMember</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-card-body">
+  <input type="hidden" id="cardId" name="cardId" th:value="${cardId!=null?cardId:''}" />
+  <table id="memberWarning" lay-filter="memberWarning"></table>
+</div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.use(['jquery','layer', 'table', 'carousel', 'upload', 'element'],function(){
+    var layer = layui.layer //弹层
+        ,table = layui.table //表格
+        ,element = layui.element; //元素操作
+    var $= layui.jquery;
+    var cardId = $("#cardId").val();
+
+    var tableInfo = table.render({
+      id: 'memberWarning'
+      ,elem: '#memberWarning'
+      ,height: 400
+      ,limit:10
+      ,url: 'http://localhost:8080/warning/selectWarningHistoryByCardId?cardId=' + cardId //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'warningHistoryId', title: 'ID',hide:true}
+          ,{field: 'cardId', title: 'cardId',hide:true}
+          ,{field: 'detector', title: '发现者', width:150, align: 'center'}
+          ,{field:'content', title:'内容', width: 410, align: 'center'}
+          ,{field:'time', title:'时间', width: 300, align: 'center'}
+        ]
+      ]
+    });
+  });
+</script>
+
+</html>

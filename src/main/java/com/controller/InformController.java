@@ -1,44 +1,28 @@
 package com.controller;
 
-import com.entity.Doctor;
-import com.entity.DoctorGroup;
-import com.entity.Family;
-import com.entity.FamilyDoctor;
-import com.entity.FamilyMember;
-import com.entity.User;
-import com.entity.UserRole;
+import com.entity.*;
 import com.github.pagehelper.PageInfo;
-import com.service.DoctorGroupService;
-import com.service.DoctorService;
-import com.service.FamilyDoctorService;
-import com.service.FamilyMemberService;
-import com.service.FamilyService;
-import com.service.IoService;
-import com.service.ServiceRecordService;
-import com.service.UserRoleService;
-import com.service.UserService;
+import com.service.*;
 import com.util.FindUser;
+import com.util.MyPageHelper;
 import com.util.SetData;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/inform")
-public class InformContrrller
+public class InformController
 {
   @Autowired
   private FamilyService familyService;
@@ -48,6 +32,7 @@ public class InformContrrller
 
   @Autowired
   private FamilyMemberService familyMemberService;
+
 
   @Autowired
   private DoctorGroupService doctorGroupService;
@@ -77,10 +62,9 @@ public class InformContrrller
   {
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
-    PageInfo pageInfo;
-    pageInfo = serviceRecordService.selectByHospitalId(user.getHospitalId(),page,limit,1,familyMemberName,doctorGroupLeaderName);
-    Map<String, Object> result = SetData.setdata(pageInfo);
-    return result;
+    MyPageHelper pageInfo;
+    pageInfo = serviceRecordService.selectByHospitalId(user.getHospitalId(),page - 1,limit,1,familyMemberName,doctorGroupLeaderName);
+    return SetData.getStringObjectMap(pageInfo);
   }
 
   @ResponseBody
@@ -119,35 +103,35 @@ public class InformContrrller
   @PreAuthorize("hasPermission('/inform/doctor_group_info','r')")
   public String doctor_group_info()
   {
-    return "/inform/user_doctorgroup_info";
+    return "inform/user_doctorgroup_info";
   }
 
   @RequestMapping("/service_info")
   @PreAuthorize("hasPermission('/inform/service_info','r')")
   public String service_info()
   {
-    return "/inform/service_info";
+    return "inform/service_info";
   }
 
   @RequestMapping("/user_family_info")
   @PreAuthorize("hasPermission('/inform/user_family_info','r')")
   public String inform()
   {
-    return "/inform/user_family_info";
+    return "inform/user_family_info";
   }
 
   @GetMapping("/addFamily")
   @PreAuthorize("hasPermission('/inform/user_family_info','c')")
   public String addFamily()
   {
-    return "/inform/addFamily";
+    return "inform/addFamily";
   }
 
   @GetMapping("/addDoctorGroup")
   @PreAuthorize("hasPermission('/inform/doctor_group_info','c')")
   public String addNotice()
   {
-    return "/inform/addDoctorGroup";
+    return "inform/addDoctorGroup";
   }
 
   @ResponseBody
@@ -180,7 +164,7 @@ public class InformContrrller
     family.setFamilyId(id);
     family.setHospitalId(user.getHospitalId());
     FamilyDoctor familyDoctor = new FamilyDoctor();
-    familyDoctor.setFamilyDoctorId(familyDoctorService.getAll().getFamilyDoctorId() + 1);
+    familyDoctor.setFamilyDoctorId(familyDoctorService.getLastOne().getFamilyDoctorId() + 1);
     familyDoctor.setFamilyId(family.getFamilyId());
     familyDoctor.setDoctorGroupId((long)-1);
     familyDoctor.setContractContent("11111111111");
@@ -225,20 +209,20 @@ public class InformContrrller
   @PreAuthorize("hasPermission('/inform/doctor_group_info','r')")
   public String showDoctorList()
   {
-    return "/inform/showDoctorList";
+    return "inform/showDoctorList";
   }
 
   @GetMapping("/showFamilyMemberList")
   @PreAuthorize("hasPermission('/inform/user_family_info','r')")
   public String showFamilyMember()
   {
-    return "/inform/showFamilyMemberList";
+    return "inform/showFamilyMemberList";
   }
 
   @GetMapping("/addDoctor")
   public String addDoctor()
   {
-    return "/inform/addDoctor";
+    return "inform/addDoctor";
   }
 
   @GetMapping("/editDoctor")
@@ -247,14 +231,14 @@ public class InformContrrller
   {
     Doctor Doctor = doctorService.selectByPrimaryKey(id);
     model.addAttribute("member", Doctor);
-    return "/inform/addDoctor";
+    return "inform/addDoctor";
   }
 
   @GetMapping("/addFamilyMember")
   @PreAuthorize("hasPermission('/inform/user_family_info','c')")
   public String addFamilyMember()
   {
-    return "/inform/addFamilyMember";
+    return "inform/addFamilyMember";
   }
 
   @GetMapping("/editFamilyMember")
@@ -263,7 +247,7 @@ public class InformContrrller
   {
     FamilyMember familyMember = familyMemberService.selectByPrimaryKey(id);
     model.addAttribute("member", familyMember);
-    return "/inform/addFamilyMember";
+    return "inform/addFamilyMember";
   }
 
 
@@ -275,11 +259,13 @@ public class InformContrrller
   {
     Family family = familyService.selectByPrimaryKey(id);
     List<FamilyMember> mlist = familyMemberService.getAllMember(family.getFamilyId());
+    FamilyDoctor familyDoctor = familyDoctorService.selectByFamilyId(family.getFamilyId());
     for(FamilyMember familyMember : mlist)
     {
       familyMemberService.deleteByPrimaryKey(familyMember.getFamilyMemberId());
     }
     familyService.deleteByPrimaryKey(id);
+    familyDoctorService.delete(familyDoctor.getFamilyDoctorId());
     return "删除成功";
   }
 
@@ -361,7 +347,6 @@ public class InformContrrller
   @PreAuthorize("hasPermission('/inform/user_family_info','d')")
   public String deleteMemberById(Long id)
   {
-
     familyMemberService.deleteByPrimaryKey(id);
     return "删除成功";
   }

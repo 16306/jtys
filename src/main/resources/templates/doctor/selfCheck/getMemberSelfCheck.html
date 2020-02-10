@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>FamilyMember</title>
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="layui-card-body">
+  <input type="hidden" id="cardId" name="cardId" th:value="${cardId!=null?cardId:''}" />
+  <div class="layui-collapse">
+    <div class="layui-colla-item">
+      <h2 class="layui-colla-title">血压</h2>
+      <div class="layui-colla-content">
+        <div class="layui-card-body" style="padding: 0">
+          <table id="Pressure" lay-filter="Pressure"></table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-colla-item">
+      <h2 class="layui-colla-title">血糖</h2>
+      <div class="layui-colla-content">
+        <div class="layui-card-body" style="padding: 0">
+          <table id="Sugar" lay-filter="Sugar"></table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-colla-item">
+      <h2 class="layui-colla-title">心率</h2>
+      <div class="layui-colla-content">
+        <div class="layui-card-body" style="padding: 0">
+          <table id="HeartRate" lay-filter="HeartRate"></table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-colla-item">
+      <h2 class="layui-colla-title">体温</h2>
+      <div class="layui-colla-content">
+        <div class="layui-card-body" style="padding: 0">
+          <table id="Temperature" lay-filter="Temperature"></table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-colla-item">
+      <h2 class="layui-colla-title">体重</h2>
+      <div class="layui-colla-content">
+        <div class="layui-card-body" style="padding: 0">
+          <table id="Weight" lay-filter="Weight"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.use(['jquery','layer', 'table', 'carousel', 'upload', 'element'],function(){
+    var layer = layui.layer //弹层
+        ,table = layui.table //表格
+        ,element = layui.element; //元素操作
+    var $= layui.jquery;
+    var cardId = $("#cardId").val();
+
+    table.render({
+      id: 'Pressure'
+      ,elem: '#Pressure'
+      ,height: 225
+      ,limit:4
+      ,url: 'http://localhost:8080/doctor/selectPressureCheckByCardId?cardId=' + cardId //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'selfCheckId', title: 'ID',hide:true}
+          ,{field: 'measurement', title: '类型',hide:true}
+          ,{field: 'measurementTime', title: '时间', width:308, align: 'center'}
+          ,{field: 'measurementResult', title: '结果', width:310, align: 'center'}
+          ,{field: 'measurementUnit', title: '单位', width:200, align: 'center'}
+        ]
+      ]
+    });
+
+    table.render({
+      id: 'Sugar'
+      ,elem: '#Sugar'
+      ,height: 225
+      ,limit:4
+      ,url: 'http://localhost:8080/doctor/selectSugarCheckByCardId?cardId=' + cardId //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'selfCheckId', title: 'ID',hide:true}
+          ,{field: 'measurement', title: '类型',hide:true}
+          ,{field: 'measurementTime', title: '时间', width:308, align: 'center'}
+          ,{field: 'measurementResult', title: '结果', width:310, align: 'center'}
+          ,{field: 'measurementUnit', title: '单位', width:200, align: 'center'}
+        ]
+      ]
+    });
+
+    table.render({
+      id: 'HeartRate'
+      ,elem: '#HeartRate'
+      ,height: 225
+      ,limit:4
+      ,url: 'http://localhost:8080/doctor/selectHeartRateCheckByCardId?cardId=' + cardId //数据接口
+      ,skin: 'line '
+      ,page: true //开启分页
+      ,cols: [
+        [ //表头
+          {field: 'selfCheckId', title: 'ID',hide:true}
+          ,{field: 'measurement', title: '类型',hide:true}
+          ,{field: 'measurementTime', title: '时间', width:308, align: 'center'}
+          ,{field: 'measurementResult', title: '结果', width:310, align: 'center'}
+          ,{field: 'measurementUnit', title: '单位', width:200, align: 'center'}
+        ]
+      ]
+    });
+
+    table.render({
+      id: 'Temperature'
+      ,elem: '#Temperature'
+      ,height: 225
+      ,limit:4
+      ,url: 'http://localhost:8080/doctor/selectTemperatureCheckByCardId?cardId=' + cardId //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'selfCheckId', title: 'ID',hide:true}
+          ,{field: 'measurement', title: '类型',hide:true}
+          ,{field: 'measurementTime', title: '时间', width:308, align: 'center'}
+          ,{field: 'measurementResult', title: '结果', width:310, align: 'center'}
+          ,{field: 'measurementUnit', title: '单位', width:200, align: 'center'}
+        ]
+      ]
+    });
+
+    table.render({
+      id: 'Weight'
+      ,elem: '#Weight'
+      ,height: 225
+      ,limit:4
+      ,url: 'http://localhost:8080/doctor/selectWeightCheckByCardId?cardId=' + cardId //数据接口
+      ,page: true //开启分页
+      ,skin: 'line '
+      ,cols: [
+        [ //表头
+          {field: 'selfCheckId', title: 'ID',hide:true}
+          ,{field: 'measurement', title: '类型',hide:true}
+          ,{field: 'measurementTime', title: '时间', width:308, align: 'center'}
+          ,{field: 'measurementResult', title: '结果', width:310, align: 'center'}
+          ,{field: 'measurementUnit', title: '单位', width:200, align: 'center'}
+        ]
+      ]
+    });
+  });
+</script>
+
+</html>

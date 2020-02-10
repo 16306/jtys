@@ -31,7 +31,7 @@
   </select>
 
   <select id="getLastOne" resultMap="BaseResultMap">
-    select top 1 * from Self_check_form order by Self_check_id desc
+    select * from Self_check_form order by Self_check_id desc limit 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

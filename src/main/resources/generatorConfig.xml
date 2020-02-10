@@ -6,7 +6,7 @@
 
 
   <!--指定数据库的jdbc驱动jar包的位置-->
-  <classPathEntry location="C:\Users\14905\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\6.4.0.jre8\mssql-jdbc-6.4.0.jre8.jar"/>
+  <classPathEntry location="C:\Users\14905\.m2\repository\mysql\mysql-connector-java\8.0.17\mysql-connector-java-8.0.17.jar"/>
 
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
@@ -17,10 +17,10 @@
     </commentGenerator>
 
     <!--数据库链接地址账号密码-->
-    <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-      connectionURL="jdbc:sqlserver://127.0.0.1:1433; databaseName=jtys"
-      userId="sa"
-      password="123456">
+    <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+      connectionURL="jdbc:mysql://localhost:3306/jtys"
+      userId="root"
+      password="343637">
     </jdbcConnection>
 
     <!--生成pojo类存放位置-->
@@ -132,10 +132,10 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
-    <table tableName="Threshold_form" domainObjectName="Threshold" enableCountByExample="false"
-      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-      selectByExampleQueryId="false">
-    </table>
+<!--    <table tableName="Threshold_form" domainObjectName="Threshold" enableCountByExample="false"-->
+<!--      enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--      selectByExampleQueryId="false">-->
+<!--    </table>-->
     <!--<table tableName="unit_form" domainObjectName="Unit" enableCountByExample="false"-->
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
@@ -148,5 +148,9 @@
       <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
       <!--selectByExampleQueryId="false">-->
     <!--</table>-->
+    <table tableName="fileimg" domainObjectName="FileImg" enableCountByExample="false"
+           enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+           selectByExampleQueryId="false">
+    </table>
   </context>
 </generatorConfiguration>

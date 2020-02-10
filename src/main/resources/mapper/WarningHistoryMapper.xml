@@ -12,11 +12,33 @@
     warning_history_id, detector, card_id, content, time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from warning_history_form
     where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByCardId" resultMap="BaseResultMap">
+    select
+    *
+    from warning_history_form
+    where card_id = #{cardId,jdbcType=VARCHAR}
+    order by warning_history_id desc
+  </select>
+
+  <select id="getLastOne" resultMap="BaseResultMap">
+    select * from warning_history_form order by warning_history_id desc limit 1
+  </select>
+
+  <select id="selectByTime" resultMap="BaseResultMap">
+    select
+    *
+    from warning_history_form
+    where to_days(warning_history_form.time) = to_days(now())
+    and card_id = #{cardId,jdbcType=VARCHAR}
+    order by warning_history_form.time desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from warning_history_form
     where warning_history_id = #{warningHistoryId,jdbcType=BIGINT}

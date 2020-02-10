@@ -12,6 +12,7 @@ import com.mapper.EvaluationMapper;
 import com.mapper.FamilyMapper;
 import com.mapper.FamilyMemberMapper;
 import com.util.FindUser;
+import com.util.MyPageHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,11 +108,8 @@ public class SupervisionService
    * @param doctorName
    * @return
    */
-  public PageInfo<Map<Object, Object>> get_estimate_info(int page,int limit,int mark,String Evaluator, String doctorName)
+  public MyPageHelper<Map<Object, Object>> get_estimate_info(int page,int limit,int mark,String Evaluator, String doctorName)
   {
-    if(mark==1) {
-      PageHelper.startPage(page, limit);      //分页核心代码
-    }
     FindUser findUser = new FindUser();
     com.entity.User user = findUser.getuser();
     List<Map<Object, Object>> list= new ArrayList<Map<Object, Object>>();
@@ -131,7 +129,7 @@ public class SupervisionService
         list.add(result);
       }
     }
-    return new PageInfo<>(list);
+    return new MyPageHelper<>(list, page, limit);
   }
 
 }
